@@ -1,0 +1,119 @@
+---
+title: "TalkChief REST API: Concepts and Structure"
+sidebarTitle: "REST API"
+description: "Learn how TalkChief's REST API works — JSON over HTTPS, Bearer authentication, and OpenAPI 3.0 spec download from your dashboard."
+---
+
+TalkChief's REST API gives you programmatic access to your communications platform over HTTPS, with all request and response bodies encoded as JSON. Every API call is authenticated with a scoped Bearer API key, and the full OpenAPI 3.0 specification for your account is available directly from your TalkChief dashboard — giving you a complete, always-accurate contract you can use to generate SDK clients, explore available endpoints, and validate your integration.
+
+## Getting Your Base URL
+
+Your API base URL is **customer-specific** and is not shared publicly. You can find it in your TalkChief dashboard under **Settings → Developers**. The downloadable OpenAPI 3.0 specification also lives there, pre-configured with your exact host and all the endpoints enabled for your account.
+
+<Note>
+  Exact API hosts, paths, and endpoint availability vary by account and contract. Always refer to your authenticated dashboard for the canonical base URL and OpenAPI spec rather than hardcoding any host you may have seen in examples.
+</Note>
+
+Once you have your base URL, store it as an environment variable in your application rather than embedding it in source code.
+
+```bash
+export TALKCHIEF_API_HOST="https://your-api-host.talkchief.io"
+export TALKCHIEF_API_KEY="tc_live_••••••••••••••••"
+```
+
+## Request Format
+
+All requests must include two headers: `Authorization` carrying your Bearer API key, and `Content-Type` set to `application/json` for any request that sends a body. Request parameters for `POST` and `PATCH` operations are passed as a JSON object in the request body, not as query parameters.
+
+```bash
+curl -X GET https://{your-api-host}/v1/calls \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json"
+```
+
+Replace `{your-api-host}` with the base URL from your dashboard and `YOUR_API_KEY` with a real scoped key. Never commit API keys to source control — use environment variables or a secrets manager.
+
+## Response Format
+
+Every response from the TalkChief API is a JSON object. Successful responses wrap the returned data in a `data` key alongside a `"success"` status string.
+
+```json
+{
+  "status": "success",
+  "data": { "..." : "..." }
+}
+```
+
+When an error occurs, the response body contains a machine-readable `code` and a human-readable `message` you can surface to developers during debugging.
+
+```json
+{
+  "status": "error",
+  "code": "INVALID_NUMBER",
+  "message": "The destination number is not a valid E.164 number."
+}
+```
+
+Always check the HTTP status code first, then inspect `status` and `code` for actionable error details.
+
+## Status Codes
+
+TalkChief uses standard HTTP status codes. The table below covers the codes you are most likely to encounter.
+
+| Code | Meaning | What to do |
+|------|---------|------------|
+| `200 OK` | Request succeeded | Read the `data` object |
+| `201 Created` | Resource created successfully | Read the new resource in `data` |
+| `400 Bad Request` | Invalid request body or parameters | Fix the request per the `message` |
+| `401 Unauthorized` | Missing or invalid API key | Check your `Authorization` header |
+| `403 Forbidden` | Key lacks the required scope | Use a key scoped for this capability |
+| `404 Not Found` | Resource does not exist | Verify the ID or path |
+| `429 Too Many Requests` | Rate limit exceeded | Back off and retry (see below) |
+| `500 Server Error` | Unexpected server-side error | Retry once; contact support if it persists |
+
+## Rate Limits
+
+Rate limits are applied per API key and vary by capability and plan. The exact limits for your account are documented in your TalkChief dashboard under **Settings → Developers**. When you exceed a limit, the API responds with `429 Too Many Requests`.
+
+Handle `429` responses with **exponential backoff**: wait a short initial delay, double it on each successive retry, and add a small random jitter to avoid thundering-herd collisions. A reasonable starting point is 1 second, doubling up to a maximum of 32 seconds for up to five retries.
+
+<Tip>
+  The `Retry-After` response header, when present, tells you exactly how many seconds to wait before retrying. Always check for it before falling back to your own backoff schedule.
+</Tip>
+
+## OpenAPI Specification
+
+Download the complete OpenAPI 3.0 spec for your account from **Settings → Developers → API Spec** in your dashboard. The spec is scoped to your account and reflects your exact base URL, enabled endpoints, and any custom fields specific to your contract.
+
+Use the spec to:
+
+<CardGroup cols={2}>
+  <Card title="Generate SDK Clients" icon="code">
+    Feed the spec into generators like `openapi-generator` or `speakeasy` to produce typed clients in your language of choice.
+  </Card>
+  <Card title="Explore Endpoints" icon="magnifying-glass">
+    Import the spec into Postman, Insomnia, or any OpenAPI-compatible tool to browse and test all available endpoints interactively.
+  </Card>
+  <Card title="Validate Requests" icon="circle-check">
+    Use the spec at runtime or in CI to validate that your request payloads conform to the schema before sending them to the API.
+  </Card>
+  <Card title="Auto-generate Docs" icon="book">
+    Render the spec with tools like Redoc or Swagger UI to produce an internal reference for your engineering team.
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+With the request format and authentication model in hand, explore the specific capability APIs:
+
+<CardGroup cols={2}>
+  <Card title="Click-to-Call API" icon="phone" href="/developers/click-to-call">
+    Programmatically trigger outbound calls from your CRM, website, or workflow engine.
+  </Card>
+  <Card title="AI Transcription API" icon="microphone" href="/developers/transcription-api">
+    Submit call recordings for diarized, speaker-labeled transcription in Arabic, Hebrew, or English.
+  </Card>
+  <Card title="CDR Webhooks" icon="webhook" href="/developers/webhooks">
+    Receive real-time completed-call records posted directly to your HTTPS endpoint.
+  </Card>
+</CardGroup>

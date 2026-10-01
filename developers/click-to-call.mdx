@@ -1,0 +1,166 @@
+---
+title: "Click-to-Call API: Trigger Calls from Your App"
+sidebarTitle: "Click-to-Call"
+description: "Programmatically initiate outbound calls from your CRM, website, or workflow with TalkChief's Click-to-Call API and Bearer authentication."
+---
+
+The Click-to-Call API lets your application trigger an outbound phone call without anyone touching the TalkChief dashboard. You send a single authenticated POST request with a destination number and a caller ID, and TalkChief connects the call through your communications infrastructure — routing it to the right agent or queue and attaching any metadata you want to carry through to the call detail record. This makes it straightforward to add a "Call me" button to your website, a one-click dial button to your CRM, or an automated outreach trigger to your sales workflow.
+
+<Note>
+  Your exact API base URL and the list of available `from` numbers for your account are in your TalkChief dashboard under **Settings → Developers**. The call itself is always human-operated — Click-to-Call initiates the connection; an agent handles the conversation.
+</Note>
+
+## Use Cases
+
+<CardGroup cols={2}>
+  <Card title="CRM Click-to-Dial" icon="address-book">
+    Render a "Call" button next to every contact record. One click sends a POST request and the agent's phone rings, with the customer on the line before the agent even picks up.
+  </Card>
+  <Card title="Website Callback Request" icon="globe">
+    Let visitors enter their number and request an immediate callback. Your backend receives the form submission and fires a Click-to-Call request in real time.
+  </Card>
+  <Card title="Sales Workflow Trigger" icon="arrows-rotate">
+    Kick off a call automatically when a lead reaches a specific stage in your pipeline — no manual dialing, no context switching.
+  </Card>
+  <Card title="Power Dialer Integration" icon="bolt">
+    Connect Click-to-Call to your internal dialer queue to move through a list of contacts programmatically while keeping a human agent in every conversation.
+  </Card>
+</CardGroup>
+
+## Endpoint
+
+Initiate a call by sending a `POST` request to the calls endpoint on your customer-specific base URL.
+
+```http
+POST /v1/calls
+```
+
+## Request Parameters
+
+<ParamField body="to" type="string" required>
+  The destination phone number to dial, in **E.164 format** (e.g., `+12025551234`). Numbers not in E.164 format will be rejected with a `400` error and an `INVALID_NUMBER` code.
+</ParamField>
+
+<ParamField body="from" type="string" required>
+  The TalkChief number to present as the outbound caller ID, also in E.164 format. This must be a number provisioned on your account. Your available numbers are listed in **Settings → Phone Numbers** in the dashboard.
+</ParamField>
+
+<ParamField body="agent_id" type="string">
+  Route the call directly to a specific agent by their TalkChief user ID. If omitted and `queue_id` is also omitted, the call follows your account's default routing rules.
+</ParamField>
+
+<ParamField body="queue_id" type="string">
+  Route the call through a specific call queue. The first available agent in the queue answers the call. Cannot be used together with `agent_id` — provide one or the other.
+</ParamField>
+
+<ParamField body="metadata" type="object">
+  A flat key-value object of arbitrary strings attached to the call record. Use this to pass your internal identifiers — such as a CRM contact ID, deal ID, or campaign tag — so you can correlate the call detail record event back to your system when TalkChief delivers it via webhook.
+</ParamField>
+
+## Example Request
+
+<Tabs>
+  <Tab title="cURL">
+    ```bash
+    curl -X POST https://{your-api-host}/v1/calls \
+      -H "Authorization: Bearer YOUR_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "to": "+12025551234",
+        "from": "+19175550001",
+        "agent_id": "u_alice",
+        "metadata": {
+          "crm_contact_id": "contact_88f2a1",
+          "deal_id": "deal_004"
+        }
+      }'
+    ```
+  </Tab>
+  <Tab title="JavaScript">
+    ```javascript
+    const response = await fetch(`${process.env.TALKCHIEF_API_HOST}/v1/calls`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.TALKCHIEF_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        to: '+12025551234',
+        from: '+19175550001',
+        agent_id: 'u_alice',
+        metadata: {
+          crm_contact_id: 'contact_88f2a1',
+          deal_id: 'deal_004',
+        },
+      }),
+    });
+
+    const { data } = await response.json();
+    console.log('Call initiated:', data.id);
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import os, requests
+
+    response = requests.post(
+        f"{os.environ['TALKCHIEF_API_HOST']}/v1/calls",
+        headers={
+            "Authorization": f"Bearer {os.environ['TALKCHIEF_API_KEY']}",
+            "Content-Type": "application/json",
+        },
+        json={
+            "to": "+12025551234",
+            "from": "+19175550001",
+            "agent_id": "u_alice",
+            "metadata": {
+                "crm_contact_id": "contact_88f2a1",
+                "deal_id": "deal_004",
+            },
+        },
+    )
+
+    data = response.json()["data"]
+    print("Call initiated:", data["id"])
+    ```
+  </Tab>
+</Tabs>
+
+## Response
+
+A successful `201 Created` response confirms that the call has been initiated in TalkChief's infrastructure. It does not mean the call has been answered — only that it has been queued for delivery.
+
+<ResponseField name="id" type="string">
+  The unique identifier for this call, prefixed with `c_`. Store this to correlate with CDR webhook events and any future status lookups.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  The initial status of the call. Will be `"initiated"` immediately after creation. Subsequent status changes are delivered via CDR webhook.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  ISO 8601 timestamp indicating when the call was created in TalkChief's system (e.g., `"2024-11-15T14:32:00Z"`).
+</ResponseField>
+
+**Example response body:**
+
+```json
+{
+  "status": "success",
+  "data": {
+    "id": "c_7f3k9m2",
+    "status": "initiated",
+    "created_at": "2024-11-15T14:32:00Z"
+  }
+}
+```
+
+## Tracking the Call
+
+The `201` response tells you the call started — but to know what happened next (duration, disposition, recording URL, which agent answered), you need the completed call detail record. Configure a [CDR webhook](/developers/webhooks) to receive a `call.completed` event the moment the call ends.
+
+<Tip>
+  Pass your CRM contact ID (or any internal reference) in the `metadata` field when initiating the call. TalkChief echoes that same `metadata` object back in the CDR webhook payload, so you can match the completed-call record to the right contact or deal without storing a separate `call_id` mapping.
+</Tip>
+
+When the call completes, TalkChief POSTs a `call.completed` event to your webhook endpoint containing the full call record — including `duration_seconds`, `recording_url`, `agent_id`, and your original `metadata`. See the [Webhooks reference](/developers/webhooks) for the full payload schema and signature verification instructions.

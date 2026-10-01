@@ -1,0 +1,77 @@
+---
+title: "AI Call Summaries, Sentiment, and Action Items"
+sidebarTitle: "Summaries & Actions"
+description: "Turn every transcribed call into structured follow-up with AI-generated summaries, sentiment signals, action items, and escalation alerts."
+---
+
+After a call ends, the last thing your team should have to do is manually write up what was discussed and what needs to happen next. TalkChief's AI Summaries automatically process each call transcript and produce a structured summary — covering key discussion points, proposed action items, sentiment signals, and escalation alerts — so your agents and supervisors can act immediately rather than sift through recordings. Summaries can be posted directly into Cowork channels, keeping your entire team aligned without any copy-pasting.
+
+## What AI Summaries Include
+
+Every AI-generated summary covers the following dimensions of the call:
+
+<CardGroup cols={2}>
+  <Card title="Key Discussion Points" icon="list-check">
+    A concise bulleted account of the main topics raised during the call, extracted from the transcript and grouped thematically so reviewers can scan the summary in seconds.
+  </Card>
+  <Card title="Proposed Action Items" icon="circle-check">
+    Specific tasks, commitments, or follow-ups mentioned by either party — formatted as actionable to-do items ready to be assigned or logged in your CRM or ticketing system.
+  </Card>
+  <Card title="Sentiment Signals" icon="face-smile">
+    A per-call sentiment classification — **positive**, **neutral**, or **negative** — derived from language patterns throughout the transcript. Useful for spotting trends in customer satisfaction over time.
+  </Card>
+  <Card title="Intent Classification" icon="bullseye">
+    The detected purpose or intent of the call (e.g., billing inquiry, technical support, sales interest, complaint), helping you route follow-up tasks to the right team or workflow.
+  </Card>
+  <Card title="Escalation Alerts" icon="triangle-exclamation">
+    Automatic flags raised when a call contains language or sentiment patterns that suggest the interaction may need immediate supervisor attention — such as expressed frustration, mentions of legal action, or unresolved complaints.
+  </Card>
+</CardGroup>
+
+## Summaries in Cowork Channels
+
+You can configure TalkChief to post a formatted summary into a **Cowork channel** automatically after each qualifying call ends. This means your team sees the key points, action items, and any escalation flags in the channel they already work in — no switching between tools, no manual note-taking, no risk of follow-ups falling through the cracks.
+
+Each channel post includes the call metadata (date, time, agent, queue), the structured summary, sentiment classification, and a direct link to the full transcript. Team members can reply in-thread to discuss next steps, assign tasks, or acknowledge escalation alerts.
+
+## Insights Dashboard
+
+The **Insights Dashboard** gives you semantic search across all of your transcribed calls. Rather than filtering by date or agent alone, you can search using natural language — for example, *"calls where the customer mentioned a refund"* or *"high-sentiment escalations in Q3"* — and surface the exact conversations relevant to your query.
+
+Use the Insights Dashboard to:
+
+- Identify recurring topics or pain points across hundreds of calls
+- Find specific calls by outcome, keyword, or sentiment without listening to recordings
+- Spot patterns in escalation alerts to improve agent training or process design
+- Pull targeted call sets for compliance review or quality assurance
+
+## Setting Up Summary Workflows
+
+<Steps>
+  <Step title="Ensure AI Transcription is enabled">
+    AI Summaries are generated from call transcripts, so [AI Transcription](/ai/ai-transcription) must be active for any queue you want to summarize. Confirm it is enabled before proceeding.
+  </Step>
+  <Step title="Go to AI Settings > Summaries">
+    In your TalkChief dashboard, navigate to **Settings** > **AI** > **Summaries**. This is where you control which calls receive post-call summaries and how those summaries are delivered.
+  </Step>
+  <Step title="Enable post-call summaries for selected queues">
+    Toggle on **Post-call summaries** and choose the queues or call types you want to cover. You can enable summaries globally or limit them to specific inbound queues, outbound campaigns, or call classifications.
+  </Step>
+  <Step title="Choose a Cowork channel to receive summaries">
+    Under **Delivery**, select the Cowork channel where summary posts should appear after each call. You can configure different channels for different queues — for example, routing sales call summaries to your sales team channel and support summaries to your support channel.
+  </Step>
+  <Step title="Configure escalation alert thresholds">
+    In the **Escalation Alerts** section, set the sensitivity level for escalation flags. A higher sensitivity will flag more calls for review; a lower sensitivity focuses alerts on the most severe signals. You can also designate a specific Cowork channel or individual to receive escalation notifications.
+  </Step>
+  <Step title="Review and act on summaries after each call">
+    Once the workflow is live, summaries appear in your chosen Cowork channel within minutes of each call ending. Agents and supervisors should review the summary, confirm or correct action items, and respond to any escalation alerts promptly.
+  </Step>
+</Steps>
+
+<Warning>
+  AI summaries are generated by a machine learning model and may contain inaccuracies, omissions, or misclassifications. Always have a qualified human review AI-generated summaries before using them for compliance records, legal documentation, performance management, or any other critical business decision. TalkChief AI outputs are decision-support tools — final judgment remains with your team.
+</Warning>
+
+<Tip>
+  Use escalation alerts as a first-line signal for supervisor review rather than a definitive verdict. When an alert fires, a supervisor should listen to or read the full transcript to determine whether immediate action is needed. Pairing escalation alerts with a dedicated Cowork channel or a real-time notification ensures high-priority calls are never missed during busy periods.
+</Tip>

@@ -1,0 +1,92 @@
+---
+title: "Authenticate TalkChief API Requests with API Keys"
+sidebarTitle: "Authentication"
+description: "TalkChief uses per-capability API keys passed as Bearer tokens. Learn how to provision, use, and secure your keys for every API integration."
+---
+
+TalkChief authenticates every API request using per-capability API keys that you provision from your dashboard. Each key is tied to a specific platform capability — Click-to-Call, AI Transcription, and so on — and must be included in the `Authorization` header of every request as a Bearer token. There are no session cookies or OAuth flows for server-to-server integrations; the API key is the sole credential your application needs.
+
+## Getting Your API Key
+
+Provision a new API key from your TalkChief dashboard before making any API calls. Keys are shown in full only at creation time, so copy yours before closing the dialog.
+
+<Steps>
+  <Step title="Log in to your TalkChief dashboard">
+    Open [TalkChief](https://talkchief.io) and sign in with your account credentials.
+  </Step>
+  <Step title="Navigate to Settings > Developers > API Keys">
+    From the left-hand navigation, go to **Settings**, then **Developers**, and select **API Keys**.
+  </Step>
+  <Step title="Create a new key and select its capability">
+    Click **Create Key**. In the dialog, give the key a descriptive label (for example, `crm-click-to-call-prod`) and select the capability it should be scoped to — Click-to-Call, AI Transcription, or another available option.
+  </Step>
+  <Step title="Copy the key immediately">
+    The full key value is displayed **only once** at creation time. Copy it now and store it somewhere secure before closing the dialog. TalkChief does not store the raw key and cannot retrieve it for you later.
+  </Step>
+  <Step title="Store the key securely">
+    Save the key in an environment variable or a dedicated secrets manager (for example, AWS Secrets Manager, HashiCorp Vault, or your CI/CD platform's secrets store). Never paste the raw key directly into source code.
+  </Step>
+</Steps>
+
+## Using Your API Key
+
+Pass your API key as a Bearer token in the `Authorization` header on every request. The header format is:
+
+```http
+Authorization: Bearer YOUR_API_KEY
+```
+
+Here is a complete `curl` example that initiates an outbound call using the Click-to-Call API. Replace `YOUR_API_KEY` with your real key, and use the base URL from your authenticated dashboard — not the placeholder shown here.
+
+```bash
+curl -X POST https://api.talkchief.io/v1/calls \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "to": "+1234567890",
+    "from": "+10987654321"
+  }'
+```
+
+<Note>
+  The base URL `https://api.talkchief.io/v1/` is a placeholder used for illustration only. Your real production API base URL is available in your authenticated TalkChief dashboard and contract documentation. Do not hardcode this placeholder in production code — it will not resolve to a live endpoint.
+</Note>
+
+## Key Scoping
+
+Every API key you create is scoped to exactly one capability. A key provisioned for the Click-to-Call API cannot make requests to the AI Transcription API, and vice versa. If you are building an integration that uses multiple capabilities, create a separate key for each one and store them independently.
+
+This scoping policy limits the impact of a compromised credential: exposure of one key never grants access to other parts of the platform.
+
+| Capability | Required Key Scope |
+|---|---|
+| Click-to-Call | `click-to-call` |
+| AI Transcription | `ai-transcription` |
+| CDR Webhooks (validation) | `webhooks` |
+
+The exact scope labels for your account are shown in the **Create Key** dialog in your dashboard.
+
+## Security Best Practices
+
+Treat your API keys with the same care as passwords. Follow these practices to reduce the risk of unauthorized access:
+
+- **Never commit API keys to source control.** Use `.gitignore`, pre-commit hooks, or a secrets-scanning tool to catch accidental commits.
+- **Use environment variables or a secrets manager.** Inject keys at runtime so they never appear in code or configuration files checked into a repository.
+- **Rotate keys regularly.** Create a replacement key, update your integration, verify it works, and then delete the old key — all from the dashboard.
+- **Delete unused keys immediately.** If an integration is decommissioned or a key is no longer needed, revoke it from **Settings > Developers > API Keys** right away.
+- **Monitor usage for unexpected activity.** Review API key usage logs in the dashboard periodically. Unusual call volumes or unfamiliar source IPs may indicate a leaked key.
+
+<Warning>
+  Keep your API keys secret at all times. If you suspect a key has been leaked or is being used without your authorization, **revoke it immediately** from your TalkChief dashboard under **Settings > Developers > API Keys**, then create a replacement. Do not wait — a compromised key can be used to place calls or access call data on your behalf until it is revoked.
+</Warning>
+
+## Error Responses
+
+When authentication fails, the API returns a standard HTTP error response. The two most common authentication errors are:
+
+| Status Code | Meaning | Common Cause |
+|---|---|---|
+| `401 Unauthorized` | Missing or invalid API key | The `Authorization` header is absent, malformed, or the key has been revoked. |
+| `403 Forbidden` | Key exists but lacks permission | The key is valid, but it is not scoped to the capability you are trying to access. |
+
+A `401` response means you need to check that the key is present and correctly formatted in the header. A `403` response means you are using the right key format but the wrong key for this endpoint — verify that the key's capability scope matches the API you are calling, and create a new scoped key if needed.

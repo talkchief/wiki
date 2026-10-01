@@ -1,0 +1,212 @@
+---
+title: "CDR Webhooks: Receive Completed-Call Events"
+sidebarTitle: "Webhooks"
+description: "Receive real-time call detail records via HTTPS webhooks — verify HMAC-SHA256 signatures and handle retries for every completed call."
+---
+
+CDR (Call Detail Record) webhooks give your application a real-time feed of completed calls without any polling. When a call ends, TalkChief composes a JSON payload containing the full call record — direction, participants, duration, status, recording URL, and any metadata you attached at dial time — and POSTs it to the HTTPS endpoint you configure. Your server acknowledges receipt with a `2xx` response, and the event is marked as delivered. This is the most reliable way to keep your CRM, data warehouse, or billing system in sync with call activity on your TalkChief account.
+
+<Warning>
+  Always verify the `TalkChief-Signature` header on every incoming webhook request **before** processing the payload. Skipping signature verification exposes your endpoint to spoofed events that could corrupt your data or trigger unintended actions.
+</Warning>
+
+## Setting Up a Webhook
+
+<Steps>
+  <Step title="Expose a public HTTPS endpoint">
+    Deploy a route on your server that accepts `POST` requests and is reachable over the public internet with a valid TLS certificate. HTTP (non-TLS) endpoints are not accepted. During local development, tools like [ngrok](https://ngrok.com) or [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/) can create a temporary public HTTPS tunnel to your localhost.
+  </Step>
+  <Step title="Navigate to webhook settings">
+    In your TalkChief dashboard, go to **Settings → Developers → Webhooks**.
+  </Step>
+  <Step title="Add a new webhook">
+    Click **Add Webhook** and enter the full HTTPS URL of your endpoint (e.g., `https://your-app.example.com/webhooks/talkchief`).
+  </Step>
+  <Step title="Select event types">
+    Choose the events you want to receive. Select **call.completed** to receive CDR records for every finished call. Additional event types may be available depending on your plan.
+  </Step>
+  <Step title="Copy your signing secret">
+    After saving the webhook, TalkChief displays a one-time signing secret. Copy it immediately and store it securely — treat it like a password. You will use it to verify the `TalkChief-Signature` header on incoming requests.
+  </Step>
+  <Step title="Deploy your handler and test">
+    Deploy your webhook handler, then place a real call on your TalkChief account. Check your server logs for the incoming payload and confirm that your signature verification passes. Use the **Resend** button in the dashboard to replay events during development.
+  </Step>
+</Steps>
+
+## Event Types
+
+| Event | Description |
+|-------|-------------|
+| `call.completed` | Fired when a call ends and the full CDR is available. This is the primary event for capturing call records. |
+
+<Info>
+  Additional event types (e.g., `call.missed`, `call.transferred`) may be available on your plan. Check **Settings → Developers → Webhooks → Event Types** in your dashboard for the full list.
+</Info>
+
+## Webhook Payload
+
+TalkChief delivers the following JSON body for a `call.completed` event. All fields are present on every delivery; fields that are not applicable for a given call (e.g., `recording_url` when recording is disabled) are included as `null`.
+
+```json
+{
+  "event": "call.completed",
+  "call_id": "c_7f3k9m2",
+  "direction": "inbound",
+  "from": "+12025551234",
+  "to": "+19175550001",
+  "duration_seconds": 183,
+  "status": "completed",
+  "timestamp": "2024-11-15T14:32:00Z",
+  "recording_url": "https://storage.talkchief.io/recordings/c_7f3k9m2.mp3",
+  "queue_id": "q_sales",
+  "agent_id": "u_alice",
+  "metadata": {}
+}
+```
+
+### Payload Field Reference
+
+<ResponseField name="event" type="string">
+  The event type string. Always `"call.completed"` for CDR events. Use this to route payloads if your endpoint handles multiple event types.
+</ResponseField>
+
+<ResponseField name="call_id" type="string">
+  The unique identifier for this call, prefixed with `c_`. Use this as the idempotency key — if your endpoint receives the same `call_id` twice (due to a retry), process it only once.
+</ResponseField>
+
+<ResponseField name="direction" type="string">
+  Whether the call was `"inbound"` (originated externally and arrived at your TalkChief number) or `"outbound"` (initiated by your team or via the Click-to-Call API).
+</ResponseField>
+
+<ResponseField name="from" type="string">
+  The E.164-formatted phone number of the call originator. For inbound calls, this is the caller's number. For outbound calls, this is your TalkChief caller ID.
+</ResponseField>
+
+<ResponseField name="to" type="string">
+  The E.164-formatted phone number that was dialled. For inbound calls, this is your TalkChief number. For outbound calls, this is the destination number.
+</ResponseField>
+
+<ResponseField name="duration_seconds" type="integer">
+  The total connected call duration in whole seconds. This is the billable talk time, not the total time including ringing.
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  The final disposition of the call. Common values include `"completed"` (answered and ended normally), `"no-answer"`, `"busy"`, and `"failed"`.
+</ResponseField>
+
+<ResponseField name="timestamp" type="string">
+  ISO 8601 UTC timestamp of when the call ended (e.g., `"2024-11-15T14:32:00Z"`).
+</ResponseField>
+
+<ResponseField name="recording_url" type="string">
+  A pre-signed HTTPS URL to the call recording audio file, if call recording is enabled on your account. `null` if recording is disabled or the call was not recorded. Pre-signed URLs expire after 24 hours — download the file promptly if you need to retain it.
+</ResponseField>
+
+<ResponseField name="queue_id" type="string">
+  The ID of the queue the call passed through, if any. `null` for calls that bypassed queueing.
+</ResponseField>
+
+<ResponseField name="agent_id" type="string">
+  The TalkChief user ID of the agent who handled the call. `null` for unanswered calls.
+</ResponseField>
+
+<ResponseField name="metadata" type="object">
+  The key-value metadata object you passed when initiating an outbound call via the Click-to-Call API. Empty object `{}` for inbound calls or outbound calls initiated without metadata.
+</ResponseField>
+
+## Verifying Webhook Signatures
+
+TalkChief signs every webhook request using **HMAC-SHA256**. The signature is sent in the `TalkChief-Signature` HTTP header as a hex-encoded digest of the raw request body, computed using your webhook signing secret.
+
+To verify a request, recompute the HMAC-SHA256 digest of the raw request body using your secret, then compare it to the value in the header using a **constant-time comparison** function. Always use a constant-time comparison — standard string equality (`===`, `==`) is vulnerable to timing attacks.
+
+<Tabs>
+  <Tab title="Node.js">
+    ```javascript
+    const crypto = require('crypto');
+
+    function verifyWebhook(payload, signature, secret) {
+      const expected = crypto
+        .createHmac('sha256', secret)
+        .update(payload)          // payload must be the raw Buffer, not parsed JSON
+        .digest('hex');
+      return crypto.timingSafeEqual(
+        Buffer.from(expected),
+        Buffer.from(signature)
+      );
+    }
+
+    // Express.js example — use express.raw() to preserve the raw body
+    app.post(
+      '/webhooks/talkchief',
+      express.raw({ type: 'application/json' }),
+      (req, res) => {
+        const signature = req.headers['talkchief-signature'];
+        const secret = process.env.TALKCHIEF_WEBHOOK_SECRET;
+
+        if (!verifyWebhook(req.body, signature, secret)) {
+          return res.status(401).send('Invalid signature');
+        }
+
+        const event = JSON.parse(req.body);
+        // Process event.call_id, event.duration_seconds, etc.
+        res.sendStatus(200);
+      }
+    );
+    ```
+  </Tab>
+  <Tab title="Python">
+    ```python
+    import hmac, hashlib
+
+    def verify_webhook(payload: bytes, signature: str, secret: str) -> bool:
+        expected = hmac.new(
+            secret.encode(), payload, hashlib.sha256
+        ).hexdigest()
+        return hmac.compare_digest(expected, signature)
+
+    # Flask example — use request.get_data() to get the raw body
+    from flask import Flask, request, abort
+    import os, json
+
+    app = Flask(__name__)
+
+    @app.route('/webhooks/talkchief', methods=['POST'])
+    def webhook_handler():
+        signature = request.headers.get('TalkChief-Signature', '')
+        secret = os.environ['TALKCHIEF_WEBHOOK_SECRET']
+        raw_body = request.get_data()  # must be raw bytes, not decoded
+
+        if not verify_webhook(raw_body, signature, secret):
+            abort(401)
+
+        event = json.loads(raw_body)
+        # Process event['call_id'], event['duration_seconds'], etc.
+        return '', 200
+    ```
+  </Tab>
+</Tabs>
+
+<Warning>
+  Compute the HMAC over the **raw request body bytes**, not over a re-serialised JSON string. JSON serialisation is not guaranteed to be deterministic — whitespace or key ordering differences will produce a different digest and cause all verifications to fail.
+</Warning>
+
+## Retry Behavior
+
+If your endpoint returns a non-`2xx` HTTP status code, or does not respond within **10 seconds**, TalkChief marks the delivery as failed and retries with exponential backoff:
+
+| Attempt | Delay |
+|---------|-------|
+| 1st retry | 30 seconds |
+| 2nd retry | 2 minutes |
+| 3rd retry | 10 minutes |
+| 4th retry | 1 hour |
+| 5th retry | 6 hours |
+
+After five failed retries, the event is marked as permanently undelivered. You can replay individual events manually from **Settings → Developers → Webhooks → Event Log** in your dashboard.
+
+Because the same event may be delivered more than once during retries, your handler must be **idempotent**. Use the `call_id` field as a natural idempotency key — check whether you have already processed a record with that ID before writing to your database or triggering downstream actions.
+
+<Tip>
+  When you initiate an outbound call via the [Click-to-Call API](/developers/click-to-call), pass your CRM contact or deal ID in the `metadata` field. TalkChief echoes it back in the `metadata` object of every CDR webhook event, so you can match each completed-call record back to the right record in your system without maintaining a separate `call_id` → CRM ID mapping table.
+</Tip>

@@ -1,0 +1,52 @@
+---
+title: "TalkChief Developer Platform Overview"
+sidebarTitle: "Overview"
+description: "Build call automation, transcription, and event-driven workflows on TalkChief's developer platform — available to authorized customers under contract."
+---
+
+The TalkChief developer platform gives authorized customers programmatic access to the core capabilities of the TalkChief unified communications stack. Whether you want to trigger outbound calls from your own application, transcribe recordings with AI, or react to completed-call events in real time, the platform exposes each capability through a clean, standards-based REST API backed by an OpenAPI 3.0 specification you can download directly from your dashboard.
+
+## What You Can Build
+
+- **Trigger outbound calls from your CRM, app, or website** using the Click-to-Call API — initiate calls programmatically without touching the TalkChief UI.
+- **Transcribe and analyze calls** using the AI Transcription API — submit call recordings and retrieve structured transcription results for search, compliance, or downstream processing.
+- **Receive call events in real time** using CDR Webhooks — TalkChief POSTs completed-call records (call detail records) to your endpoint the moment a call finishes.
+- **Download and explore the full OpenAPI 3.0 specification** from your authenticated dashboard — import it into Postman, Insomnia, or any OpenAPI-compatible toolchain to get started quickly.
+
+## Explore the Platform
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="key" href="/developers/authentication">
+    Learn how to provision API keys and authenticate every request with a Bearer token.
+  </Card>
+  <Card title="REST API" icon="code" href="/developers/rest-api">
+    Browse the full REST API reference and download the OpenAPI 3.0 spec from your dashboard.
+  </Card>
+  <Card title="Click-to-Call" icon="phone" href="/developers/click-to-call">
+    Trigger outbound calls programmatically from any application or workflow.
+  </Card>
+  <Card title="Transcription API" icon="microphone" href="/developers/transcription-api">
+    Submit call recordings and retrieve AI-generated transcriptions and analysis.
+  </Card>
+  <Card title="CDR Webhooks" icon="webhook" href="/developers/webhooks">
+    Receive completed-call events pushed directly to your endpoint in real time.
+  </Card>
+</CardGroup>
+
+## Getting Access
+
+Developer APIs are available exclusively to TalkChief customers under an active contract. Once your account is provisioned, you can create API keys directly from your TalkChief dashboard:
+
+1. Log in to your TalkChief dashboard.
+2. Navigate to **Settings > Developers > API Keys**.
+3. Create a new key and select the specific capability you want to enable (for example, Click-to-Call or AI Transcription).
+
+Each key is scoped to a single capability — a key created for Click-to-Call cannot be used to call the Transcription API. This scoping limits the blast radius if a key is ever compromised. See the [Authentication](/developers/authentication) page for full details on key management and security best practices.
+
+<Note>
+  Production API hosts, full endpoint paths, and any customer-specific callable URLs are **not** published in these docs. For security reasons, they are provided exclusively through your authenticated TalkChief dashboard and your current contract documentation. Always retrieve live credentials and base URLs from those sources — never rely on placeholder values in production.
+</Note>
+
+<Info>
+  Visit the [TalkChief Developer Portal](https://talkchief.io/en/developers) to access your dashboard, review your contract entitlements, and find the latest platform announcements.
+</Info>

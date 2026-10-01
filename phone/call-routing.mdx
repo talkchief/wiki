@@ -1,0 +1,77 @@
+---
+title: "Configure Call Routing Rules in TalkChief"
+sidebarTitle: "Call Routing"
+description: "Set up ring groups, time-based schedules, skill-based rules, call forwarding, and voicemail to route every call to the right place."
+---
+
+Call routing determines what happens to an inbound call the moment it reaches your TalkChief number. Effective routing reduces wait times, ensures callers reach the most qualified agent, and keeps your team reachable even outside business hours. TalkChief gives you several complementary routing methods that you can combine to match exactly how your organisation operates.
+
+## Routing Methods
+
+### Ring Groups
+
+A ring group collects multiple agents or devices and rings them together when a call arrives. You can choose how the group behaves:
+
+- **Simultaneous ringing** — all members ring at the same time; the first to answer takes the call.
+- **Sequential ringing** — TalkChief rings each member in a defined order until someone picks up.
+- **Round-robin** — distribute calls evenly across group members over time.
+
+Ring groups are ideal for sales teams, support tiers, or any scenario where you want multiple people available to answer without the caller being transferred manually.
+
+### Time-Based Routing
+
+Time-based routing sends calls down different paths depending on the time of day or day of the week. You define one or more schedules — for example, Monday–Friday 09:00–18:00 — and assign a destination for calls that arrive inside that window and a separate fallback destination for calls outside it.
+
+Common fallback actions include sending the caller to voicemail, playing a custom out-of-hours message, forwarding to an on-call mobile number, or routing to another ring group.
+
+### Skill-Based Routing
+
+Skill-based routing matches each incoming call to an agent who has the skills required to handle it. You tag agents with one or more skills (for example, `Spanish`, `Billing`, or `Enterprise`) and then configure routing rules that prefer or require those tags when distributing calls. If no perfectly matched agent is available, you can set a fallback to the next best match or a queue.
+
+## Business Hours
+
+Business hours settings tell TalkChief when your team is open and what to do when it is not. To configure business hours:
+
+1. Define your open periods — select days and set start and end times for each.
+2. Set your timezone so schedules evaluate correctly for your team's location.
+3. Choose the out-of-hours action: voicemail, a recorded message, call forwarding to another number, or an IVR prompt directing the caller to self-service options.
+
+You can create multiple schedules (for example, separate schedules for different teams or departments) and assign them independently to different numbers or ring groups.
+
+## Call Forwarding
+
+Call forwarding lets you redirect incoming calls to any phone number or device — useful when an agent is working from a personal mobile, when your team is temporarily unavailable, or when you want overflow calls handled by a third-party answering service. You can set forwarding at the number level, the user level, or as part of a routing rule.
+
+<Note>
+  Forwarding a call to an external number may incur additional per-minute charges depending on the destination country and your plan. Review your plan details or contact your account manager before enabling international forwarding at scale.
+</Note>
+
+## Voicemail
+
+TalkChief voicemail lets callers leave a message when no agent is available. You can:
+
+- Upload or record a custom greeting for each number or ring group.
+- Receive voicemail notifications by email, including an audio attachment.
+- Access all voicemail recordings directly in the TalkChief dashboard or mobile app.
+- Set different greetings for out-of-hours versus queue-timeout scenarios.
+
+## Setting Up a Basic Ring Group
+
+<Steps>
+  <Step title="Open Routing Settings">
+    In the TalkChief dashboard, navigate to **Phone** → **Routing** in the left sidebar to access your routing configuration.
+  </Step>
+  <Step title="Create a Ring Group">
+    Click **New Ring Group**, give it a descriptive name (for example, `Sales Team` or `Tier-1 Support`), and select the ring strategy — simultaneous, sequential, or round-robin.
+  </Step>
+  <Step title="Add Members">
+    Search for and add the agents or extensions you want to include. You can drag to reorder members if you chose sequential ringing.
+  </Step>
+  <Step title="Assign to a Number">
+    Go to **Phone** → **Numbers**, select the number you want to route, and set its inbound destination to the ring group you just created. Save your changes — the routing takes effect immediately.
+  </Step>
+</Steps>
+
+<Note>
+  Skill-based routing and advanced ring strategies may only be available on select TalkChief plans. Visit your plan overview or contact support to confirm which routing features are included in your subscription.
+</Note>

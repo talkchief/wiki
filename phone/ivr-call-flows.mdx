@@ -1,0 +1,83 @@
+---
+title: "Build IVR Menus and Visual Call Flows"
+sidebarTitle: "IVR & Call Flows"
+description: "Design interactive voice menus and end-to-end call flows with TalkChief's visual builder — no coding needed to route callers intelligently."
+---
+
+When a customer calls your business, the first few seconds shape their entire experience. TalkChief's IVR (Interactive Voice Response) system and visual call flow builder let you design exactly what happens on those calls — from the opening greeting to the final destination — using a drag-and-drop interface that requires no technical expertise.
+
+## What Is IVR?
+
+IVR stands for Interactive Voice Response. It is the technology behind the familiar "Press 1 for Sales, Press 2 for Support" menus that greet callers when they ring a business. The caller hears a pre-recorded prompt and responds by pressing a key on their keypad (DTMF tones) or, where supported, by speaking a command. Based on their input, the system routes them to the appropriate team, queue, or message.
+
+IVR removes the need for a receptionist to manually transfer every call and ensures callers reach the right destination even during high call volumes or outside business hours. With TalkChief, your IVR menus are a node inside a broader call flow, so you can combine them with queues, time conditions, announcements, and ring groups in any order.
+
+## Visual Call Flow Builder
+
+TalkChief's visual call flow builder presents your entire routing logic as a canvas of connected nodes. Each node represents one step in the caller's journey — a greeting, a menu, a condition, a queue, or a transfer. You connect nodes by drawing lines between them, and you configure each node's behaviour in a side panel.
+
+Key features of the builder include:
+
+- **Drag-and-drop nodes** — add greetings, IVR menus, time conditions, ring groups, queues, voicemail boxes, and hangup actions from the node palette.
+- **Branching logic** — create different paths for different caller inputs, times of day, or queue outcomes (answered, timed out, abandoned).
+- **Audio management** — upload MP3/WAV files or use text-to-speech directly inside the node configuration.
+- **Live preview** — trace the path a call would take before publishing.
+
+## Common Call Flow Patterns
+
+### Simple IVR Menu
+
+The most common pattern greets the caller and presents a short list of options:
+
+1. **Greeting node** — play a welcome message (for example, "Thank you for calling Acme Corp.").
+2. **IVR menu node** — list options and map each key press to a destination:
+   - Press **1** → Sales ring group
+   - Press **2** → Support ring group
+   - Press **0** → Reception / operator
+3. **Timeout branch** — if the caller does not press anything within a configurable number of seconds, route them to a default destination or repeat the prompt.
+
+### Time-Based Branching
+
+Use a **Time Condition node** immediately after the greeting to split the flow into business-hours and after-hours paths:
+
+- **During business hours** → IVR menu or ring group
+- **Outside business hours** → play an out-of-hours message, then offer voicemail or an emergency number
+
+You can stack multiple time conditions to handle lunch breaks, public holidays, or different schedules for different teams.
+
+### Queue with Estimated Wait-Time Announcement
+
+For high-volume inbound lines, add a **Queue node** between your IVR menu and your ring group:
+
+1. Caller presses a menu option and enters the queue.
+2. The queue plays hold music or a custom audio track.
+3. An **announcement node** periodically tells the caller their estimated wait time or position in the queue.
+4. When an agent becomes available, the call is connected automatically.
+
+<Tip>
+  Keep queue announcements concise and space them at least 60 seconds apart. Callers who hear frequent interruptions to their hold music are more likely to abandon the call.
+</Tip>
+
+## Creating Your First IVR
+
+<Steps>
+  <Step title="Open the Call Flows Section">
+    In the TalkChief dashboard, go to **Phone** → **Call Flows**. Click **New Flow** and give it a name that identifies the number or use case (for example, `Main Line IVR` or `Support Queue Flow`).
+  </Step>
+  <Step title="Add a Greeting Node">
+    Drag a **Play Audio** node onto the canvas from the node palette. In the configuration panel, upload your greeting audio file or type a message to generate text-to-speech. Connect the node to the flow's **Start** trigger.
+  </Step>
+  <Step title="Add IVR Menu Options">
+    Drag an **IVR Menu** node and connect it to the greeting node. Add each menu option by specifying the key (0–9, *, #) and a label. Each option creates an output connector on the node for you to wire to a destination.
+  </Step>
+  <Step title="Connect to Ring Groups or Queues">
+    Drag **Ring Group** or **Queue** nodes for each department and connect them to the corresponding IVR menu outputs. Add a **Voicemail** or **Play Audio** node on the timeout output of the IVR menu to handle callers who do not press anything.
+  </Step>
+  <Step title="Publish the Flow">
+    Click **Save**, then click **Publish**. Go to **Phone** → **Numbers**, select the number you want to use this flow, and set its inbound destination to the flow you just published. Your IVR is now live.
+  </Step>
+</Steps>
+
+<Tip>
+  Before pointing a live number at a new flow, use TalkChief's built-in **Test Call** feature to dial the flow from a test number. Walk through every menu branch and edge case — including timeout paths and after-hours conditions — to confirm callers always reach a valid destination.
+</Tip>

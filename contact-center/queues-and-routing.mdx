@@ -1,0 +1,88 @@
+---
+title: "Set Up Call Queues and Smart Routing Rules"
+sidebarTitle: "Queues & Routing"
+description: "Build call queues, pick a routing strategy, enable queue callback, and control operating hours for every inbound flow."
+---
+
+A well-configured call queue is the difference between a caller who feels taken care of and one who hangs up in frustration. TalkChief lets you create multiple queues, each with its own routing strategy, hold experience, and schedule, so every call reaches the right agent at the right time. You can also adjust routing rules in real time — no restarts, no disruptions to live calls.
+
+## Creating a Queue
+
+<Steps>
+  <Step title="Navigate to Contact Center > Queues">
+    In the TalkChief dashboard, open the **Contact Center** section in the left navigation and select **Queues**. You will see a list of any existing queues.
+  </Step>
+  <Step title='Click "New Queue" and name it'>
+    Select **New Queue** in the top-right corner. Give the queue a clear, descriptive name (for example, "Billing Support" or "Spanish Sales") so agents and supervisors can identify it at a glance.
+  </Step>
+  <Step title="Set maximum wait time and queue size">
+    Define how long a caller can wait in the queue before being redirected (maximum wait time) and how many callers can be queued simultaneously (queue size). Callers who exceed either limit are routed to your configured overflow destination — voicemail, another queue, or a custom message.
+  </Step>
+  <Step title="Choose a routing strategy">
+    Select how incoming calls are distributed among available agents: **Skill-Based**, **Time-Based**, or **Ring Group**. See [Routing Strategies](#routing-strategies) below for guidance on each option.
+  </Step>
+  <Step title="Assign agents or ring groups">
+    Add the agents or ring groups that should receive calls from this queue. For skill-based routing, you will also assign proficiency levels or skill tags to each agent at this step.
+  </Step>
+  <Step title="Configure hold music and position announcements">
+    Upload custom hold audio or choose from TalkChief's built-in music library. Enable **Position Announcements** to let callers know their place in the queue, and set the announcement frequency (for example, every 60 seconds). When you are satisfied, click **Save Queue**.
+  </Step>
+</Steps>
+
+## Routing Strategies
+
+TalkChief supports three routing strategies. You can switch between them at any time without restarting the queue.
+
+### Skill-Based Routing
+
+Skill-based routing matches each incoming call to the agent best equipped to handle it. You define skills — such as "Tier 2 Support," "Spanish," or "Enterprise Accounts" — and assign them to agents with optional proficiency ratings. When a call arrives, TalkChief scores available agents and connects the caller to the best match. If no agent with the required skill is available, the call falls back to the next-best match or waits in queue.
+
+### Time-Based Routing
+
+Time-based routing sends calls to different destinations depending on the time of day or day of the week. For example, calls arriving during business hours can go to your main agent pool, while after-hours calls are redirected to voicemail or an on-call ring group. This strategy is typically used alongside **Operating Hours & Shifts** (see below) for fine-grained schedule control.
+
+### Ring Group Routing
+
+Ring group routing rings multiple agents simultaneously or in a fixed sequence. In **simultaneous** mode, every agent in the group is alerted at once and the first to answer takes the call. In **sequential** (round-robin) mode, TalkChief cycles through agents in order, ensuring an even distribution of calls across the team.
+
+## Queue Callback
+
+Queue callback lets callers opt out of waiting on hold and instead receive a return call from an available agent. This reduces abandonment rates and improves caller satisfaction.
+
+To enable queue callback for a queue:
+
+1. Open the queue's settings and navigate to the **Callback** tab.
+2. Toggle **Enable Queue Callback** on.
+3. Set the threshold — the estimated wait time (in minutes) at which the callback option is offered to the caller.
+4. Record or upload the prompt that plays to offer the option (for example, "Press 1 to keep your place in the queue and receive a callback instead of waiting.").
+5. Save your changes.
+
+When a caller selects the callback option, TalkChief captures their number, removes them from the queue, and places them back in virtual position. When an agent becomes available, TalkChief automatically triggers an outbound call to the caller and connects the agent.
+
+## Operating Hours & Shifts
+
+Operating hours define when each queue is active. Outside of those hours, you can route calls to a voicemail box, redirect them to another queue, play a custom message, or forward them to an external number.
+
+To configure operating hours:
+
+1. Open the queue and select the **Schedule** tab.
+2. Click **Add Schedule** and define your business hours for each day of the week.
+3. Under **Out-of-Hours Handling**, choose a destination for calls that arrive outside the schedule.
+4. For teams with shift patterns, use **Shift Management** to create named shifts (Morning, Evening, On-Call) and link them to agent groups. Supervisors can update shift assignments in real time without disrupting active calls.
+
+## Blacklisting Numbers
+
+If specific phone numbers are causing disruption — persistent spam, abusive callers, or automated robocalls — you can block them so they never enter your queues.
+
+To blacklist a number:
+
+1. Go to **Contact Center > Settings > Blacklist**.
+2. Click **Add Number** and enter the full E.164-formatted number (for example, `+14155550100`).
+3. Optionally add a note explaining the reason for blocking.
+4. Click **Save**. Calls from that number will be silently rejected or played a disconnection tone, depending on your configuration.
+
+You can also bulk-import a list of numbers via CSV from the same settings page.
+
+<Tip>
+  TalkChief lets you modify routing strategies, agent assignments, and queue settings in real time — changes take effect immediately without restarting the queue or dropping any calls already in progress. Use this to respond quickly to unexpected spikes in call volume or sudden agent unavailability.
+</Tip>

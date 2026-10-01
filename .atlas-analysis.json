@@ -1,30 +1,11 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
+  "projectType": "saas",
+  "projectName": "TalkChief",
+  "projectDescription": "TalkChief is an AI-powered unified communications platform that brings business phone, contact center workflows, team collaboration (Cowork), analytics, and multilingual AI transcription into one SaaS workspace.",
   "theme": "luma",
-  "name": "TalkChief",
-  "colors": {
-    "primary": "#1be49c",
-    "light": "#0c8c5c",
-    "dark": "#0c0c0c"
-  },
-  "favicon": "https://media.brand.dev/483ee27f-08fb-4d32-842d-86b4c40f9fb4.png",
-  "logo": {
-    "light": "https://media.brand.dev/07fcb57b-76a5-49f6-abdb-740da69c791f.svg",
-    "dark": "https://media.brand.dev/07fcb57b-76a5-49f6-abdb-740da69c791f.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "https://talkchief.io/en/contact"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Start Free Trial",
-      "href": "https://talkchief.io/en/register"
-    }
-  },
+  "primaryColor": "#1be49c",
+  "lightColor": "#0c8c5c",
+  "darkColor": "#0c0c0c",
   "navigation": {
     "tabs": [
       {
@@ -105,10 +86,29 @@
       }
     ]
   },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/talkchief",
-      "linkedin": "https://linkedin.com/company/talkchief"
-    }
-  }
+  "keyFeatures": [
+    "Business phone system with IVR, call routing, ring groups, and visual call flows",
+    "Contact center with skill-based routing, call queues, monitoring, and Power Dialer",
+    "TalkChief Cowork — team channels, DMs, presence, and conferencing in one workspace",
+    "Multilingual AI transcription (Arabic, Hebrew, English) with diarized speaker output",
+    "AI call summaries, sentiment analysis, and action items connected to team channels",
+    "Analytics dashboards for calls, queues, team performance, and financials",
+    "Global voice coverage across 90+ countries with direct GCC and KSA connectivity",
+    "Integrations with Pipedrive, HubSpot, Zoho, monday.com, Shopify, and Microsoft Teams",
+    "Developer platform: Click-to-Call API, AI Transcription API, CDR webhooks, OpenAPI 3.0 spec",
+    "Native apps for Windows, macOS, iOS, and Android plus browser workspace"
+  ],
+  "publicApiSurface": [
+    "Click-to-Call API",
+    "AI Transcription API",
+    "CDR Webhooks (completed-call events)",
+    "OpenAPI 3.0 specification (downloadable from dashboard)",
+    "Per-capability API key authentication",
+    "REST API concepts and endpoints",
+    "Webhook delivery and verification",
+    "CRM integration workflow",
+    "SIP endpoint registration",
+    "Microsoft Teams integration",
+    "HubSpot integration"
+  ]
 }

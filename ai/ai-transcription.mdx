@@ -1,0 +1,94 @@
+---
+title: "Automatic Multilingual Call Transcription"
+sidebarTitle: "AI Transcription"
+description: "Diarized, per-speaker transcripts for Arabic, Hebrew, and English calls — including mixed-language conversations — with automatic language detection."
+---
+
+TalkChief's AI Transcription automatically converts your calls into accurate, speaker-labeled transcripts across Arabic, Hebrew, and English — including conversations that switch between languages mid-call. Every transcript is diarized, meaning each speaker's words are clearly attributed and time-stamped, so you can follow the flow of any conversation without listening to the full recording. Transcripts are available through the dashboard and the API the moment processing completes.
+
+## Supported Languages
+
+TalkChief AI Transcription supports the following languages and combinations:
+
+- **Arabic** — Modern Standard Arabic and common regional dialects
+- **Hebrew** — Full support for Hebrew-language calls
+- **English** — including accented and regional varieties
+- **Mixed-language calls** — TalkChief automatically detects when a conversation shifts between Arabic and English or Hebrew and English, and transcribes each segment in the appropriate language
+
+Automatic language detection runs at the start of every call, so you do not need to configure a language per queue or per number. The engine identifies the primary language and adjusts mid-call if the conversation switches.
+
+Transcripts use **diarization** — each turn is labeled with a speaker identifier (e.g., *Speaker 1*, *Speaker 2*) and an exact timestamp, giving you a readable, structured record of who said what and when.
+
+## Pricing
+
+AI Transcription is available as a paid add-on for your TalkChief workspace.
+
+| Item | Detail |
+|---|---|
+| **Add-on price** | $10 per member / month |
+| **Included minutes** | 1,500 minutes per member per month |
+| **Overage rate** | $0.025 per minute |
+| **Minimum billing unit** | 1 minute per job |
+| **Proration after the first minute** | Per-second |
+| **Failed jobs** | Not billed |
+
+Overage minutes are billed at $0.025/min with a one-minute minimum per transcription job. After the first minute, billing continues in per-second increments so you are never charged for unused time. If a transcription job fails for any reason, you are not charged for that job.
+
+## Enabling AI Transcription
+
+<Steps>
+  <Step title="Navigate to Settings > Add-ons">
+    Open your TalkChief dashboard, click your workspace name in the top navigation, and select **Settings**. In the left sidebar, choose **Add-ons**.
+  </Step>
+  <Step title="Enable AI Transcription for your workspace">
+    Locate the **AI Transcription** card and toggle it on. You will be prompted to confirm the add-on pricing before activation takes effect.
+  </Step>
+  <Step title="Select queues or call types to transcribe">
+    Once enabled, choose which queues, numbers, or call types should be transcribed automatically. You can enable transcription workspace-wide or limit it to specific inbound or outbound flows.
+  </Step>
+  <Step title="Review transcripts in the AI Transcription dashboard">
+    After your first transcribed calls complete, navigate to **AI** > **Transcription** in the main menu. Your transcripts appear here, searchable and filterable by date, agent, queue, and language.
+  </Step>
+</Steps>
+
+## Accessing Transcripts
+
+You can access your transcripts in three ways:
+
+<CardGroup cols={2}>
+  <Card title="Transcription Dashboard" icon="file-lines">
+    Browse, filter, and read all transcripts directly in the TalkChief dashboard under **AI > Transcription**. Each transcript includes speaker labels, timestamps, and a link to the associated call recording.
+  </Card>
+  <Card title="Semantic Search" icon="magnifying-glass">
+    Use the **Insights Dashboard** to search across your entire call history using natural language. Find calls by topic, keyword, speaker phrase, or outcome without reading every transcript manually.
+  </Card>
+  <Card title="API Access" icon="code">
+    Retrieve transcripts programmatically for downstream processing, CRM sync, or custom reporting. See the [Transcription API reference](/developers/transcription-api) for endpoints, authentication, and response schemas.
+  </Card>
+  <Card title="Workflow Integrations" icon="arrows-split-up-and-left">
+    Transcripts are available as structured data inputs for TalkChief workflow automations, enabling you to trigger actions based on transcript content or diarized output.
+  </Card>
+</CardGroup>
+
+## Transcript Output
+
+Each transcript is delivered as a diarized, time-stamped document with the following structure:
+
+- **Speaker labels** — participants are identified as *Speaker 1*, *Speaker 2*, etc. (or by agent name when matched to a TalkChief user)
+- **Timestamps** — every speaker turn carries a start and end time, accurate to the second
+- **Language segments** — for mixed-language calls, each segment is tagged with the detected language so you can distinguish Arabic, Hebrew, and English turns at a glance
+- **Structured format** — transcripts are available as JSON via the API, making them easy to parse, store, and route into CRM systems, ticketing tools, or compliance archives
+
+<Note>
+  Transcription accuracy depends on audio quality, background noise levels, and the clarity of each speaker's audio channel. Always have a qualified human review transcripts before using them for compliance records, legal proceedings, performance evaluations, or any other critical business decision.
+</Note>
+
+## Frequently Asked Questions
+
+<Accordion title="What happens if a transcription job fails?">
+  Failed jobs are not billed. If a transcript could not be generated — due to an audio quality issue, processing error, or timeout — the job is marked as failed in the dashboard and no charge is applied. You can retry the transcription for any failed job directly from the transcript list.
+</Accordion>
+
+<Accordion title="Can I transcribe calls in multiple languages?">
+  Yes — TalkChief automatically detects the language spoken on each call, including mixed Arabic/English or Hebrew/English conversations. You do not need to configure a language in advance. The engine identifies language at the segment level, so a single transcript can contain correctly labeled turns in more than one language.
+</Accordion>
