@@ -1,0 +1,59 @@
+# Autonomous merge for the TalkChief wiki.
+# - Every same-repo PR (Mintlify editor, Mintlify MCP agent, humans) gets auto-merge (squash) enabled.
+#   GitHub merges it only when branch protection is satisfied: `ci/circleci: quality` green on an
+#   up-to-date branch, plus code-owner approval when gate files (.circleci/, scripts/, .github/) change.
+# - After every push to main, open auto-merge PRs that fell behind are updated so they re-run CI
+#   and merge in turn (personal repos have no merge queue).
+# Fork PRs are ignored (read-only token, never auto-merged).
+name: auto-merge
+
+on:
+  pull_request:
+    types: [opened, reopened, ready_for_review, synchronize]
+  push:
+    branches: [main]
+  # Merges done by auto-merge use GITHUB_TOKEN, and those pushes do not trigger workflows,
+  # so the behind-PR updater also runs on a schedule.
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: auto-merge-${{ github.event.pull_request.number || 'main' }}
+  cancel-in-progress: false
+
+jobs:
+  enable:
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Enable auto-merge (squash)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: gh pr merge "$PR" --auto --squash --delete-branch -R "$GITHUB_REPOSITORY"
+
+  update-behind:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Update auto-merge PRs that are behind main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          prs=$(gh pr list -R "$GITHUB_REPOSITORY" --state open \
+                --json number,autoMergeRequest,isCrossRepository,mergeStateStatus \
+                --jq '.[] | select(.autoMergeRequest != null and (.isCrossRepository | not) and .mergeStateStatus == "BEHIND") | .number')
+          for n in $prs; do
+            echo "updating PR #$n"
+            gh api -X PUT "repos/$GITHUB_REPOSITORY/pulls/$n/update-branch" || echo "PR #$n: update failed (conflict?)"
+          done

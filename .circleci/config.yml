@@ -1,0 +1,98 @@
+version: 2.1
+
+# TalkChief wiki CI/CD
+#   every branch / PR : quality  (Mintlify build, links + anchors + redirects, alt text, wiki_lint)
+#   main              : quality -> verify-deploy (Mintlify GitHub App publishes; we confirm it is live)
+#   nightly schedule  : external-links (outbound links rot over time; does not block merges)
+# Merging is gated by GitHub branch protection on the `ci/circleci: quality` check
+# (branches must be up to date) and done via PR auto-merge (`gh pr merge --auto --squash`).
+# Changes to .circleci/, scripts/, .github/ need code-owner approval (see .github/CODEOWNERS).
+
+parameters:
+  run-nightly:
+    type: boolean
+    default: false
+
+executors:
+  docs:
+    docker:
+      - image: cimg/python:3.12-node
+    resource_class: small
+    environment:
+      MINT_VERSION: "4.2.964"
+      MINT_TELEMETRY: "false"
+
+commands:
+  setup-mint:
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - mint-v1-{{ .Environment.MINT_VERSION }}
+      - run:
+          name: Install Mintlify CLI
+          command: npm install --prefix ~/mint --no-audit --no-fund mint@${MINT_VERSION}
+      - save_cache:
+          key: mint-v1-{{ .Environment.MINT_VERSION }}
+          paths:
+            - ~/mint/node_modules
+      - run:
+          name: Mint version
+          command: ~/mint/node_modules/.bin/mint version --telemetry=false
+
+jobs:
+  quality:
+    executor: docs
+    steps:
+      - setup-mint
+      - run:
+          name: Content rules (frontmatter, SEO, nav, brand, confidentiality)
+          command: |
+            pip install --quiet --disable-pip-version-check pyyaml==6.0.2
+            python3 scripts/ci/wiki_lint.py
+      - run:
+          name: Mintlify build validation (strict)
+          command: ~/mint/node_modules/.bin/mint validate --telemetry=false
+      - run:
+          name: Broken internal links, anchors and redirects
+          command: ~/mint/node_modules/.bin/mint broken-links --check-anchors --check-redirects --telemetry=false
+      - run:
+          name: Accessibility (image/video alt text)
+          command: ~/mint/node_modules/.bin/mint a11y --skip-contrast --telemetry=false
+
+  verify-deploy:
+    executor: docs
+    steps:
+      - checkout
+      - run:
+          name: Wait for Mintlify deployment and smoke-test the live site
+          no_output_timeout: 20m
+          command: |
+            pip install --quiet --disable-pip-version-check pyyaml==6.0.2
+            python3 scripts/ci/post_deploy_check.py
+
+  external-links:
+    executor: docs
+    steps:
+      - setup-mint
+      - run:
+          name: External links
+          command: ~/mint/node_modules/.bin/mint broken-links --check-external --telemetry=false
+
+workflows:
+  docs:
+    when:
+      not: << pipeline.parameters.run-nightly >>
+    jobs:
+      - quality
+      - verify-deploy:
+          requires: [quality]
+          filters:
+            branches:
+              only: main
+
+  nightly:
+    when: << pipeline.parameters.run-nightly >>
+    jobs:
+      - quality
+      - external-links
