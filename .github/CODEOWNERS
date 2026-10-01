@@ -1,0 +1,5 @@
+# Changes to the quality gate itself need the owner's approval (branch protection: code owner review).
+/.circleci/      @talkchief
+/scripts/        @talkchief
+/.github/        @talkchief
+/.mintignore     @talkchief

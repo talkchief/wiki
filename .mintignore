@@ -5,3 +5,7 @@
 # Draft content
 drafts/
 *.draft.mdx
+
+# CI tooling, never published
+scripts/
+.circleci/
