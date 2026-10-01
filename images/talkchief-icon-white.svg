@@ -1,0 +1,6 @@
+<svg width="142" height="142" viewBox="0 13.5 142 142" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="m" maskUnits="userSpaceOnUse" x="0" y="13.5" width="142" height="142">
+<rect x="0" y="13.5" width="142" height="142" fill="white"/><path d="M52 58.5L55 56.5V42.5L52 40.5H36.5L34 42.5V56.5L36.5 58.5H52Z" fill="black"/><path d="M104.5 40.5H65L61.5 44V126L65 129H78.5L80.5 126V58.5H104.5L107.5 56.5V42.5L104.5 40.5Z" fill="black"/>
+</mask>
+<circle cx="71" cy="84.5" r="71" fill="white" mask="url(#m)"/>
+</svg>

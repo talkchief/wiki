@@ -7,10 +7,13 @@
     "light": "#0c8c5c",
     "dark": "#0c0c0c"
   },
-  "favicon": "https://media.brand.dev/483ee27f-08fb-4d32-842d-86b4c40f9fb4.png",
+  "favicon": {
+    "light": "/images/talkchief-icon-white.svg",
+    "dark": "/images/favicon.ico"
+  },
   "logo": {
-    "light": "https://media.brand.dev/07fcb57b-76a5-49f6-abdb-740da69c791f.svg",
-    "dark": "https://media.brand.dev/07fcb57b-76a5-49f6-abdb-740da69c791f.svg"
+    "light": "/images/talkchief-icon-white.svg",
+    "dark": "/images/talkchief-logo-circle-blue.png"
   },
   "navbar": {
     "links": [
