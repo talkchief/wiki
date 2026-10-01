@@ -1,0 +1,96 @@
+---
+title: "Search call transcripts by words and meaning"
+sidebarTitle: "Call search"
+description: "Find transcribed calls by what was said. Search exact words and phrases, then see calls that say the same thing in other words, marked Similar meaning."
+keywords: ["call search", "search call transcripts", "conversation search", "find calls by keyword", "semantic call search"]
+---
+
+Call search finds transcribed calls by what was said on them. Type a word or a phrase, and TalkChief lists calls that contain it. It then adds calls that say the same thing in other words. This page is for admins and supervisors.
+
+<Note>
+  Call search covers calls transcribed by [AI transcription](/ai/ai-transcription). Admins search the whole company. Supervisors search their own teams. Agents do not have access.
+</Note>
+
+## How matching works
+
+Results come in two groups:
+
+1. **Exact words first.** Calls where the words or phrase were said. Matches are highlighted in each line.
+2. **Then similar meaning.** Calls that say the same thing in other words, marked **Similar meaning**. For example, a search for "buy" also finds calls where someone said "purchase".
+
+Meaning-based matching compares what each line means, not only its spelling. It helps you find calls where customers describe the same problem in different ways.
+
+## Search your calls
+
+<Steps>
+  <Step title="Open Call search">
+    Go to **Insights** > **Call search**.
+  </Step>
+  <Step title="Enter what was said">
+    Type a word or an exact phrase, for example `cancel my subscription`. Use at least 2 characters.
+  </Step>
+  <Step title="Narrow the search">
+    Set **From** and **To** dates. The default is the last 30 days. Optionally pick a **Team**, a **Member**, and **Said by**: **Anyone**, **Member**, or **Customer**.
+  </Step>
+  <Step title="Run it">
+    Select **Search**.
+  </Step>
+</Steps>
+
+<Frame>
+  ![Insights > Call search with 'cancel my subscription' in the search box, From and To dates, Team, Member and Said by filters, and the Search button](/images/docs/call-search-form.png)
+</Frame>
+
+## Read the results
+
+Each result shows the call date and time, the call type, the member, and the team. Under it, up to three matching lines show who said them and when.
+
+- Highlighted text marks the exact words you searched for.
+- **+N more matches in this call** means the call has more matching lines.
+- **Similar meaning** marks calls found by meaning rather than exact words.
+- The count at the top shows how many calls matched. Up to 50 calls are shown.
+
+To open a call, select **Open transcript**, or select a matching line. The transcript drawer opens and scrolls to that line. See [Transcripts and summaries](/ai/transcripts-and-summaries).
+
+<Frame>
+  ![Call search results list with exact-word results showing highlighted matches, followed by a result marked Similar meaning, each with an Open transcript button](/images/docs/call-search-results.png)
+</Frame>
+
+## Tips for better searches
+
+<Tip>
+  - Search a short phrase the customer would say, like `refund` or `speak to a manager`.
+  - Use **Said by** > **Customer** to find what customers asked for, not what your team offered.
+  - Narrow the dates or pick a team when a search returns too many calls.
+</Tip>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="&quot;No calls match this search&quot;">
+    Widen the date range, clear the team and member filters, or try other words. Only transcribed calls are searched.
+  </Accordion>
+  <Accordion title="&quot;Call search is available to admins and supervisors&quot;">
+    Your role does not have access. Ask an admin.
+  </Accordion>
+  <Accordion title="I see no Similar meaning results">
+    They appear only when the exact-word results leave room, and only for calls that are close enough in meaning.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Transcripts and summaries" icon="message-lines" href="/ai/transcripts-and-summaries">
+    Read a call and generate a summary.
+  </Card>
+  <Card title="Escalations" icon="siren" href="/ai/escalations">
+    Review calls that need a supervisor.
+  </Card>
+  <Card title="AI insights" icon="chart-mixed" href="/ai/ai-insights">
+    See trends across all analyzed calls.
+  </Card>
+  <Card title="AI transcription setup" icon="sliders" href="/ai/ai-transcription">
+    Choose which calls are transcribed.
+  </Card>
+</CardGroup>

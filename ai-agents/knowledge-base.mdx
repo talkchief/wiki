@@ -1,0 +1,113 @@
+---
+title: "AI voice agent knowledge base | TalkChief"
+sidebarTitle: "Knowledge base"
+description: "Upload PDF, DOCX, or TXT documents to the TalkChief Knowledge library and grant them to AI voice agents and campaigns so they answer from your content."
+keywords: ["ai agent knowledge base", "ai voice agent documents", "upload faq to ai agent", "ai agent rag"]
+---
+
+The Knowledge library holds the approved documents your agents can search during a call. You upload each document once for the whole workspace. Then you choose which inbound agents and campaigns may use it.
+
+<Note>
+Limits: PDF, DOCX, or TXT files up to **3 MB** each. A workspace holds up to **15** library documents. Each campaign can also have up to **2** private documents.
+</Note>
+
+## Upload a document
+
+<Steps>
+  <Step title="Open Knowledge">
+    In the agents workspace sidebar, under **Library**, click **Knowledge**.
+  </Step>
+  <Step title="Add the file">
+    Click **Add document**, then **Choose a file or drop it here**. Pick one PDF, DOCX, or TXT file.
+  </Step>
+  <Step title="Wait for indexing">
+    The document appears in the **Reference library** with the status **Preparing**. When it is ready, the status changes to **Smart search ready** or **Keyword search ready**.
+  </Step>
+</Steps>
+
+<Frame>
+  ![The Knowledge page Reference library table with three fake documents, their status badges, and the 3 of 15 documents counter.](/images/docs/knowledge-library.png)
+</Frame>
+
+A new document stays private until you grant it to an agent or select it in a campaign.
+
+### Document status
+
+| Status | Meaning |
+|---|---|
+| **Preparing** | TalkChief is reading and indexing the file |
+| **Smart search ready** | The agent can find answers by meaning |
+| **Keyword search ready** | The agent can find answers by matching words. Open the **⋯** menu and click **Retry smart search** to try full indexing again |
+| **Needs attention** | Indexing failed. Check the error under the document name, fix the file, and upload it again |
+
+## Help the agent pick the right document
+
+Click **Manage access** on a document to edit its details. Clear details help the agent choose the right source.
+
+| Field | Example |
+|---|---|
+| **Display name** | Price list 2026 |
+| **Language** | English |
+| **What this document contains** | Treatment prices, payment plans, and insurance rules |
+| **Other names callers may use** | price sheet, fees (up to 10, comma-separated) |
+| **Topics** | pricing, insurance (up to 10, comma-separated) |
+
+Click **Save document details**.
+
+## Grant a document to an inbound agent
+
+You can grant access from either place:
+
+- **From the library**: click **Manage access** on the document. Under **Inbound agent access**, turn on the switch for each agent, then click **Done**.
+- **From the agent**: open the agent, go to **Knowledge**, and turn on the switch next to each document. The status changes from **Not allowed** to **Allowed**.
+
+Access changes apply to the agent's next search. You do not need to click **Save changes**.
+
+<Frame>
+  ![The agent's Knowledge section showing the Knowledge access card with two documents Allowed and one Not allowed.](/images/docs/agent-knowledge-access.png)
+</Frame>
+
+<Tip>
+Each agent that uses knowledge needs one of its 25 voice action slots for knowledge search. See [Voice actions](/ai-agents/tools-and-integrations#voice-actions-limit).
+</Tip>
+
+## Add knowledge to a campaign
+
+Outbound campaigns choose their own documents. Open the campaign, then go to **Knowledge & actions**.
+
+- To use a library document, pick it in **Choose workspace knowledge…** and click **Add knowledge**.
+- To add a file only this campaign can use, click **Upload campaign document**. Each campaign can hold 2 private documents.
+
+Private campaign documents never appear in other campaigns or agents.
+
+## Delete a document
+
+Open the **⋯** menu on the document and click **Delete…**, or click **Delete document** in **Manage access**. Every agent and campaign loses access to it.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What should I upload?">
+    Upload approved, current material: policies, service guides, price lists, opening hours, and processes. Short, well-structured documents work best.
+  </Accordion>
+  <Accordion title="Why can't I turn on access for a document?">
+    The document is still preparing or needs attention. Wait for a ready status, or fix and re-upload the file.
+  </Accordion>
+  <Accordion title="Can callers make the agent ignore its instructions with document text?">
+    No. The agent treats document content as reference material only. It cannot change the agent's instructions.
+  </Accordion>
+  <Accordion title="I have more than 15 documents. What should I do?">
+    Combine related short files into one document, up to 3 MB. Delete documents you no longer use.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Create an agent" icon="robot" href="/ai-agents/create-an-agent">
+    Set the agent's persona and voice.
+  </Card>
+  <Card title="Tools and integrations" icon="screwdriver-wrench" href="/ai-agents/tools-and-integrations">
+    Connect business systems and email.
+  </Card>
+</CardGroup>

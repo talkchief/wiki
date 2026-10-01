@@ -1,49 +1,78 @@
 ---
-title: "Contact Center Overview: Queues, Routing & Coaching"
+title: "Contact center overview: queues, live calls, and agents"
 sidebarTitle: "Overview"
-description: "Manage inbound call queues, outbound campaigns, live agent coaching, and analytics from one unified contact center module in TalkChief."
+description: "See what the TalkChief contact center includes: call queues and ring strategies, live call monitoring, the agent workspace, AI insights, and reports."
+keywords: ["contact center", "call center software", "call queues", "live call monitoring", "agent workspace"]
 ---
 
-TalkChief's Contact Center brings every inbound and outbound calling workflow under one roof. From intelligent call routing and IVR menus to real-time supervisor coaching and detailed BI dashboards, the module is built to help your team deliver consistent, high-quality customer experiences — whether your agents sit in the same office or are spread across the globe in a virtual call center.
+The TalkChief contact center helps teams share incoming calls, watch calls as they happen, and review performance afterward. It is built into the same workspace as your business phone. This page is for admins and supervisors who plan how their team handles calls.
+
+<Note>
+  Admins set up queues and teams. Supervisors can monitor the live calls of their own team. Agents work in a separate agent workspace. The number of queues depends on your plan, and AI features need the **Growth** or **Professional** plan. See [Plans and pricing](/plans-and-pricing).
+</Note>
+
+## What's included
 
 <CardGroup cols={2}>
-  <Card title="Queues & Routing" icon="sitemap" href="contact-center/queues-and-routing">
-    Create call queues, choose routing strategies, enable queue callback, and manage operating hours.
+  <Card title="Queues and routing" icon="sitemap" href="/contact-center/queues-and-routing">
+    Create queues, pick a ring strategy, set hold music, and choose a failover.
   </Card>
-  <Card title="Monitoring & Coaching" icon="headset" href="contact-center/monitoring-and-coaching">
-    Listen in on live calls, whisper to agents, barge into calls, and review recordings.
+  <Card title="Live calls" icon="phone-volume" href="/contact-center/monitoring-and-coaching">
+    See calls in progress and Listen, Coach, or Join.
   </Card>
-  <Card title="Power Dialer" icon="phone-arrow-up-right" href="contact-center/power-dialer">
-    Run human-operated outbound calling campaigns with contact lists, scripts, and outcome logging.
+  <Card title="Power Dialer" icon="phone-arrow-up-right" href="/contact-center/power-dialer">
+    Enterprise add-on for high-volume outbound calling, on request.
   </Card>
-  <Card title="IVR & Call Flows" icon="diagram-project" href="phone/ivr-call-flows">
-    Design multi-level IVR menus and visual call flows that route callers to the right destination.
+  <Card title="Reports and dashboards" icon="chart-bar" href="/analytics/reports-and-dashboards">
+    Track queue volume, wait times, and agent performance.
   </Card>
 </CardGroup>
 
-## Key Capabilities
+## Inbound calls
 
-TalkChief's Contact Center covers the full lifecycle of a customer call, from the moment a call arrives to post-call reporting.
+- **Queues**: hold callers with music and optional position announcements until an agent is free. Find them in **Team** > **Queues**.
+- **Ring strategies**: choose how agents ring, for example **Ring All**, **Round Robin**, or **Least Number of Calls**.
+- **Ring order**: drag agents in **Manage Agents** to set who rings first.
+- **Failover**: send calls to a fallback call flow when no agent is available.
+- **Call flows**: route a number to a queue, a team, or an **AI Agent** from the number's **Callflow**.
 
-**Inbound**
-- **Call Queues** — hold callers in organized queues with custom hold music and position announcements.
-- **IVR** — greet callers with self-service menus and route them automatically based on their input.
-- **Skill-Based Routing** — match callers to agents with the right skills, language, or product expertise.
-- **Queue Callback** — let callers request a callback rather than waiting on hold, reducing abandonment rates.
+## Supervision
 
-**Outbound**
-- **Power Dialer** — a human-operated planned calling workflow that lets agents work through contact lists efficiently. Each call is manually initiated by the agent, keeping you in full control.
+- **Live Calls**: see every call in progress, refreshed every few seconds, in **Calls** > **Live Calls**.
+- **Listen**, **Coach**, and **Join**: monitor a call silently, talk only to the member, or join the conversation.
+- **Escalations**: with AI transcription, TalkChief flags calls that may need a supervisor in **Insights** > **Escalations**.
 
-**Supervision**
-- **Live Monitoring** — supervisors can silently listen to any active call without the agent or caller being aware.
-- **Call Whispering** — coach agents mid-call by speaking to them privately without the customer hearing.
-- **Call Recording** — record calls on a per-queue or per-agent basis, with configurable retention policies.
+## Agent workspace
 
-**Analytics**
-- **Live Feed Dashboard** — see active calls, queue lengths, and agent statuses in real time.
-- **Call Reports** — review historical call data, handle times, and outcomes.
-- **Interactive BI Dashboards** — explore trends, filter by team or queue, and share insights across your organization.
+Agents sign in to their own workspace. Their **Dashboard** shows whether they are **Available** or **On break**, with **Take break** and **Resume work** buttons. Their **Queues** page lists the queues they belong to.
 
-<Note>
-  The exact features available to your account depend on your TalkChief subscription plan. Check your plan details or contact support if a capability described here is not visible in your dashboard.
-</Note>
+## Insights
+
+- **Dashboards** and **Reports** in the **Insights** group show call volume, queue outcomes, wait times, and agent activity.
+- **Call search** finds calls by what was said, once AI transcription is on.
+
+## Outbound calls
+
+Members place calls from the **Web Phone** or the TalkChief apps. For automated outbound calling, AI voice agents can run campaigns from [agents.talkchief.io](https://agents.talkchief.io). Enterprise companies can request the [Power Dialer](/contact-center/power-dialer) add-on.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do I need a special plan for queues?">
+    Queues are available in the admin workspace. Each plan has its own queue limit. If you reach it, upgrade in **Settings** > **Plans**.
+  </Accordion>
+  <Accordion title="Can supervisors monitor every call?">
+    Supervisors see the live calls of their own team. Admins see every live call in the company.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="rocket" href="/quickstart">
+    Set up your workspace and make your first call.
+  </Card>
+  <Card title="AI transcription" icon="microphone" href="/ai/ai-transcription">
+    Turn calls into transcripts, summaries, and escalations.
+  </Card>
+</CardGroup>

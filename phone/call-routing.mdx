@@ -1,77 +1,117 @@
 ---
-title: "Call Routing: Ring Groups, Schedules, and Forwarding"
-sidebarTitle: "Call Routing"
-description: "Set up ring groups, time-based schedules, skill-based rules, call forwarding, and voicemail to route every call to the right place."
+title: "Call Routing with Teams, Queues, and Forwarding"
+sidebarTitle: "Call routing"
+description: "Route TalkChief calls to the right person with team ring groups, call queues, working hours, member call forwarding, and failover when devices are offline."
+keywords: ["call routing", "ring group", "call queue", "call forwarding", "business hours routing"]
 ---
 
-Call routing determines what happens to an inbound call the moment it reaches your TalkChief number. Effective routing reduces wait times, ensures callers reach the most qualified agent, and keeps your team reachable even outside business hours. TalkChief gives you several complementary routing methods that you can combine to match exactly how your organisation operates.
+Call routing decides who rings when a call reaches one of your numbers. In TalkChief you combine a few building blocks: call flows, teams, queues, working hours, and each member's call forwarding.
 
-## Routing methods
+## How a call is routed
 
-### Ring Groups
+1. The call reaches your number and starts that number's [call flow](/phone/call-flows).
+2. A **Time Condition** step can check the team's working hours and pick the **Open** or **Closed** branch.
+3. An **IVR** step can let the caller choose a department.
+4. The call then rings a **Team**, a **Member**, an **AI Agent**, or a **Queue**, or it goes to **Voicemail** or **Call Forward**.
+5. If a member doesn't answer, their own call forwarding settings can send the call to their mobile.
 
-A ring group collects multiple agents or devices and rings them together when a call arrives. You can choose how the group behaves:
+## Ring a team
 
-- **Simultaneous ringing** — all members ring at the same time; the first to answer takes the call.
-- **Sequential ringing** — TalkChief rings each member in a defined order until someone picks up.
-- **Round-robin** — distribute calls evenly across group members over time.
+The **Team** step in a call flow rings a group of members. In its settings you choose:
 
-Ring groups are ideal for sales teams, support tiers, or any scenario where you want multiple people available to answer without the caller being transferred manually.
+| Setting | Options |
+|---|---|
+| **Ring strategy** | **In order** rings one member at a time. **Simultaneously** rings everyone at once. |
+| **Ring each member for** / **Keep ringing for** | 15–60 seconds. |
+| **Repeat** | 1–15 rounds. |
+| **Media** | Audio to play while the call rings. |
 
-### Time-Based Routing
+Each team also has a **Team Extension**. Calling that extension reaches all team members.
 
-Time-based routing sends calls down different paths depending on the time of day or day of the week. You define one or more schedules — for example, Monday–Friday 09:00–18:00 — and assign a destination for calls that arrive inside that window and a separate fallback destination for calls outside it.
+## Send calls to a queue
 
-Common fallback actions include sending the caller to voicemail, playing a custom out-of-hours message, forwarding to an on-call mobile number, or routing to another ring group.
-
-### Skill-Based Routing
-
-Skill-based routing matches each incoming call to an agent who has the skills required to handle it. You tag agents with one or more skills (for example, `Spanish`, `Billing`, or `Enterprise`) and then configure routing rules that prefer or require those tags when distributing calls. If no perfectly matched agent is available, you can set a fallback to the next best match or a queue.
-
-## Business Hours
-
-Business hours settings tell TalkChief when your team is open and what to do when it is not. To configure business hours:
-
-1. Define your open periods — select days and set start and end times for each.
-2. Set your timezone so schedules evaluate correctly for your team's location.
-3. Choose the out-of-hours action: voicemail, a recorded message, call forwarding to another number, or an IVR prompt directing the caller to self-service options.
-
-You can create multiple schedules (for example, separate schedules for different teams or departments) and assign them independently to different numbers or ring groups.
-
-## Call Forwarding
-
-Call forwarding lets you redirect incoming calls to any phone number or device — useful when an agent is working from a personal mobile, when your team is temporarily unavailable, or when you want overflow calls handled by a third-party answering service. You can set forwarding at the number level, the user level, or as part of a routing rule.
-
-<Note>
-  Forwarding a call to an external number may incur additional per-minute charges depending on the destination country and your plan. Review your plan details or contact your account manager before enabling international forwarding at scale.
-</Note>
-
-## Voicemail
-
-TalkChief voicemail lets callers leave a message when no agent is available. You can:
-
-- Upload or record a custom greeting for each number or ring group.
-- Receive voicemail notifications by email, including an audio attachment.
-- Access all voicemail recordings directly in the TalkChief dashboard or mobile app.
-- Set different greetings for out-of-hours versus queue-timeout scenarios.
-
-## Setting Up a Basic Ring Group
+Queues hold callers until an agent is free. You create them in **Team** → **Queues** and add them to a flow with the **Queue** step.
 
 <Steps>
-  <Step title="Open Routing Settings">
-    In the TalkChief dashboard, navigate to **Phone** → **Routing** in the left sidebar to access your routing configuration.
+  <Step title="Create the queue">
+    Go to **Team** → **Queues** and select **+ New Queue**. Under **Queue Details**, enter the **Queue Name** and **Extension Number**. Set the **Queue timeout (Max wait time)**, **Queue SLA Threshold**, **Time Zone**, and hold **Media**.
   </Step>
-  <Step title="Create a Ring Group">
-    Click **New Ring Group**, give it a descriptive name (for example, `Sales Team` or `Tier-1 Support`), and select the ring strategy — simultaneous, sequential, or round-robin.
+  <Step title="Choose how agents ring">
+    Under **Agent Details**, pick a **Ring Strategy**, set the **Agent Wrap-up time**, and set **Ring each agent for**. Select **Create Queue**.
   </Step>
-  <Step title="Add Members">
-    Search for and add the agents or extensions you want to include. You can drag to reorder members if you chose sequential ringing.
+  <Step title="Add agents">
+    On the queue card, open **Actions** and select **Manage Agents**. Choose the members who take calls from this queue, drag them to set the **Ring order**, then save.
   </Step>
-  <Step title="Assign to a Number">
-    Go to **Phone** → **Numbers**, select the number you want to route, and set its inbound destination to the ring group you just created. Save your changes — the routing takes effect immediately.
+  <Step title="Add the queue to a call flow">
+    Open the number's call flow and add a **Queue** step. See [Call flows](/phone/call-flows).
   </Step>
 </Steps>
 
-<Note>
-  Skill-based routing and advanced ring strategies may only be available on select TalkChief plans. Visit your plan overview or contact support to confirm which routing features are included in your subscription.
-</Note>
+Available ring strategies: **Ring All**, **Round Robin**, **In Order**, **Least Talk Time**, **Least Number of Calls**, **By Agent Skill & Order**, **Random**, and **Ring Progressively**.
+
+You can also turn on **Enable Position Announcement** to tell callers their place in line. Set the **Announcement Interval** and **Announcement Language**.
+
+For queue reporting and live monitoring, see [Queues and routing](/contact-center/queues-and-routing).
+
+### Queue failover
+
+On the queue card, open **Actions** and select **Failover**. This shows the call flow of the queue's failover number, where calls go when no agent is available. If none is set, you see **No failover number is configured for this queue.**
+
+## Route by working hours
+
+Each team has its own **Working Hours** on its **Settings** tab. A **Time Condition** step in the call flow uses them. During working hours the call takes the **Open** branch. At other times it takes the **Closed** branch. See [Working hours and media](/phone/working-hours-and-media).
+
+## Forward a member's calls
+
+Every member can forward calls to an outside number when they can't answer.
+
+<Steps>
+  <Step title="Open the member's call forward">
+    Go to **Team** → **Teams & Members** and open the **Members** tab. In the **Call Forward** column, select the member's setting. You can also open the member's **Settings** page.
+  </Step>
+  <Step title="Turn it on">
+    Turn on **Enable call forward**. Choose the **Country** and enter the **Phone Number**, 9–13 digits, with the country code.
+  </Step>
+  <Step title="Pick the options">
+    Turn on any of these options, then save.
+  </Step>
+</Steps>
+
+| Option | What it does |
+|---|---|
+| **Failover** | Forwards calls only when all the member's devices are offline. |
+| **Bypass users phones** | Forwards right away without ringing the member's devices. |
+| **Direct calls only** | Forwards only calls made straight to the member, not calls from a ring group or queue. |
+| **Require Key press** | The member must press a key to accept the forwarded call. |
+
+<Tip>
+  Use **Require Key press** when forwarding to a mobile. It stops the mobile's own voicemail from taking the call.
+</Tip>
+
+## Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="What's the difference between a team and a queue?">
+    A **Team** step rings members right away and stops after the set rounds. A **Queue** keeps callers waiting with hold audio until an agent is free, and it tracks wait times and SLA.
+  </Accordion>
+  <Accordion title="Can I forward a whole number to my mobile?">
+    Yes. Add a **Call Forward** step to the number's call flow and enter your mobile number.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Call flows" icon="diagram-project" href="/phone/call-flows">
+    Build each number's routing step by step.
+  </Card>
+  <Card title="Queues and routing" icon="headset" href="/contact-center/queues-and-routing">
+    Run a contact center with queues and reports.
+  </Card>
+  <Card title="Teams and members" icon="users" href="/contact-center/teams-and-members">
+    Set up the teams that calls ring.
+  </Card>
+  <Card title="Voicemail" icon="voicemail" href="/phone/voicemail">
+    Catch the calls nobody could answer.
+  </Card>
+</CardGroup>

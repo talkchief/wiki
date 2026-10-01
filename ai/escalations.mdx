@@ -1,0 +1,179 @@
+---
+title: "Review and acknowledge escalated calls in TalkChief"
+sidebarTitle: "Escalations"
+description: "See transcribed calls that need a supervisor, sorted by severity with reasons. Acknowledge them with a note and send alerts by email or to CoWork channels."
+keywords: ["call escalation", "escalation alerts", "supervisor alerts", "customer complaint alerts", "contact center escalations"]
+---
+
+TalkChief flags transcribed calls that need a supervisor. For example, the customer asked for a manager, was very upset, or threatened action. The member was rude, or a complaint or cancellation was left unresolved. You review these calls on the **Escalations** page and acknowledge them when handled.
+
+<Note>
+  Escalations need [AI transcription](/ai/ai-transcription). Admins see escalations for the whole company. Supervisors see their own teams. Agents do not see escalations.
+</Note>
+
+## Severity and reasons
+
+Each escalated call has a severity and one or more reasons.
+
+| Severity | Reasons |
+|---|---|
+| **High** | **Asked for a manager**, **Legal or public threat**, **Customer very upset** |
+| **Medium** | **Member rude or dismissive**, **Wants to cancel, not resolved**, **Complaint not resolved**, **Repeat contact, not resolved**, **Upset customer, not resolved** |
+| **Low** | **Hinted at wanting a manager**, **Mild threat**, **Upset customer, issue resolved**, **Problem raised and resolved** |
+
+A call is **Low** only when it has no high or medium reason. Low calls are worth a look but rarely urgent.
+
+## The sidebar badge
+
+Admins and supervisors see **Escalations** under **Insights** in the sidebar. A red badge shows the number of open **High** and **Medium** escalations. It refreshes every minute. Low escalations are not counted in the badge.
+
+## Review an escalation
+
+<Steps>
+  <Step title="Open the page">
+    Go to **Insights** > **Escalations**. The **Open** tab lists calls that are waiting, newest first.
+  </Step>
+  <Step title="Filter by severity">
+    Use the severity filter to show **All severities**, **High**, **Medium**, or **Low**.
+  </Step>
+  <Step title="Read the card">
+    Each card shows the member, the severity badge, the customer number, the call date and type, and the reason chips. It also shows a short summary and the line where the escalation happened.
+  </Step>
+  <Step title="Open the call">
+    Select **Open call**. The transcript drawer opens and scrolls to the escalation line, which is highlighted in red. See [Transcripts and summaries](/ai/transcripts-and-summaries).
+  </Step>
+</Steps>
+
+<Frame>
+  ![Insights > Escalations, Open tab with the open-count badge, severity filter, and cards showing a High badge, reason chips such as 'Asked for a manager', a summary, the quoted escalation line, and Open call and Acknowledge buttons](/images/docs/escalations-open-list.png)
+</Frame>
+
+<Tip>
+  You can share a link to one escalation. Opening a call adds it to the page address, so a colleague with access sees the same call.
+</Tip>
+
+## Acknowledge an escalation
+
+When the issue is handled, acknowledge it so it leaves the open list.
+
+<Steps>
+  <Step title="Select Acknowledge">
+    On the card, select **Acknowledge**.
+  </Step>
+  <Step title="Add a note">
+    In **Note (optional)**, write what you did, for example "Called the customer back, issue resolved". Notes can be up to 500 characters.
+  </Step>
+  <Step title="Confirm">
+    Select **Acknowledge**. The call moves to the **Acknowledged** tab, and the badge count drops.
+  </Step>
+</Steps>
+
+The **Acknowledged** tab shows who acknowledged each call, when, and their note.
+
+<Frame>
+  ![Acknowledge this escalation dialog with the Note (optional) field filled in and the Acknowledge button](/images/docs/escalations-acknowledge-dialog.png)
+</Frame>
+
+## Get notified
+
+You choose notifications per team on the **Notifications** tab. You can also reach it from **Settings** > **AI transcription** > **Open notifications**.
+
+Each team you manage has its own card. Admins see every team. Supervisors see the teams they supervise.
+
+### Email
+
+Each person sets their own email alerts.
+
+<Steps>
+  <Step title="Open Notifications">
+    Go to **Insights** > **Escalations** > **Notifications**.
+  </Step>
+  <Step title="Turn on email">
+    On the team's card, turn on **Email me**.
+  </Step>
+  <Step title="Pick a minimum severity">
+    Choose **High only**, **High and medium**, or **All, including low**. The change saves right away.
+  </Step>
+</Steps>
+
+By default, supervisors get emails for **High** escalations on their teams. Admins get no emails until they turn them on. If you get more than 10 escalation emails in an hour, the rest arrive together in one digest email.
+
+### CoWork channels
+
+Post escalated calls to a CoWork channel so the whole team sees them right away. Each post includes the call summary when it is ready.
+
+<Steps>
+  <Step title="Create a webhook in CoWork">
+    In CoWork, open the channel menu > **Integrations** > **Incoming webhooks**. Create a webhook for the channel and copy its URL.
+  </Step>
+  <Step title="Add the channel in TalkChief">
+    On the team's card in **Notifications**, under **Escalation alerts in CoWork channels**, select **Add channel**.
+  </Step>
+  <Step title="Fill in the details">
+    Enter a **Name**, for example "Support escalations", and paste the **Webhook URL**. Under **Post to this channel**, choose the minimum severity.
+  </Step>
+  <Step title="Decide on customer numbers">
+    Leave **Show full customer numbers** off to show only the last 4 digits. Turn it on only if everyone in the channel may see customer numbers.
+  </Step>
+  <Step title="Connect and test">
+    Select **Connect**. Then select **Send test** to post a test message to the channel.
+  </Step>
+</Steps>
+
+<Frame>
+  ![Escalations > Notifications tab, one team card with the Email me switch and 'High only' selector, and a connected CoWork channel row with a Working status, severity selector, on switch, Send test and Disconnect](/images/docs/escalations-notifications-tab.png)
+</Frame>
+
+Each channel row shows its status:
+
+| Status | Meaning |
+|---|---|
+| **Working** | Messages are posting |
+| **Not used yet** | No escalation has been posted yet |
+| **Check needed** | The last post had a problem. TalkChief keeps trying. |
+| **Failing** | Posts are failing. Check the webhook in CoWork. |
+| **Needs a new owner** | The person who added it no longer manages the team. Select **Take over** to turn it back on. |
+| **Off** | You turned the channel off |
+
+To stop posting, turn the channel's switch off, or select **Disconnect**. The channel and its messages stay in CoWork.
+
+<Warning>
+  Keep the webhook URL private. Anyone who has it can post to the channel.
+</Warning>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="&quot;Escalations are available to admins and supervisors&quot;">
+    Your role does not have access. Ask an admin.
+  </Accordion>
+  <Accordion title="&quot;This channel is not in your company's CoWork workspace&quot;">
+    Use an incoming webhook from your own company's CoWork workspace.
+  </Accordion>
+  <Accordion title="&quot;You have reached the maximum number of connected channels&quot;">
+    Each team can have up to 10 channels. Disconnect one you no longer use.
+  </Accordion>
+  <Accordion title="The test message did not arrive">
+    Check that the webhook still exists in CoWork. If it was deleted, create a new one and connect it again.
+  </Accordion>
+  <Accordion title="&quot;You don't manage any team yet&quot;">
+    Notifications are set per team. Ask an admin to make you a supervisor of a team.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Transcripts and summaries" icon="message-lines" href="/ai/transcripts-and-summaries">
+    Read the full call and its summary.
+  </Card>
+  <Card title="AI insights" icon="chart-mixed" href="/ai/ai-insights">
+    Track escalation trends over time.
+  </Card>
+  <Card title="CoWork channels" icon="hashtag" href="/cowork/channels-and-spaces">
+    Organize team conversations in CoWork.
+  </Card>
+  <Card title="AI transcription setup" icon="sliders" href="/ai/ai-transcription">
+    Choose which calls are transcribed.
+  </Card>
+</CardGroup>

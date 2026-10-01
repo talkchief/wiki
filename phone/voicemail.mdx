@@ -1,0 +1,103 @@
+---
+title: "Voicemail: Listen, Filter, and Forward Messages"
+sidebarTitle: "Voicemail"
+description: "Review TalkChief voicemail by date range, play or download each message, send voicemail to email, and set greeting options for each member's mailbox."
+keywords: ["voicemail", "visual voicemail", "voicemail to email", "voicemail box", "missed calls"]
+---
+
+Voicemail catches the calls nobody answers. Callers reach a mailbox through a **Voicemail** step in a call flow. You listen to messages in **Calls** → **Voicemail**.
+
+## Review your voicemail
+
+<Steps>
+  <Step title="Open Voicemail">
+    In the sidebar, go to **Calls** → **Voicemail**.
+  </Step>
+  <Step title="Pick a date range">
+    Under **Filters**, choose a **Range**: **Today**, **Yesterday**, **This Week**, **Last Week**, **This Month**, **Last Month**, **Last 7 days**, **Last 30 days**, or **Custom**. For **Custom**, set **From** and **To**. **This Month** is the default.
+  </Step>
+  <Step title="Narrow the list">
+    Type in **Filter by From** to search by caller name or **Filter by number** to search by phone number. Select **New only** to show only new messages. The badge shows how many are new.
+  </Step>
+  <Step title="Play or download a message">
+    Select play on a row to listen. Use the download button to save the recording.
+  </Step>
+</Steps>
+
+<Frame>
+  ![Voicemail page with the This Month range, two new messages marked with a dot, and the player open on one demo message](/images/docs/voicemail-list.png)
+</Frame>
+
+### What each column shows
+
+| Column | Meaning |
+|---|---|
+| **From** | The caller's name, or **Unknown**. A dot marks new messages. |
+| **Number** | The caller's phone number. |
+| **To** | The number or extension the caller dialed. |
+| **VM Box** | The mailbox that took the message. The company mailbox shows as **Main voicemail box**. |
+| **Duration** | The length of the message. |
+| **Received** | The date and time the message arrived. |
+
+Select a column header to sort by it. Select it again to reverse the order.
+
+<Tip>
+  Use **Page size** to show 50, 100, 150, or 200 messages at a time.
+</Tip>
+
+## Send callers to voicemail
+
+Add a **Voicemail** step to a number's call flow and pick the mailbox. A common setup puts it on the **Closed** branch of a **Time Condition** or after a **Team** step. See [Call flows](/phone/call-flows).
+
+## Set up a member's mailbox
+
+Admins set each member's mailbox options on their settings page.
+
+<Steps>
+  <Step title="Open the member's settings">
+    Go to **Team** → **Teams & Members**, open the **Members** tab, and select **Settings** in the member's actions menu.
+  </Step>
+  <Step title="Turn on voicemail">
+    In the **Voicemail** section, turn the switch on.
+  </Step>
+  <Step title="Choose the options">
+    Turn on the options you need, then select **Save changes**.
+  </Step>
+</Steps>
+
+| Option | What it does |
+|---|---|
+| **Forward to member's email** | Sends each new message to the member's email. |
+| **Skip Greeting Message** | Callers don't hear the mailbox greeting. |
+| **Skip Instructions Message** | Callers don't hear the recording instructions. |
+| **Play Media message before Mailbox** | Plays a file from **Media** before the caller leaves a message. |
+
+## Clear a member's mailbox
+
+On the member's settings page, open **Actions** and select **Clear Saved VMbox Messages**.
+
+<Warning>
+  Clearing a mailbox deletes every saved message for that member. You can't undo it.
+</Warning>
+
+## Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="I see 'No voicemails!'">
+    There are no messages in the selected range. Pick a wider **Range**, such as **Last 30 days**.
+  </Accordion>
+  <Accordion title="Can I get voicemail by email?">
+    Yes. Turn on **Forward to member's email** in the member's **Voicemail** settings.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Call flows" icon="diagram-project" href="/phone/call-flows">
+    Add a Voicemail step to a number.
+  </Card>
+  <Card title="Working hours and media" icon="clock" href="/phone/working-hours-and-media">
+    Upload the audio played before the mailbox.
+  </Card>
+</CardGroup>

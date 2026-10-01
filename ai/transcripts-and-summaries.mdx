@@ -1,0 +1,136 @@
+---
+title: "Read AI call transcripts and summaries in TalkChief"
+sidebarTitle: "Transcripts and summaries"
+description: "Open AI call transcripts from Reports, read them as a conversation, play the recording from any line, and generate summaries with action items."
+keywords: ["call transcript", "ai call summary", "call summary action items", "speaker labels", "call recording transcript"]
+---
+
+Every transcribed call has a transcript you can read as a conversation. You can play the recording from any line and generate a summary with key points and action items. This page is for admins and supervisors who review calls.
+
+<Note>
+  Transcripts exist only for calls covered by [AI transcription](/ai/ai-transcription). Admins see every call in the company. Supervisors see calls from their own teams.
+</Note>
+
+## Open a transcript
+
+<Steps>
+  <Step title="Go to Reports">
+    Go to **Insights** > **Reports** and pick the **Outbound**, **Inbound**, or **Queue** tab.
+  </Step>
+  <Step title="Find the call">
+    Use the filters to narrow the list, then select **Apply**.
+  </Step>
+  <Step title="Open the transcript">
+    In the **RECORDING** column, select the **Open transcript** icon next to the recording player. Calls without the icon have no transcript.
+  </Step>
+</Steps>
+
+The **Call transcript** drawer opens at the side of the page. Its header shows the call date and time, the call type, the languages spoken, and the call length.
+
+<Frame>
+  ![Insights > Reports, Inbound tab, a row's RECORDING cell with the play button, the Open transcript icon and a red High escalation badge](/images/docs/transcript-open-from-reports.png)
+</Frame>
+
+You can also open transcripts from [Call search](/ai/call-search) and [Escalations](/ai/escalations).
+
+## Read the conversation
+
+The **Conversation** tab shows the call as chat bubbles, one per turn. Each bubble shows who spoke, what they said, and when.
+
+Speaker labels work like this:
+
+| Label | Meaning |
+|---|---|
+| The member's name | Your team member on the call. Their bubbles sit on the right. |
+| **Customer** | The other party on the call. Their bubbles sit on the left. |
+| **Speaker 1**, **Speaker 2** | Shown when TalkChief cannot tell which side is which |
+
+- Select any bubble to play the recording from that point.
+- Use the player at the top of the drawer to play or pause the recording.
+
+If the member and the customer look reversed, select **Swap sides**. This only changes the view. It does not change the transcript.
+
+<Frame>
+  ![Call transcript drawer, Conversation tab with member-name bubbles on the right, Customer bubbles on the left, the Swap sides button and insight chips in the header](/images/docs/transcript-drawer-conversation.png)
+</Frame>
+
+## Insight chips
+
+Chips at the top of the drawer summarize the call:
+
+- **Sentiment**: the customer's overall mood, from **Very negative** to **Very positive**.
+- **Intent**: why the customer called, for example **Support request**, **Billing**, or **Cancellation**.
+- **Resolution**: **Resolved**, **Not resolved**, or **Unclear**.
+- **Churn risk** and **Complaint** appear when the call shows those signals.
+- **Uncertain** appears when the result is not reliable enough to show.
+
+When a call is escalated, a red **Escalation** chip shows its severity. Select it to jump to the line where the customer asked to escalate. That line is highlighted. See [Escalations](/ai/escalations).
+
+## Generate a summary
+
+<Steps>
+  <Step title="Open the Summary tab">
+    In the transcript drawer, select **Summary**.
+  </Step>
+  <Step title="Generate it">
+    If the call has no summary yet, select **Generate summary**. It takes a few seconds.
+  </Step>
+  <Step title="Review it">
+    Read the short summary, then the **Key points** and **Action items**.
+  </Step>
+</Steps>
+
+Escalated calls get a summary automatically, so it is ready when a supervisor opens the call.
+
+<Frame>
+  ![Call transcript drawer, Summary tab with a short summary paragraph, a Key points list and an Action items list](/images/docs/transcript-drawer-summary.png)
+</Frame>
+
+<Warning>
+  Transcripts, insights, and summaries are generated automatically and can contain mistakes. Check the recording before you use them for compliance, legal, or performance decisions.
+</Warning>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="There is no transcript icon on a call">
+    The call was not transcribed. It may be shorter than the minimum call duration, of a call type you did not select, internal, or from before AI transcription was turned on. Transcription also takes a few minutes after the call ends.
+  </Accordion>
+  <Accordion title="&quot;No speech was found in this call&quot;">
+    The recording had no speech to transcribe, for example a silent or very short call.
+  </Accordion>
+  <Accordion title="&quot;The summary could not be generated&quot;">
+    A failed summary can't be generated again from the drawer. Contact TalkChief support and include the call's date, time, and phone number.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Which languages are supported?">
+    Transcripts show each line in the language it was spoken. Calls that switch languages show more than one language in the drawer header.
+  </Accordion>
+  <Accordion title="Can agents see transcripts?">
+    No. Transcripts are available to admins and to supervisors for their own teams.
+  </Accordion>
+  <Accordion title="Can summaries be posted to CoWork?">
+    Escalated calls can be posted to CoWork channels with their summary. See [Escalations](/ai/escalations).
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="AI transcription setup" icon="sliders" href="/ai/ai-transcription">
+    Turn on transcription and see pricing.
+  </Card>
+  <Card title="Call search" icon="magnifying-glass" href="/ai/call-search">
+    Find calls by what was said.
+  </Card>
+  <Card title="Escalations" icon="siren" href="/ai/escalations">
+    Review calls that need a supervisor.
+  </Card>
+  <Card title="Reports and dashboards" icon="chart-line" href="/analytics/reports-and-dashboards">
+    Filter calls and play recordings.
+  </Card>
+</CardGroup>

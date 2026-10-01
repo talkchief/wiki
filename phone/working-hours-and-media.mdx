@@ -1,0 +1,134 @@
+---
+title: "Working Hours, Greetings, and Hold Music"
+sidebarTitle: "Working hours & media"
+description: "Set company and team working hours that drive your call flows, and upload MP3 greetings, IVR prompts, and music on hold in the TalkChief Media Manager."
+keywords: ["business hours", "working hours", "hold music", "IVR greeting", "upload MP3"]
+---
+
+Working hours tell TalkChief when each team takes calls. Media is the audio callers hear, such as greetings, menu prompts, and hold music. Both feed into your [call flows](/phone/call-flows).
+
+## Working hours
+
+Working hours exist at two levels:
+
+- **Company default**: set in **Configuration** → **Settings** → **Account** under **Working Hours**, along with the **Company time zone**. Teams use these unless you change them.
+- **Team**: set on each team's **Settings** tab. A **Time Condition** step in a call flow uses these hours.
+
+### Set a team's working hours
+
+<Steps>
+  <Step title="Open the team settings">
+    Go to **Team** → **Teams & Members**, select **Manage Team** on the team card, and open **Settings**.
+  </Step>
+  <Step title="Add a rule">
+    Under **Working Hours**, select **Add rule**. Each rule has a **From** time, a **To** time, and **Working Days**.
+  </Step>
+  <Step title="Enter the times">
+    Times use the 12-hour clock. Enter each time as hh:mm and pick AM or PM. For example, 5:00 PM is 17:00. The rule shows the 24-hour version so you can check it.
+  </Step>
+  <Step title="Pick the days">
+    Select at least one working day for the rule.
+  </Step>
+  <Step title="Save">
+    Select **Save changes**. Select **Discard** to undo your edits.
+  </Step>
+</Steps>
+
+<Tip>
+  Use more than one rule for split shifts. For example, add one rule for 9:00 AM–1:00 PM and another for 2:00 PM–6:00 PM on the same days.
+</Tip>
+
+The team's **Time Zone** comes from the company settings. If you see **This team has no timezone configured on the server**, ask an admin to fix it before saving.
+
+<Frame>
+  ![Team Settings tab with two working-hours rules for Monday to Friday and the Save changes bar visible](/images/docs/team-working-hours-rules.png)
+</Frame>
+
+### Fix overlapping rules
+
+Two rules can't cover the same day and time. If they do, TalkChief highlights them and shows which rules overlap and when. Change the days or hours so only one rule applies at any time. You can't save until you fix it.
+
+### Use working hours in a call flow
+
+Add a **Time Condition** step and pick the team's working hours under **Search team working hours**. The flow then splits:
+
+- **Open**: calls during working hours.
+- **Closed**: calls at all other times.
+
+For rules in a time zone you choose, use **Advance Time Condition** instead. See [Call flows](/phone/call-flows).
+
+## Media
+
+Media holds the audio files used across your phone system. Go to **Configuration** → **Media** to open the **Media Manager**.
+
+### Upload a file
+
+<Steps>
+  <Step title="Start the upload">
+    Select **Upload Media**.
+  </Step>
+  <Step title="Choose the file">
+    Pick an MP3 file of up to 5 MB.
+  </Step>
+  <Step title="Name it">
+    Enter a **Media Name** that says what the file is, such as "Main menu prompt". Select **upload**.
+  </Step>
+</Steps>
+
+<Note>
+  Only MP3 files are accepted. Convert WAV or other formats to MP3 before you upload them.
+</Note>
+
+You can also upload a file while editing a **Play Media** step in a call flow. Select **Upload a new media**.
+
+### Set music on hold
+
+The **Music On-Hold** card sets the audio callers hear when they're on hold. Pick a file from the list. The card shows **Active** once a file is set.
+
+<Frame>
+  ![Media Manager with the Music On-Hold card set to a demo track and the Media List showing three demo files](/images/docs/media-manager.png)
+</Frame>
+
+### Manage your files
+
+The **Media List** shows every file. Search by name, play a file to check it, and use **Actions** to:
+
+- **Rename** a file.
+- **Delete** a file. You type the media name to confirm.
+
+<Warning>
+  Check that a file isn't used in a call flow, IVR, or queue before you delete it.
+</Warning>
+
+### Where media is used
+
+| Where | Setting |
+|---|---|
+| Hold audio for the whole account | **Music On-Hold** on the **Media** page |
+| Greetings in a call flow | **Play Media** step |
+| IVR menu prompt | **Media** in **IVR settings** |
+| Audio while a team rings | **Media** in the **Team** step |
+| Queue hold audio | **Media** in the queue settings |
+| Before a member's mailbox | **Play Media message before Mailbox** |
+
+## Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="Why won't my file upload?">
+    The file must be an MP3 and no larger than 5 MB. Check the file type and size, then try again.
+  </Accordion>
+  <Accordion title="Why can't I save the working hours?">
+    Two rules probably overlap, a rule has no working day, or a start time is after its end time. Fix the highlighted rule and save again.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Call flows" icon="diagram-project" href="/phone/call-flows">
+    Use working hours and media in your routing.
+  </Card>
+  <Card title="Teams and members" icon="users" href="/contact-center/teams-and-members">
+    Manage the teams that own working hours.
+  </Card>
+</CardGroup>

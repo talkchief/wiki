@@ -1,70 +1,129 @@
 ---
-title: "Phone Numbers, Portability, and Caller ID — TalkChief"
+title: "Phone Numbers and Caller ID in TalkChief"
 sidebarTitle: "Numbers & Caller ID"
-description: "Provision numbers in 90+ countries, port existing numbers to TalkChief, and control outbound Caller ID with Fixed, Shared, Random, or Smart Dynamic modes."
+description: "Buy local, mobile, and toll-free numbers, assign them to teams, and choose a default, random, or dynamic caller ID for every member who dials out."
+keywords: ["buy phone number", "virtual number", "caller ID", "dynamic caller ID", "local presence"]
 ---
 
-Your phone numbers and caller ID settings define how customers reach you and how your business appears when you call them. TalkChief lets you acquire new numbers in more than 90 countries, port existing numbers from another provider, and configure outbound caller identity at the user, team, or campaign level — all from a single dashboard.
+Your phone numbers live in **Calls** → **Numbers**. From there you buy numbers, name them, give them to teams, and open their call flows. Caller ID is set per team, with an override for each member.
 
-## Getting a Phone Number
+<Note>
+  Buying, assigning, renewing, and releasing numbers are admin-only. Supervisors can view numbers and their details and rename them.
+</Note>
 
-TalkChief offers three number types to match different business needs:
+## Buy a number
 
-- **Local numbers** — geographic numbers tied to a specific city or region, ideal for establishing a local presence and reducing the perceived cost for callers in that area.
-- **Toll-free numbers** — freephone numbers (such as 800 or 1-800 prefixes) where your business absorbs the inbound call cost; well suited for customer service and support lines.
-- **International numbers** — numbers in foreign countries that allow customers abroad to reach you at local rates, available across 90+ countries.
+<Steps>
+  <Step title="Start the purchase">
+    Go to **Calls** → **Numbers** and select **Buy number**. The **Buy a New Number** dialog opens.
+  </Step>
+  <Step title="Choose the type and location">
+    Under **What type of number do you need?**, pick a **Type**, such as **Local**, **Mobile**, or **Toll-free**. The types on offer depend on the country. Then choose a **Country** and, where asked, a **State** and **City**. Leave **Any city** to search the whole country.
+  </Step>
+  <Step title="Check availability">
+    Select **Check Availability**. TalkChief shows a **Number Available** card with the **One-time setup fee** and the **Monthly Cost**.
+  </Step>
+  <Step title="Submit registration details if asked">
+    Some countries show **Registration Required**. Before you can use the number, you must provide proof of a local address and a valid ID. Fill in the required fields, choose a **Document Type**, and select **Upload Document**. Each file can be up to 2 MB. Select **Next** to continue.
+  </Step>
+  <Step title="Assign and name the number">
+    Under **Who will be using this number?**, pick a team. Under **what would you like to name this number?**, enter a **Nickname**, such as "Main line". Confirm the purchase.
+  </Step>
+</Steps>
 
-To get a number in the TalkChief dashboard:
+<Tip>
+  If no number shows up for a city, try another city or leave **Any city** selected.
+</Tip>
 
-1. Navigate to **Phone** → **Numbers** and click **Get a Number**.
-2. Select the country and, where applicable, the number type (local, toll-free) and region or area code.
-3. Choose a number from the available inventory and click **Provision**.
-4. Assign the number to a call flow, ring group, or user as part of the provisioning flow.
+<Frame>
+  ![Buy a New Number dialog showing a demo available number with the One-time setup fee and Monthly Cost rows](/images/docs/buy-number-available.png)
+</Frame>
+
+## Manage your numbers
+
+Each number appears as a card with its nickname, status, and assigned team. Use the search box (**Search number, name or team**) and the status filters (**All**, **Active**, **Pending**, **High spam**) to find one.
+
+Open a number's actions menu to:
+
+| Action | What it does | Who can use it |
+|---|---|---|
+| **Details** | Shows the **Type**, **Monthly Price**, **Next Billing Cycle**, **Purchase Date**, and **Spam Score**. | Admin, supervisor |
+| **Rename** | Changes the **Nickname**. | Admin, supervisor |
+| **Assign teams** | Adds or removes teams for this number. One team is marked **Default**. | Admin |
+| **Callflow** | Opens the number's call flow. See [Call flows](/phone/call-flows). | Admin |
+| **Renew** | Requests renewal of a number that is being removed. | Admin |
+| **Release** | Releases the number. You type the number's name to confirm. | Admin |
 
 <Warning>
-  Number availability varies by country and is subject to local telecommunications regulations. Some countries require proof of local address, business registration documents, or end-user registration before a number can be provisioned. Confirm eligibility and any documentation requirements for your target country before completing a purchase — numbers that cannot be verified may be cancelled by the local regulator.
+  Releasing a number stops calls to it. Check that the number isn't printed on your website or materials before you release it.
 </Warning>
 
-## Number Portability
+## Assign numbers to a team
 
-If you already have a phone number with another provider, you can bring it to TalkChief through the number portability process. Porting preserves your existing number so customers, partners, and printed materials stay accurate during the transition.
+You can also manage numbers from the team's page.
 
-**Eligibility:** Most geographic and toll-free numbers are eligible for porting, but eligibility depends on the originating country and your current provider's policies. Vanity numbers and some mobile numbers may have additional restrictions.
+<Steps>
+  <Step title="Open the team">
+    Go to **Team** → **Teams & Members**, then select **Manage Team** on the team card.
+  </Step>
+  <Step title="Add numbers">
+    Open the **Numbers** tab and select **Assign Numbers**. Pick the numbers to add and select **Assign**.
+  </Step>
+  <Step title="Choose the default number">
+    In a number's **Actions** menu, select **Make Default**. To take a number away from the team, select **Remove from this Team**.
+  </Step>
+</Steps>
 
-**How the porting process works:**
+## Set the caller ID
 
-1. **Submit a porting request** — go to **Phone** → **Numbers** → **Port a Number** and enter your existing number and current provider details.
-2. **Provide authorisation** — you will need a Letter of Authorisation (LOA) and, in most cases, a copy of your most recent bill showing the number.
-3. **Coordinate with your provider** — TalkChief's porting team liaises with your current carrier on your behalf. Typical port times range from a few business days to several weeks depending on the country and carrier.
-4. **Test before cut-over** — once the port date is confirmed, TalkChief will provision the number in your account in advance so you can configure routing and test call flows before the switch is live.
-5. **Confirm the port** — on the agreed date, your number moves to TalkChief and inbound calls begin routing through your new configuration automatically.
+Caller ID is the number people see when your team dials out. You set it on each team's **Outbound** tab.
 
-For detailed eligibility information and to start a porting request, visit the [TalkChief Number Portability page](https://talkchief.io/en/features/number-portability).
+<Steps>
+  <Step title="Open the team's Outbound tab">
+    Go to **Team** → **Teams & Members**, select **Manage Team**, then open **Outbound**.
+  </Step>
+  <Step title="Choose the team default">
+    Under **Default setting**, pick one option. Unavailable options are grayed out.
+  </Step>
+  <Step title="Override for a member if needed">
+    Under **Member Settings**, set a member's **Caller ID** to **Custom**. Then choose a number under **Customized Caller ID**. Members left on **Default** show **Follows default team settings**.
+  </Step>
+  <Step title="Save">
+    Select **Save**. Select **reset** to undo unsaved changes.
+  </Step>
+</Steps>
 
-<Note>
-  Do not cancel your current number with your existing provider before the port completes. Cancelling early may make the number unrecoverable.
-</Note>
+| Option | How it works |
+|---|---|
+| **Default Number** | Every call uses the team's default number. |
+| **Random Number** | Each call uses a random number from the team's numbers. The team needs at least 3 numbers. We recommend at least 5. |
+| **Dynamic Number** | TalkChief picks a team number that matches the country you dial. For example, a call to France uses a French number. If no number matches, it uses the team default. |
 
-## Caller ID Options
+<Frame>
+  ![Team Outbound tab with Default setting set to Dynamic Number and one member set to Custom with a demo number selected](/images/docs/team-outbound-caller-id.png)
+</Frame>
 
-Caller ID controls the number your recipients see when you call them outbound. TalkChief gives you four modes to match different use cases.
+## Frequently asked questions
 
-### Fixed Caller ID
+<AccordionGroup>
+  <Accordion title="Why can't I select Random Number?">
+    The team needs at least three assigned numbers. Assign more numbers on the team's **Numbers** tab, then try again.
+  </Accordion>
+  <Accordion title="Can a member always call from the same number?">
+    Yes. On the team's **Outbound** tab, set the member's **Caller ID** to **Custom** and pick the number.
+  </Accordion>
+  <Accordion title="What does the High spam filter show?">
+    It lists numbers flagged as high spam risk. Open **Details** to see the number's **Spam Score**.
+  </Accordion>
+</AccordionGroup>
 
-Fixed Caller ID always presents the same number to every outbound call destination. Use this when brand consistency is the priority — for example, always showing your main office number regardless of which agent is placing the call.
+## Related pages
 
-### Shared Caller ID
-
-Shared Caller ID assigns one outbound number to an entire team. All members of the team appear to call from the same number, making it easy for customers to call back a single line rather than individual direct numbers.
-
-### Random Caller ID
-
-Random Caller ID rotates outbound presentation across a pool of numbers you define. Each call in the pool uses a different number from the set. This is particularly useful for outbound dialling campaigns where repeatedly calling from the same number can reduce answer rates.
-
-### Smart Dynamic Caller ID
-
-Smart Dynamic Caller ID automatically selects the most appropriate number from your inventory based on the destination of each outbound call. For example, if you call a local number in Germany, TalkChief presents a German local number as your caller ID rather than your headquarters number in another country. This improves answer rates and gives customers a familiar, local number to call back.
-
-<Note>
-  Caller ID presentation is subject to country-specific regulations. Some countries prohibit the presentation of numbers that are not registered to the calling party, and carriers in certain regions may override or withhold caller ID regardless of your settings. Number availability, portability timelines, and caller ID options all vary by jurisdiction — consult your TalkChief account manager or review local telecommunications authority guidelines before deploying caller ID configurations in regulated markets.
-</Note>
+<CardGroup cols={2}>
+  <Card title="Call flows" icon="diagram-project" href="/phone/call-flows">
+    Decide what happens when someone calls your number.
+  </Card>
+  <Card title="Teams and members" icon="users" href="/contact-center/teams-and-members">
+    Create teams and invite the members who use your numbers.
+  </Card>
+</CardGroup>

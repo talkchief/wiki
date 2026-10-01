@@ -1,94 +1,194 @@
 ---
-title: "AI Transcription: Diarized Multilingual Call Transcripts"
-sidebarTitle: "AI Transcription"
-description: "Diarized, per-speaker transcripts for Arabic, Hebrew, and English calls — including mixed-language conversations — with automatic language detection."
+title: "Set up AI transcription and billing in TalkChief"
+sidebarTitle: "AI transcription"
+description: "Turn on automatic AI call transcription for your company, teams, or members. Choose call types and a minimum duration, and see how pricing works."
+keywords: ["ai call transcription", "automatic call transcription", "call transcription pricing", "transcription add-on", "call recording transcripts"]
 ---
 
-TalkChief's AI Transcription automatically converts your calls into accurate, speaker-labeled transcripts across Arabic, Hebrew, and English — including conversations that switch between languages mid-call. Every transcript is diarized, meaning each speaker's words are clearly attributed and time-stamped, so you can follow the flow of any conversation without listening to the full recording. Transcripts are available through the dashboard and the API the moment processing completes.
+AI transcription turns your recorded calls into text automatically. You can read each call as a conversation, search what was said, get summaries, and spot calls that need a supervisor. This page is for admins who set it up and manage billing.
 
-## Supported Languages
+<Note>
+  AI transcription is available on the **Growth** and **Professional** plans, including trials. Only admins can change these settings.
+</Note>
 
-TalkChief AI Transcription supports the following languages and combinations:
+## What you get
 
-- **Arabic** — Modern Standard Arabic and common regional dialects
-- **Hebrew** — Full support for Hebrew-language calls
-- **English** — including accented and regional varieties
-- **Mixed-language calls** — TalkChief automatically detects when a conversation shifts between Arabic and English or Hebrew and English, and transcribes each segment in the appropriate language
+When AI transcription is on for a member, their recorded calls are transcribed after each call ends. You then get:
 
-Automatic language detection runs at the start of every call, so you do not need to configure a language per queue or per number. The engine identifies the primary language and adjusts mid-call if the conversation switches.
-
-Transcripts use **diarization** — each turn is labeled with a speaker identifier (e.g., *Speaker 1*, *Speaker 2*) and an exact timestamp, giving you a readable, structured record of who said what and when.
+- **Transcripts** in **Reports**, shown as a conversation with speaker labels. See [Transcripts and summaries](/ai/transcripts-and-summaries).
+- **Call search** across what was said, by exact words or by meaning. See [Call search](/ai/call-search).
+- **Escalations** for calls that need a supervisor. See [Escalations](/ai/escalations).
+- **AI insights** dashboards with sentiment, resolution, and scorecards. See [AI insights](/ai/ai-insights).
 
 ## Pricing
 
-AI Transcription is available as a paid add-on for your TalkChief workspace.
+AI transcription is a per-member add-on.
 
 | Item | Detail |
 |---|---|
-| **Add-on price** | $10 per member / month |
-| **Included minutes** | 1,500 minutes per member per month |
-| **Overage rate** | $0.025 per minute |
-| **Minimum billing unit** | 1 minute per job |
-| **Proration after the first minute** | Per-second |
-| **Failed jobs** | Not billed |
+| Add-on price | $10 per member per month, or $120 per member per year on yearly plans |
+| Included minutes | 1,500 minutes per member each month |
+| Beyond the included minutes | $0.01 per minute, charged from your wallet |
+| First month | The fee is prorated from the day you turn it on. The full 1,500 minutes apply right away. |
+| Short calls | Calls shorter than your minimum call duration are skipped and never charged |
+| Internal calls | Calls between your own members are never transcribed |
 
-Overage minutes are billed at $0.025/min with a one-minute minimum per transcription job. After the first minute, billing continues in per-second increments so you are never charged for unused time. If a transcription job fails for any reason, you are not charged for that job.
+Calls are transcribed from the moment you turn it on. Earlier calls are not transcribed.
 
-## Enabling AI Transcription
+<Tip>
+  Included minutes belong to each member. They are not pooled across your company.
+</Tip>
+
+## Before you start
+
+You need two things before you can turn AI transcription on:
+
+1. Your company is on the **Growth** or **Professional** plan. If not, the page shows **View plans**.
+2. **Auto Top-up** is on for your wallet. Overage minutes are charged from the wallet, so TalkChief asks for it first. If it is off, saving shows "Turn on auto top-up to use AI transcription".
+
+<Warning>
+  While AI transcription is on, you cannot turn off auto top-up. Turn off AI transcription first.
+</Warning>
+
+## How the settings work
+
+You can set AI transcription at three levels. The most specific level wins.
+
+| Level | Where | Options |
+|---|---|---|
+| Company | **Settings** > **AI transcription** | On or Off |
+| Team | **Teams & Members** > **Manage Team** > **Settings** tab | **Inherit**, **On**, or **Off** |
+| Member | **Teams & Members** > member **Settings** | **Inherit**, **On**, or **Off** |
+
+- **Inherit** follows the level above. A member follows their team. A team follows the company.
+- A team or member set to **On** or **Off** overrides the level above.
+- The company setting applies to every current and future member, unless a team or member setting says otherwise.
+
+When you turn a level on, you also choose:
+
+- **Call types**: **Inbound**, **Outbound**, and **Queues**. Pick at least one.
+- **Minimum call duration (seconds)**: 0 to 600. Shorter calls are skipped and never charged. The default is 10 seconds.
+
+## Turn on AI transcription for your company
 
 <Steps>
-  <Step title="Navigate to Settings > Add-ons">
-    Open your TalkChief dashboard, click your workspace name in the top navigation, and select **Settings**. In the left sidebar, choose **Add-ons**.
+  <Step title="Open the settings">
+    Go to **Settings** > **AI transcription**. The card shows the pricing for your plan.
   </Step>
-  <Step title="Enable AI Transcription for your workspace">
-    Locate the **AI Transcription** card and toggle it on. You will be prompted to confirm the add-on pricing before activation takes effect.
+  <Step title="Switch it on">
+    Turn on **Transcribe calls for the whole company**.
   </Step>
-  <Step title="Select queues or call types to transcribe">
-    Once enabled, choose which queues, numbers, or call types should be transcribed automatically. You can enable transcription workspace-wide or limit it to specific inbound or outbound flows.
+  <Step title="Choose what to transcribe">
+    Under **Call types**, select **Inbound**, **Outbound**, **Queues**, or any mix. Set **Minimum call duration (seconds)**.
   </Step>
-  <Step title="Review transcripts in the AI Transcription dashboard">
-    After your first transcribed calls complete, navigate to **AI** > **Transcription** in the main menu. Your transcripts appear here, searchable and filterable by date, agent, queue, and language.
+  <Step title="Save and confirm">
+    Select **Save changes**. The **Turn on AI transcription?** dialog shows how many members the add-on covers and the cost. Select **Turn on and pay**.
   </Step>
 </Steps>
 
-## Accessing Transcripts
+The rest of the current billing period is charged now, prorated. A message shows the amount charged.
 
-You can access your transcripts in three ways:
+<Frame>
+  ![Settings > AI transcription card with the pricing box, the 'Transcribe calls for the whole company' switch on, Call types Inbound, Outbound and Queues checked, and Minimum call duration set to 10](/images/docs/ai-transcription-company-settings.png)
+</Frame>
+
+## Set AI transcription for a team or member
+
+Use a team or member setting to cover only some people, or to exclude someone.
+
+<Steps>
+  <Step title="Open the team or member">
+    Go to **Teams & Members**. For a team, select **Manage Team**, then open the **Settings** tab. The team opens on **Members** first. For a member, open the member's **Settings**.
+  </Step>
+  <Step title="Find the AI transcription card">
+    Scroll to the **AI transcription** card. It is saved on its own, separate from the rest of the page.
+  </Step>
+  <Step title="Pick a mode">
+    Select **Inherit**, **On**, or **Off**. With **Inherit**, the card shows what applies, for example "Inherited from company: On (Inbound, Queues; calls of 10s or longer)".
+  </Step>
+  <Step title="Save">
+    If you chose **On**, set **Call types** and **Minimum call duration (seconds)**. Select **Save changes**, then confirm.
+  </Step>
+</Steps>
+
+On a member's card, **In effect now** shows the setting that applies to that member today, and where it comes from.
+
+<Frame>
+  ![Member settings page, AI transcription card with the Inherit / On / Off control, 'In effect now' line and an Active status badge](/images/docs/ai-transcription-member-card.png)
+</Frame>
+
+<Tip>
+  To transcribe only one team, keep the company **Off** and set that team to **On**. To exclude one person from a company-wide setting, set that member to **Off**.
+</Tip>
+
+## Check usage
+
+**Settings** > **AI transcription** > **Usage this month** lists each member with AI transcription:
+
+- **Minutes**: minutes used of the minutes included this month, for example "320 of 1,500 min".
+- **Status**: **Active**, or **Active until** a date **(not renewing)** after you turn it off.
+
+<Frame>
+  ![Usage this month table with Member, Team, Minutes progress bars and Status badges, including one 'Active until … (not renewing)' row with an Undo button](/images/docs/ai-transcription-usage.png)
+</Frame>
+
+## Turn AI transcription off
+
+Set the company switch to off, or set a team or member to **Off**, then select **Save changes** and **Turn off**.
+
+- Coverage stays active until the end of the paid period. Then it stops renewing.
+- The paid period is not refunded.
+- Calls during the remaining paid period are still transcribed.
+
+To change your mind before the period ends, select **Undo** next to the member in **Usage this month**. Nothing is charged again, because the period is already paid.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The switch is disabled or I see a plan notice">
+    AI transcription needs the Growth or Professional plan. Select **View plans** to upgrade.
+  </Accordion>
+  <Accordion title="Saving fails with a payment message">
+    Turn on **Auto Top-up** for your wallet, or update your card if a payment failed. The message links to **View plans** and **Open wallet**.
+  </Accordion>
+  <Accordion title="A call was not transcribed">
+    Check that the member was covered when the call happened, that its call type was selected, and that the call was longer than the minimum call duration. Internal calls between members and calls from before you turned it on are never transcribed.
+  </Accordion>
+  <Accordion title="I see &quot;Only admins can manage AI transcription&quot;">
+    Only admins can view and change these settings. Ask an admin on your account.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do unused minutes roll over?">
+    No. Each member gets 1,500 included minutes each month.
+  </Accordion>
+  <Accordion title="How are overage minutes charged?">
+    At $0.01 per minute from your wallet, prorated per second.
+  </Accordion>
+  <Accordion title="Can I transcribe calls from last week?">
+    No. Calls are transcribed only from the moment AI transcription is turned on for that member.
+  </Accordion>
+  <Accordion title="Is there an API for transcribing my own audio files?">
+    Yes, the Transcription API is a separate product with its own pricing. See the [Transcription API](/developers/transcription-api).
+  </Accordion>
+</AccordionGroup>
+
+## Related
 
 <CardGroup cols={2}>
-  <Card title="Transcription Dashboard" icon="file-lines">
-    Browse, filter, and read all transcripts directly in the TalkChief dashboard under **AI > Transcription**. Each transcript includes speaker labels, timestamps, and a link to the associated call recording.
+  <Card title="Transcripts and summaries" icon="message-lines" href="/ai/transcripts-and-summaries">
+    Read transcripts and generate call summaries.
   </Card>
-  <Card title="Semantic Search" icon="magnifying-glass">
-    Use the **Insights Dashboard** to search across your entire call history using natural language. Find calls by topic, keyword, speaker phrase, or outcome without reading every transcript manually.
+  <Card title="Call search" icon="magnifying-glass" href="/ai/call-search">
+    Find calls by what was said.
   </Card>
-  <Card title="API Access" icon="code">
-    Retrieve transcripts programmatically for downstream processing, CRM sync, or custom reporting. See the [Transcription API reference](/developers/transcription-api) for endpoints, authentication, and response schemas.
+  <Card title="Escalations" icon="siren" href="/ai/escalations">
+    Review calls that need a supervisor.
   </Card>
-  <Card title="Workflow Integrations" icon="arrows-split-up-and-left">
-    Transcripts are available as structured data inputs for TalkChief workflow automations, enabling you to trigger actions based on transcript content or diarized output.
+  <Card title="Plans and pricing" icon="tags" href="/plans-and-pricing">
+    Compare plans and add-ons.
   </Card>
 </CardGroup>
-
-## Transcript Output
-
-Each transcript is delivered as a diarized, time-stamped document with the following structure:
-
-- **Speaker labels** — participants are identified as *Speaker 1*, *Speaker 2*, etc. (or by agent name when matched to a TalkChief user)
-- **Timestamps** — every speaker turn carries a start and end time, accurate to the second
-- **Language segments** — for mixed-language calls, each segment is tagged with the detected language so you can distinguish Arabic, Hebrew, and English turns at a glance
-- **Structured format** — transcripts are available as JSON via the API, making them easy to parse, store, and route into CRM systems, ticketing tools, or compliance archives
-
-<Note>
-  Transcription accuracy depends on audio quality, background noise levels, and the clarity of each speaker's audio channel. Always have a qualified human review transcripts before using them for compliance records, legal proceedings, performance evaluations, or any other critical business decision.
-</Note>
-
-## Frequently Asked Questions
-
-<Accordion title="What happens if a transcription job fails?">
-  Failed jobs are not billed. If a transcript could not be generated — due to an audio quality issue, processing error, or timeout — the job is marked as failed in the dashboard and no charge is applied. You can retry the transcription for any failed job directly from the transcript list.
-</Accordion>
-
-<Accordion title="Can I transcribe calls in multiple languages?">
-  Yes — TalkChief automatically detects the language spoken on each call, including mixed Arabic/English or Hebrew/English conversations. You do not need to configure a language in advance. The engine identifies language at the segment level, so a single transcript can contain correctly labeled turns in more than one language.
-</Accordion>
