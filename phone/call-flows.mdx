@@ -1,0 +1,137 @@
+---
+title: "Build Call Flows and IVR Menus in TalkChief"
+sidebarTitle: "Call flows"
+description: "Use the TalkChief call flow editor to route each number through IVR menus, working hours, teams, queues, voicemail, call forwarding, and AI agents."
+keywords: ["call flow", "IVR menu", "auto attendant", "call routing editor", "AI agent call flow"]
+---
+
+A call flow decides what happens when someone calls one of your numbers. Each number has its own flow. You build it in the call flow editor as a tree of steps that starts at **Incoming call**.
+
+<Note>
+  Editing call flows is for admins and supervisors. On the **Numbers** page, the **Callflow** shortcut is admin-only.
+</Note>
+
+## Open a call flow
+
+You can open a number's call flow in two ways:
+
+- In the sidebar, select **Calls** → **Call Flow**, then pick a number from the list.
+- Go to **Calls** → **Numbers**, open a number's actions menu, and select **Callflow**.
+
+To switch to another number, select the number name at the top of the editor and pick a different one.
+
+<Frame>
+  ![Call flow editor for a demo number showing Incoming call, a Working Hours step with Open and Closed branches, an IVR with digits 1 and 2, and the Unsaved changes bar](/images/docs/call-flow-editor-overview.png)
+</Frame>
+
+## Steps you can add
+
+Select **Add option** under any step to add the next one. These steps are available:
+
+| Step | What it does |
+|---|---|
+| **Team** | Rings a group of members. You name the group, pick the members, and choose a **Ring strategy**: **In order** or **Simultaneously**. Set the ring time (15–60 seconds) and how many times to **Repeat** (1–15). You can also pick **Media** to play. |
+| **Member** | Rings one member. Set **Keep ringing for** in seconds. |
+| **AI Agent** | Rings one of your AI voice agents. Set **Keep ringing for** (15–60 seconds, 20 by default). See [Add an AI agent to a call flow](/ai-agents/add-to-call-flow). |
+| **Prepend** | Adds a short text label in front of the caller ID, such as `[Sales]`, so the person who answers knows where the call came from. Up to 18 characters. |
+| **Queue** | Sends the caller to a call queue. A queue ends the branch. See [Queues and routing](/contact-center/queues-and-routing). |
+| **Play Media** | Plays an audio file, such as a greeting. Pick an existing file or upload a new MP3 of up to 5 MB. |
+| **Call Forward** | Forwards the call to an outside phone number. Pick a saved number or add a new one with a nickname. Set a **Timeout** of 30–600 seconds. You can also turn on **Require key press to confirm call** and **Allow recording**. |
+| **Voicemail** | Sends the caller to a voicemail box to leave a message. |
+| **Callflow** | Jumps to the call flow of another of your numbers. This ends the branch. |
+| **IVR** | Plays a menu and routes the caller by the key they press. See [Build an IVR menu](#build-an-ivr-menu). |
+
+The first step after **Incoming call** can also be a time condition:
+
+| Step | What it does |
+|---|---|
+| **Time Condition** | Uses a team's working hours. The flow splits into an **Open** branch and a **Closed** branch. |
+| **Advance Time Condition** | Uses rules in a time zone you choose. Each rule gets its own branch, and **Closed** covers all other times. |
+
+<Note>
+  Some older flows may show a **Webhook** step. It sends call data to a web address. You can edit an existing **Webhook** step, but you can't add a new one from the menu.
+</Note>
+
+## Build a call flow
+
+<Steps>
+  <Step title="Add the first step">
+    Under **Incoming call**, select **Add option** and pick a step. For a business that closes at night, start with **Time Condition**.
+  </Step>
+  <Step title="Configure the step">
+    A settings panel opens. Fill in the fields and select **Save**. To change a step later, select its **Edit** button. To remove it, select **Delete**.
+  </Step>
+  <Step title="Add what happens next">
+    Select **Add sub-step** on a step to add the next one. For time conditions, add steps under both **Open** and **Closed**.
+  </Step>
+  <Step title="Save the flow">
+    Your edits show an **Unsaved changes** bar at the bottom of the screen. Select **Save** to apply them, or **Cancel** to throw them away.
+  </Step>
+</Steps>
+
+<Warning>
+  Changes apply only after you select **Save** in the **Unsaved changes** bar. Closing the page before then loses your edits.
+</Warning>
+
+## Build an IVR menu
+
+An IVR plays a recorded menu, such as "Press 1 for sales", and sends callers to a step based on the key they press.
+
+<Steps>
+  <Step title="Add the IVR step">
+    Select **Add option** and pick **IVR**. The **IVR settings** panel opens.
+  </Step>
+  <Step title="Name it and pick the prompt">
+    Enter a **Name** and choose the **Media** file that plays the menu. Upload the file in **Configuration** → **Media** first if you don't have one yet.
+  </Step>
+  <Step title="Set the options">
+    Under **Settings**, choose:
+    - **Allow caller to dial extensions** to let callers type a member's extension.
+    - **Misdial retries** for how many wrong entries a caller gets.
+    - **Timeout for dialing** and **Enter digit timeout**, in seconds.
+  </Step>
+  <Step title="Add a row for each key">
+    Select **Add number** to add a row, pick the key (0–9), and choose the step it leads to. The **Timeout** row handles callers who don't press anything. You can also add an **Invalid** row for wrong keys.
+  </Step>
+</Steps>
+
+<Tip>
+  Keep menus short. Three or four options are easier to remember than nine.
+</Tip>
+
+## Route callers to an AI agent
+
+The **AI Agent** step rings an AI voice agent the same way a member is rung. Pick the agent under **Select AI agent** and set **Keep ringing for**. If you have no AI agents yet, the panel links to agents.talkchief.io so you can create one first.
+
+For a full walkthrough, see [Add an AI agent to a call flow](/ai-agents/add-to-call-flow).
+
+## Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="Why can't I add a step after a Queue?">
+    **Queue** and **Callflow** end a branch. To handle callers who wait too long, set the queue's failover. See [Queues and routing](/contact-center/queues-and-routing).
+  </Accordion>
+  <Accordion title="Where do the working hours in a Time Condition come from?">
+    From each team's **Working Hours** on the team **Settings** tab. See [Working hours and media](/phone/working-hours-and-media).
+  </Accordion>
+  <Accordion title="The editor says the call flow could not be loaded">
+    Select **Retry**. If it keeps failing, check that the number is still active in **Calls** → **Numbers**.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Call routing" icon="route" href="/phone/call-routing">
+    See how teams, queues, and forwarding work together.
+  </Card>
+  <Card title="Working hours and media" icon="clock" href="/phone/working-hours-and-media">
+    Set opening hours and upload menu prompts.
+  </Card>
+  <Card title="Voicemail" icon="voicemail" href="/phone/voicemail">
+    Review the messages callers leave.
+  </Card>
+  <Card title="Add an AI agent to a call flow" icon="robot" href="/ai-agents/add-to-call-flow">
+    Let an AI voice agent answer your calls.
+  </Card>
+</CardGroup>

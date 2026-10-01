@@ -1,166 +1,182 @@
 ---
-title: "Click-to-Call API: Initiate Outbound Calls from Any App"
+title: "Click-to-Call API: Start Calls from Your CRM or App"
 sidebarTitle: "Click-to-Call"
-description: "Programmatically initiate outbound calls from your CRM, website, or workflow with TalkChief's Click-to-Call API and Bearer authentication."
+description: "Use the TalkChief Click-to-Call API to ring a member's phone and connect them to any number, with request fields, responses and every error code."
+keywords: ["click to call api", "talkchief click-to-call", "crm click to call", "outbound call api"]
 ---
 
-The Click-to-Call API lets your application trigger an outbound phone call without anyone touching the TalkChief dashboard. You send a single authenticated POST request with a destination number and a caller ID, and TalkChief connects the call through your communications infrastructure — routing it to the right agent or queue and attaching any metadata you want to carry through to the call detail record. This makes it straightforward to add a "Call me" button to your website, a one-click dial button to your CRM, or an automated outreach trigger to your sales workflow.
+Click-to-Call starts a call from your own software. TalkChief first rings the member you name, then connects them to the destination number. Use it to put a call button in a CRM, a helpdesk or an internal tool, with no dialing in the TalkChief app.
 
 <Note>
-  Your exact API base URL and the list of available `from` numbers for your account are in your TalkChief dashboard under **Settings → Developers**. The call itself is always human-operated — Click-to-Call initiates the connection; an agent handles the conversation.
+  The member must be online on a TalkChief device and not already on a call. Otherwise the request fails with `error_code` 415 or 416.
 </Note>
 
-## Use Cases
+## Before you start
 
-<CardGroup cols={2}>
-  <Card title="CRM Click-to-Dial" icon="address-book">
-    Render a "Call" button next to every contact record. One click sends a POST request and the agent's phone rings, with the customer on the line before the agent even picks up.
-  </Card>
-  <Card title="Website Callback Request" icon="globe">
-    Let visitors enter their number and request an immediate callback. Your backend receives the form submission and fires a Click-to-Call request in real time.
-  </Card>
-  <Card title="Sales Workflow Trigger" icon="arrows-rotate">
-    Kick off a call automatically when a lead reaches a specific stage in your pipeline — no manual dialing, no context switching.
-  </Card>
-  <Card title="Power Dialer Integration" icon="bolt">
-    Connect Click-to-Call to your internal dialer queue to move through a list of contacts programmatically while keeping a human agent in every conversation.
-  </Card>
-</CardGroup>
+<Steps>
+  <Step title="Get the Click-to-Call key">
+    As a company admin, go to **Settings** → **Integrations** → **API Keys**. On the **Click-to-Call** panel, click **Generate key** if you don't have one yet. Then click **Copy**. See [Authentication](/developers/authentication).
+  </Step>
+  <Step title="Decide how to identify the member">
+    You can identify the member who places the call by email address or by extension.
+  </Step>
+</Steps>
 
-## Endpoint
+## Place a call
 
-Initiate a call by sending a `POST` request to the calls endpoint on your customer-specific base URL.
-
-```http
-POST /v1/calls
+```text
+POST https://api.talkchief.io/public/api/calls/click-to-call
 ```
 
-## Request Parameters
+You can send the body as JSON or as form fields. The limit is 300 requests per minute.
 
-<ParamField body="to" type="string" required>
-  The destination phone number to dial, in **E.164 format** (e.g., `+12025551234`). Numbers not in E.164 format will be rejected with a `400` error and an `INVALID_NUMBER` code.
+### Request
+
+<ParamField body="api_key" type="string" required>
+  Your 64-character Click-to-Call key. You can send it in the `X-API-Key` header instead. If both are present, the body value wins.
 </ParamField>
 
-<ParamField body="from" type="string" required>
-  The TalkChief number to present as the outbound caller ID, also in E.164 format. This must be a number provisioned on your account. Your available numbers are listed in **Settings → Phone Numbers** in the dashboard.
+<ParamField body="destination" type="string" required>
+  The number to dial, with the country code. TalkChief removes every character except digits, `,` and `.`. At least 9 characters must remain.
 </ParamField>
 
-<ParamField body="agent_id" type="string">
-  Route the call directly to a specific agent by their TalkChief user ID. If omitted and `queue_id` is also omitted, the call follows your account's default routing rules.
+<ParamField body="email" type="string">
+  Email address of the member who places the call. You must send `email` or `extension`. If you send both, TalkChief uses `email` and ignores `extension`.
 </ParamField>
 
-<ParamField body="queue_id" type="string">
-  Route the call through a specific call queue. The first available agent in the queue answers the call. Cannot be used together with `agent_id` — provide one or the other.
+<ParamField body="extension" type="string">
+  Extension of the member who places the call, up to 4 digits. Only used when you don't send `email`.
 </ParamField>
 
-<ParamField body="metadata" type="object">
-  A flat key-value object of arbitrary strings attached to the call record. Use this to pass your internal identifiers — such as a CRM contact ID, deal ID, or campaign tag — so you can correlate the call detail record event back to your system when TalkChief delivers it via webhook.
+<ParamField body="auto_answer" type="string" default="true">
+  Set to `true` to ring the member's desk phone and answer it automatically. If that phone can't take the call, the member's devices ring normally. Set to `false` to ring all of the member's devices. The value must be exactly `true` or `false`. A JSON boolean also works.
 </ParamField>
 
-## Example Request
+<ParamField body="custom_param" type="object">
+  Key/value pairs that come back in the response, such as your CRM record ID. TalkChief adds `call_id` to this object.
+</ParamField>
 
-<Tabs>
-  <Tab title="cURL">
-    ```bash
-    curl -X POST https://{your-api-host}/v1/calls \
-      -H "Authorization: Bearer YOUR_API_KEY" \
-      -H "Content-Type: application/json" \
-      -d '{
-        "to": "+12025551234",
-        "from": "+19175550001",
-        "agent_id": "u_alice",
-        "metadata": {
-          "crm_contact_id": "contact_88f2a1",
-          "deal_id": "deal_004"
-        }
-      }'
-    ```
-  </Tab>
-  <Tab title="JavaScript">
-    ```javascript
-    const response = await fetch(`${process.env.TALKCHIEF_API_HOST}/v1/calls`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.TALKCHIEF_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        to: '+12025551234',
-        from: '+19175550001',
-        agent_id: 'u_alice',
-        metadata: {
-          crm_contact_id: 'contact_88f2a1',
-          deal_id: 'deal_004',
-        },
-      }),
-    });
+<ParamField body="custom_params" type="any">
+  Any value. It comes back unchanged in the response.
+</ParamField>
 
-    const { data } = await response.json();
-    console.log('Call initiated:', data.id);
-    ```
-  </Tab>
-  <Tab title="Python">
-    ```python
-    import os, requests
+### Example
 
-    response = requests.post(
-        f"{os.environ['TALKCHIEF_API_HOST']}/v1/calls",
-        headers={
-            "Authorization": f"Bearer {os.environ['TALKCHIEF_API_KEY']}",
-            "Content-Type": "application/json",
-        },
-        json={
-            "to": "+12025551234",
-            "from": "+19175550001",
-            "agent_id": "u_alice",
-            "metadata": {
-                "crm_contact_id": "contact_88f2a1",
-                "deal_id": "deal_004",
-            },
-        },
-    )
+<CodeGroup>
 
-    data = response.json()["data"]
-    print("Call initiated:", data["id"])
-    ```
-  </Tab>
-</Tabs>
+```bash curl
+curl -X POST 'https://api.talkchief.io/public/api/calls/click-to-call' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "api_key": "YOUR_CLICK_TO_CALL_KEY",
+    "destination": "15555550123",
+    "email": "agent@yourcompany.com",
+    "auto_answer": "true",
+    "custom_param": { "crm_record_id": "12345" }
+  }'
+```
 
-## Response
+```python Python
+import os
+import requests
 
-A successful `201 Created` response confirms that the call has been initiated in TalkChief's infrastructure. It does not mean the call has been answered — only that it has been queued for delivery.
+resp = requests.post(
+    "https://api.talkchief.io/public/api/calls/click-to-call",
+    json={
+        "api_key": os.environ["TALKCHIEF_C2C_KEY"],
+        "destination": "15555550123",
+        "email": "agent@yourcompany.com",
+        "auto_answer": "true",
+        "custom_param": {"crm_record_id": "12345"},
+    },
+    timeout=30,
+)
+if resp.status_code == 429:
+    # Rate limited before the request was processed: back off and retry
+    raise RuntimeError("Rate limited, retry later")
+resp.raise_for_status()  # any other non-200 status
+body = resp.json()  # processed requests return HTTP 200
+if body["success"]:
+    call_id = body["data"]["custom_param"]["call_id"]
+else:
+    print(body["error_code"], body["message"], body.get("errors"))
+```
 
-<ResponseField name="id" type="string">
-  The unique identifier for this call, prefixed with `c_`. Store this to correlate with CDR webhook events and any future status lookups.
+</CodeGroup>
+
+### Response
+
+<ResponseField name="success" type="boolean">
+  `true` when TalkChief placed the call.
 </ResponseField>
 
-<ResponseField name="status" type="string">
-  The initial status of the call. Will be `"initiated"` immediately after creation. Subsequent status changes are delivered via CDR webhook.
+<ResponseField name="data" type="object">
+  <Expandable title="properties">
+    <ResponseField name="email" type="string">The email you sent, in lowercase, or an empty string.</ResponseField>
+    <ResponseField name="extension" type="string">The extension you sent, or an empty string.</ResponseField>
+    <ResponseField name="destination" type="string">The destination after cleanup.</ResponseField>
+    <ResponseField name="custom_param" type="object">Your `custom_param`, plus `call_id`, the platform ID of the call. TalkChief adds `call_id` even when you send no `custom_param`.</ResponseField>
+    <ResponseField name="custom_params" type="any">Your `custom_params`, unchanged, or `null`.</ResponseField>
+  </Expandable>
 </ResponseField>
 
-<ResponseField name="created_at" type="string">
-  ISO 8601 timestamp indicating when the call was created in TalkChief's system (e.g., `"2024-11-15T14:32:00Z"`).
+<ResponseField name="message" type="string">
+  An empty string when the call succeeds.
 </ResponseField>
 
-**Example response body:**
-
-```json
+```json 200 OK
 {
-  "status": "success",
+  "success": true,
   "data": {
-    "id": "c_7f3k9m2",
-    "status": "initiated",
-    "created_at": "2024-11-15T14:32:00Z"
-  }
+    "email": "agent@yourcompany.com",
+    "extension": "",
+    "destination": "15555550123",
+    "custom_param": {
+      "crm_record_id": "12345",
+      "call_id": "example-call-id"
+    },
+    "custom_params": null
+  },
+  "message": ""
 }
 ```
 
-## Tracking the Call
+Store `call_id` so you can match the call to your CRM record later.
 
-The `201` response tells you the call started — but to know what happened next (duration, disposition, recording URL, which agent answered), you need the completed call detail record. Configure a [CDR webhook](/developers/webhooks) to receive a `call.completed` event the moment the call ends.
+## Errors
 
-<Tip>
-  Pass your CRM contact ID (or any internal reference) in the `metadata` field when initiating the call. TalkChief echoes that same `metadata` object back in the CDR webhook payload, so you can match the completed-call record to the right contact or deal without storing a separate `call_id` mapping.
-</Tip>
+Click-to-Call returns **HTTP 200** for every request it processes. When a request fails, the body has `success: false`, a numeric `error_code`, a `message` and an `errors` object:
 
-When the call completes, TalkChief POSTs a `call.completed` event to your webhook endpoint containing the full call record — including `duration_seconds`, `recording_url`, `agent_id`, and your original `metadata`. See the [Webhooks reference](/developers/webhooks) for the full payload schema and signature verification instructions.
+```json
+{
+  "success": false,
+  "error_code": 413,
+  "message": "Validation Error.",
+  "errors": { "api_key": "api_key is invalid." }
+}
+```
+
+| `error_code` | Text | Meaning |
+|---|---|---|
+| 404 | `auto_answer value error.` | `auto_answer` isn't `true` or `false` |
+| 405 | `api_key is required.` | You didn't send a key |
+| 406 | `api_key is invalid.` | The key isn't 64 characters |
+| 407 | `destination is required.` | You didn't send a destination |
+| 408 | `destination is invalid` | Fewer than 9 characters remain after cleanup |
+| 409 | `At least email or extension is required.` | You sent neither `email` nor `extension` |
+| 410 / 412 | `email format is not correct.` | `email` isn't a valid address |
+| 411 | `extension is invalid.` | The extension is 5 digits or longer |
+| 413 | `api_key is invalid.` | The key doesn't match a company. It may have been rotated |
+| 414 | `Either email or extension is invalid` | No member in your company has that email address or extension |
+| 415 | `User is not Registered. Please check your network` | The member has no device online. This text is in `message` |
+| 416 | `User is busy.` | The member is already on a call. This text is in `message` |
+| 417 | Varies | The TalkChief phone platform rejected the call. Details are in `errors.error_message_detail` |
+| 418 | `telephony service unavailable` | A temporary platform problem. Retry with backoff. The text is in `errors.error_message_detail` |
+
+For errors 404 to 414 and 418, `message` is `Validation Error.` and the text is in `errors`. For 415 and 416, the text is in `message`. For 417, `message` holds the platform's reason (or `call failed`) and `errors.error_message_detail` holds the detail.
+
+## Tips
+
+- Run the request from your server so the key never reaches a browser.
+- If you get 415, ask the member to sign in to the TalkChief app or desk phone and try again. If you get 416, wait until their current call ends.
+- To track the call after it ends, set up the [CDR webhook](/developers/webhooks). It sends a call record when the call finishes.

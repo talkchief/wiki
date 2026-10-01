@@ -1,0 +1,168 @@
+---
+title: "Web Phone: Make and Take Calls in Your Browser"
+sidebarTitle: "Web Phone"
+description: "Use the TalkChief Web Phone to dial, answer, hold, mute, and transfer calls from your browser, with recents, contacts, and clear connection status."
+keywords: ["web phone", "browser softphone", "make calls from browser", "call transfer", "TalkChief dialer"]
+---
+
+The Web Phone is the dialer built into the TalkChief web app. You can place and answer calls from any page without installing anything. Admins, supervisors, and agents all get it.
+
+<Note>
+  The Web Phone uses your own member line and extension. If it shows **Offline** right after you sign in, sign out and sign in again.
+</Note>
+
+## Open the Web Phone
+
+The Web Phone sits in the bottom-right corner of every page as a round phone button. A small dot on the button shows your line status, so you can check it without opening the panel.
+
+<Steps>
+  <Step title="Open the panel">
+    Select the phone button (**Open Web Phone**). The panel opens with three tabs: **Keypad**, **Recents**, and **Contacts**.
+  </Step>
+  <Step title="Check the status badge">
+    The badge next to **Web Phone** in the panel header shows your line status. You can make and receive calls when it says **Online**.
+  </Step>
+  <Step title="Minimize when you're done">
+    Select the arrow in the header (**Minimize Web Phone**) to collapse the panel back to the button. The panel opens again on its own when a call connects, so you can always reach the call controls.
+  </Step>
+</Steps>
+
+<Frame>
+  ![Expanded Web Phone panel with the Online badge, the Keypad tab selected, a number typed in the display, and the green Call button enabled](/images/docs/web-phone-keypad.png)
+</Frame>
+
+### Line status
+
+| Badge | What it means |
+|---|---|
+| **Online** | Your line is connected. You can make and receive calls. |
+| **Connecting** | The Web Phone is connecting your line. |
+| **Reconnecting** | The connection dropped and the Web Phone is trying again. |
+| **Offline** | Calls are disabled. The Web Phone keeps retrying in the background. |
+| **Other tab** | The Web Phone is active in another tab of this browser. |
+| **Idle** | The Web Phone hasn't started connecting yet. |
+
+## Allow microphone access
+
+Your browser asks for microphone permission the first time you place or answer a call. Select **Allow** so the other person can hear you.
+
+<Warning>
+  If you block the microphone, calls can't send your voice. Open your browser's site settings for TalkChief, set **Microphone** to **Allow**, and reload the page.
+</Warning>
+
+## Make a call
+
+<Steps>
+  <Step title="Enter a number">
+    On the **Keypad** tab, type the number in the **Enter number** field or use the dial pad. The dial pad has the digits 0–9, `*`, and `#`. To call a teammate, enter their extension.
+  </Step>
+  <Step title="Select Call">
+    Select **Call** or press **Enter**. The button only works when your line is **Online** and the field isn't empty.
+  </Step>
+  <Step title="Follow the call status">
+    The panel shows **Dialing…**, then **Ringing…** while the other side rings. Once they answer, it shows **Answered** and a call timer.
+  </Step>
+</Steps>
+
+<Tip>
+  Use the backspace button at the end of the number field to delete the last digit.
+</Tip>
+
+### Call from Recents
+
+The **Recents** tab lists calls you made or received on the Web Phone in this browser. Each entry shows the number or name, the date and time, and either the call length or **Missed**, **Declined**, or **Not answered**.
+
+- Select an entry to call that number again. If your line is offline, the number is copied to the keypad so it's ready when you reconnect.
+- Select **Clear** to delete your call history from this browser.
+
+The list keeps your 100 most recent calls. It belongs to your account, so another person who signs in on the same computer doesn't see it.
+
+### Call from Contacts
+
+The **Contacts** tab lists the members of your workspace who have an extension. Type in **Search name or extension** to filter the list, then select a contact to call their extension.
+
+## Answer or decline a call
+
+When a call comes in, an **Incoming call** alert appears in the top-right corner with the caller's name or number. The phone button also pulses.
+
+- Select **Answer** to take the call.
+- Select **Decline** to reject it.
+
+An unanswered incoming call shows as **Missed** in **Recents**.
+
+<Frame>
+  ![Incoming call alert in the top-right corner with a demo caller name and number and the Answer and Decline buttons](/images/docs/web-phone-incoming-call.png)
+</Frame>
+
+## Use the in-call controls
+
+During a call, the panel shows the caller, the call status, and these controls:
+
+| Control | What it does |
+|---|---|
+| **Mute** / **Unmute** | Turns your microphone off or on. The caller can still be heard. |
+| **Hold** / **Resume** | Puts the call on hold, then takes it off hold. The status changes to **On hold**. |
+| **Transfer** | Opens the transfer panel. Available once the call is answered. |
+| **Hang up** | Ends the call. |
+
+<Frame>
+  ![Web Phone panel during an answered call showing the call timer and the Mute, Hold, Transfer and Hang up buttons](/images/docs/web-phone-in-call.png)
+</Frame>
+
+## Transfer a call
+
+A transfer sends the caller straight to the new destination and ends the call for you.
+
+<Steps>
+  <Step title="Open the transfer panel">
+    During an answered call, select **Transfer**. The **Transfer call to** panel opens.
+  </Step>
+  <Step title="Choose where to send the call">
+    Pick a teammate from **Select a team member**. To transfer to another extension or an outside number, select **Enter number** and type it. Select **Pick from team** to go back to the list.
+  </Step>
+  <Step title="Complete the transfer">
+    Select **Transfer**. Select **Cancel** to close the panel and stay on the call.
+  </Step>
+</Steps>
+
+## Use one tab at a time
+
+Only one tab per browser connects the Web Phone. If you open TalkChief in a second tab, that tab shows **Other tab** and the message **Web Phone is open in another tab**. Calls ring in the first tab.
+
+- To move the Web Phone to the tab you're in, select **Use here**.
+- If you close the active tab, another open TalkChief tab takes over on its own.
+- If you select **Use here** during a call, the call continues in the first tab. The switch happens when that call ends.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The Web Phone says it's offline">
+    The message **Web Phone is offline — calls are disabled.** means your line isn't connected. The Web Phone retries on its own (**Retrying automatically…**) and reconnects when your network or the tab comes back. To try right away, select **Reconnect now**. If the problem continues, sign out and sign in again.
+  </Accordion>
+  <Accordion title="I see 'Too many devices are signed in to this phone line'">
+    Your line has reached its limit of connected devices. Close the Web Phone on another device or in another browser, then select **Reconnect now**. Your desktop and mobile apps count as devices too.
+  </Accordion>
+  <Accordion title="Calls ring in a different tab">
+    Only one tab per browser connects the Web Phone. Go to the tab that rings, or select **Use here** in the tab you want to use.
+  </Accordion>
+  <Accordion title="The other person can't hear me">
+    Check that the browser has microphone permission for TalkChief and that you haven't selected **Mute**. Then check that the right microphone is selected in your computer's sound settings.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Business Phone overview" icon="phone" href="/phone/overview">
+    See everything you can set up for calling in TalkChief.
+  </Card>
+  <Card title="Numbers and caller ID" icon="id-card" href="/phone/numbers-and-caller-id">
+    Choose which number your outbound calls show.
+  </Card>
+  <Card title="Agent workspace" icon="headset" href="/contact-center/agent-workspace">
+    Learn what agents see when they sign in.
+  </Card>
+  <Card title="Teams and members" icon="users" href="/contact-center/teams-and-members">
+    Manage extensions, roles, and call forwarding.
+  </Card>
+</CardGroup>

@@ -45,18 +45,52 @@
             "group": "Business Phone",
             "pages": [
               "phone/overview",
+              "phone/web-phone",
+              "phone/numbers-and-caller-id",
+              "phone/call-flows",
               "phone/call-routing",
-              "phone/ivr-call-flows",
-              "phone/numbers-and-caller-id"
+              "phone/voicemail",
+              "phone/working-hours-and-media"
             ]
           },
           {
             "group": "Contact Center",
             "pages": [
               "contact-center/overview",
+              "contact-center/teams-and-members",
               "contact-center/queues-and-routing",
               "contact-center/monitoring-and-coaching",
+              "contact-center/agent-workspace",
               "contact-center/power-dialer"
+            ]
+          },
+          {
+            "group": "AI Voice Agents",
+            "pages": [
+              "ai-agents/overview",
+              "ai-agents/create-an-agent",
+              "ai-agents/knowledge-base",
+              "ai-agents/tools-and-integrations",
+              "ai-agents/transfers",
+              "ai-agents/add-to-call-flow",
+              "ai-agents/outbound-campaigns",
+              "ai-agents/call-reports"
+            ]
+          },
+          {
+            "group": "AI Transcription",
+            "pages": [
+              "ai/ai-transcription",
+              "ai/transcripts-and-summaries",
+              "ai/call-search",
+              "ai/escalations",
+              "ai/ai-insights"
+            ]
+          },
+          {
+            "group": "Analytics",
+            "pages": [
+              "analytics/reports-and-dashboards"
             ]
           },
           {
@@ -65,14 +99,6 @@
               "cowork/overview",
               "cowork/channels-and-spaces",
               "cowork/meetings-and-conferencing"
-            ]
-          },
-          {
-            "group": "AI & Analytics",
-            "pages": [
-              "ai/ai-transcription",
-              "ai/summaries-and-actions",
-              "analytics/reports-and-dashboards"
             ]
           },
           {
@@ -117,6 +143,16 @@
     {
       "source": "/integrations/microsoft-teams",
       "destination": "/integrations/overview",
+      "permanent": true
+    },
+    {
+      "source": "/phone/ivr-call-flows",
+      "destination": "/phone/call-flows",
+      "permanent": true
+    },
+    {
+      "source": "/ai/summaries-and-actions",
+      "destination": "/ai/transcripts-and-summaries",
       "permanent": true
     }
   ]

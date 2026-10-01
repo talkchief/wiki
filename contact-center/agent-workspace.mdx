@@ -1,0 +1,107 @@
+---
+title: "Agent Workspace: Dashboard, Queues, and Breaks"
+sidebarTitle: "Agent workspace"
+description: "See what TalkChief agents get when they sign in: a dashboard with status and breaks, their queues, their settings, and the Web Phone on every page."
+keywords: ["agent dashboard", "call center agent", "agent breaks", "agent status", "queue login"]
+---
+
+Members with the agent role sign in to a simpler workspace built for taking calls. It has three pages and the Web Phone. Admins and supervisors use the full admin area instead.
+
+## What agents see
+
+When an agent signs in, TalkChief opens their **Dashboard**. The sidebar has:
+
+| Group | Item | What it shows |
+|---|---|---|
+| **Workspace** | **Dashboard** | Your status, extension, break policy, and app downloads. |
+| **Workspace** | **Queues** | The queues you belong to. |
+| **Account** | **Settings** | Your device, extension, and follow-me preferences. |
+
+The [Web Phone](/phone/web-phone) button sits in the bottom-right corner of every page.
+
+<Frame>
+  ![Agent dashboard for a demo agent showing the greeting, the Status card with Available and Take break, the Extension card, the Break policy card, and the desktop app downloads](/images/docs/agent-dashboard.png)
+</Frame>
+
+## Agent dashboard
+
+The dashboard greets you by name and shows your email. Below that are three cards:
+
+- **Status**: shows **Available** or **On break**, with the button to change it.
+- **Extension**: your own extension number. Teammates can dial it to reach you.
+- **Break policy**: a reminder that your manager configures breaks.
+
+The dashboard also links to the TalkChief desktop apps for Windows and macOS.
+
+## Take a break
+
+<Steps>
+  <Step title="Start the break">
+    On the **Status** card, select **Take break**. The status changes to **On break** and you see **Break started**.
+  </Step>
+  <Step title="Come back">
+    Select **Resume work**. The status changes back to **Available** and you see **Back online**.
+  </Step>
+</Steps>
+
+<Tip>
+  Set yourself on a break before you step away. Your supervisor can then see why you aren't taking calls.
+</Tip>
+
+## Your queues
+
+Go to **Workspace** → **Queues** to open **My queues**. It lists every queue you belong to, with its ring strategy. Each queue shows a **Logged in** badge. The badge is always shown, so it does not tell you whether you are on a break or currently receiving queue calls.
+
+If the page says **Not in any queue**, ask your manager to add you. Admins and supervisors add agents with **Manage Agents** on the queue card in **Team** → **Queues**. See [Call routing](/phone/call-routing).
+
+## Your settings
+
+Go to **Account** → **Settings** to open **Agent settings**. It shows your device, extension, and follow-me preferences. You can't edit them here. Ask an admin to change your extension, call forwarding, or voicemail. Admins do this on your member settings page. See [Teams and members](/contact-center/teams-and-members).
+
+## Set up break statuses (admins)
+
+Admins define the break statuses agents can use on the **Agent breaks** page.
+
+<Note>
+  **Agent breaks** has no sidebar link. To open it, add `/breaks` to your TalkChief web app address.
+</Note>
+
+<Steps>
+  <Step title="Add a status">
+    Select **New break status**. Enter a **Name**, such as Lunch, Meeting, or Training, and an optional **Icon key**.
+  </Step>
+  <Step title="Save">
+    Select **Save**. The status appears in the list with its **Work break?** value and **Icon**.
+  </Step>
+  <Step title="Remove a status">
+    Select **Delete** on its row and confirm.
+  </Step>
+</Steps>
+
+## Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="Why can't I see Numbers, Call Flow, or Reports?">
+    Those pages are for admins and supervisors. Your sidebar shows only **Dashboard**, **Queues**, and **Settings**.
+  </Accordion>
+  <Accordion title="Calls aren't ringing for me">
+    Open the Web Phone and check that the status badge says **Online**. If it says **Other tab**, select **Use here**. Also check that your **Status** isn't **On break**.
+  </Accordion>
+  <Accordion title="Can I use TalkChief outside the browser?">
+    Yes. Download the desktop app for Windows or macOS from your dashboard.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Web Phone" icon="phone" href="/phone/web-phone">
+    Make, answer, and transfer calls in your browser.
+  </Card>
+  <Card title="Teams and members" icon="users" href="/contact-center/teams-and-members">
+    How admins manage roles and member settings.
+  </Card>
+  <Card title="Queues and routing" icon="list" href="/contact-center/queues-and-routing">
+    How queues send calls to agents.
+  </Card>
+</CardGroup>

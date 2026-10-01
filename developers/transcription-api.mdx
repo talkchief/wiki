@@ -1,225 +1,271 @@
 ---
-title: "AI Transcription API: Submit and Retrieve Transcripts"
+title: "AI Transcription API: Transcribe Call Recordings"
 sidebarTitle: "Transcription API"
-description: "Submit call recordings to TalkChief's AI for diarized, speaker-labeled transcription in Arabic, Hebrew, or English at $0.025 per minute."
+description: "Send a recording URL to the TalkChief AI Transcription API, poll for a transcript split by speaker, and learn the request fields, statuses and billing."
+keywords: ["transcription api", "speaker diarization api", "call recording transcription", "talkchief ai transcription"]
 ---
 
-TalkChief's AI Transcription API accepts a URL pointing to a call recording and returns a structured, diarized transcript — meaning each segment of speech is labelled with a speaker role, a start time, an end time, and the transcribed text. The API supports Arabic, Hebrew, and English, with automatic language detection available when you don't know the language in advance. Submit a recording, then either poll the transcription resource for its status or supply a `webhook_url` to receive the completed transcript pushed directly to your server.
+The AI Transcription API turns a call recording into text. Each part of the transcript is labeled with its speaker and timing. You send the URL of the recording and get back a transcription ID. Then you poll that ID until the transcript is ready.
 
 <Note>
-  AI transcription is an **add-on feature**. Confirm that it is enabled on your TalkChief account before calling this API — requests made without the feature activated will return a `403 Forbidden` error. Contact your account manager or check **Settings → Add-ons** in your dashboard to enable it.
+  This API is separate from [automatic AI transcription](/ai/ai-transcription), the add-on that transcribes your TalkChief calls for you. The API transcribes any recording you send it, and each job is billed from your wallet.
 </Note>
 
-<Note>
-  Your exact API base URL is customer-specific and available in your TalkChief dashboard under **Settings → Developers**.
-</Note>
+## How it works
 
-## Pricing
+1. You submit a recording with `POST /ai/transcriptions` and get back HTTP `202` with a `transcription_id`.
+2. You poll `GET /ai/transcriptions/{transcription_id}` until `status` is `completed` or `error`.
+3. When the job completes, the response contains the full `text`, the speaker-labeled `utterances` and the `billed_amount`.
 
-Transcription usage is billed at **$0.025 per minute**, with a one-minute minimum per job. After the first minute, billing is prorated per second, so a 90-second recording costs $0.025 + ($0.025 / 60 × 30) ≈ $0.0375. Jobs that fail before producing any output are not billed.
+<Warning>
+  There's no webhook or callback for transcriptions. Poll for the result, or send `wait` to hold the submit request open for up to about 50 seconds.
+</Warning>
 
-If your team transcribes frequently, the **AI Transcription add-on** is available at **$10 per member per month** and includes **1,500 minutes** of transcription per month. Once your included minutes are consumed, additional usage is billed at the standard per-second rate.
+## Before you start
 
-<Info>
-  Billing is based on the audio duration of the submitted recording, not the length of the final transcript. Silence counts toward billable duration.
-</Info>
+<Steps>
+  <Step title="Get the AI Transcriber key">
+    As a company admin, go to **Settings** → **Integrations** → **API Keys**. On the **AI Transcriber** panel, click **Generate key** if you don't have one yet, then click **Copy**.
+  </Step>
+  <Step title="Copy your Company ID">
+    The **Company ID** appears at the top of the same page. Send it as `company_id` on every submit request.
+  </Step>
+  <Step title="Top up your wallet">
+    Your wallet must hold at least the minimum balance before you submit. If it doesn't, the request fails with HTTP `402`.
+  </Step>
+</Steps>
 
-## Submitting a Recording
+Send the key in the `X-AI-Api-Key` header on every request. Both endpoints allow 120 requests per minute.
 
-Send a `POST` request to the transcriptions endpoint with the URL of the recording you want transcribed. The recording must be accessible over HTTPS — either a public URL or a pre-signed URL that TalkChief can fetch without additional authentication.
+## Submit a recording
 
-```http
-POST /v1/transcriptions
+```text
+POST https://api.talkchief.io/public/api/ai/transcriptions
 ```
 
-### Request Parameters
+<ParamField header="X-AI-Api-Key" type="string" required>
+  Your AI Transcriber key.
+</ParamField>
+
+<ParamField body="company_id" type="integer" required>
+  Your Company ID. It must belong to the same company as the key, otherwise you get HTTP `403`.
+</ParamField>
 
 <ParamField body="recording_url" type="string" required>
-  A publicly accessible HTTPS URL pointing to the audio file to transcribe. Supported formats include MP3, WAV, OGG, and M4A. The URL must remain accessible until the transcription job completes — pre-signed URLs should have an expiry of at least 30 minutes.
+  A public `https://` URL of the audio file, up to 1,024 characters. The URL must stay reachable while the job runs.
 </ParamField>
 
 <ParamField body="language" type="string">
-  The language of the recording. Accepted values are `"ar"` (Arabic), `"he"` (Hebrew), `"en"` (English), or `"auto"` for automatic detection. Defaults to `"auto"` if omitted. Providing the correct language explicitly improves accuracy and reduces processing time.
+  A language hint such as `en`, `ar` or `he`, up to 16 characters. If you leave it out, the language is detected automatically. When detection finds a language, it replaces your hint in the result.
 </ParamField>
 
-<ParamField body="webhook_url" type="string">
-  An HTTPS URL on your server. When the transcript is ready, TalkChief sends a `POST` request to this URL with the completed transcript payload — the same structure returned by the GET endpoint. Use this instead of polling for production integrations.
+<ParamField body="detect_language" type="boolean" default="true">
+  Set to `true` to identify the languages spoken. Send `false` to turn detection off. Accepts `true`/`false`, `1`/`0` or `"true"`/`"false"`.
 </ParamField>
 
-### Example Request
+<ParamField body="detect_audio_events" type="boolean" default="false">
+  Set to `true` to mark sounds such as laughter or music in the transcript. Off by default.
+</ParamField>
 
-<Tabs>
-  <Tab title="cURL">
-    ```bash
-    curl -X POST https://{your-api-host}/v1/transcriptions \
-      -H "Authorization: Bearer YOUR_API_KEY" \
-      -H "Content-Type: application/json" \
-      -d '{
-        "recording_url": "https://storage.example.com/recordings/call_20241115.mp3",
-        "language": "en",
-        "webhook_url": "https://your-app.example.com/webhooks/transcription"
-      }'
-    ```
-  </Tab>
-  <Tab title="JavaScript">
-    ```javascript
-    const response = await fetch(`${process.env.TALKCHIEF_API_HOST}/v1/transcriptions`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${process.env.TALKCHIEF_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        recording_url: 'https://storage.example.com/recordings/call_20241115.mp3',
-        language: 'en',
-        webhook_url: 'https://your-app.example.com/webhooks/transcription',
-      }),
-    });
+<ParamField body="wait" type="boolean">
+  Send `1` to wait for the result in a single request, for up to about 50 seconds. You can send it in the body or as a query parameter (`?wait=1`). If the job is still running when time is up, you get back the normal pending response. Keep polling that ID.
+</ParamField>
 
-    const { data } = await response.json();
-    console.log('Transcription job created:', data.id);
-    ```
-  </Tab>
-  <Tab title="Python">
-    ```python
-    import os, requests
+Language detection and audio event detection don't cost extra.
 
-    response = requests.post(
-        f"{os.environ['TALKCHIEF_API_HOST']}/v1/transcriptions",
-        headers={
-            "Authorization": f"Bearer {os.environ['TALKCHIEF_API_KEY']}",
-            "Content-Type": "application/json",
-        },
-        json={
-            "recording_url": "https://storage.example.com/recordings/call_20241115.mp3",
-            "language": "en",
-            "webhook_url": "https://your-app.example.com/webhooks/transcription",
-        },
-    )
+<CodeGroup>
 
-    data = response.json()["data"]
-    print("Transcription job created:", data["id"])
-    ```
-  </Tab>
-</Tabs>
-
-A successful submission returns `201 Created` with a transcription object whose `status` is `"pending"`.
-
-## Checking Status
-
-Retrieve the current state of a transcription job — or fetch the completed transcript — by sending a `GET` request with the transcription ID returned at submission.
-
-```http
-GET /v1/transcriptions/{transcription_id}
+```bash curl
+curl -X POST 'https://api.talkchief.io/public/api/ai/transcriptions' \
+  -H 'X-AI-Api-Key: YOUR_AI_TRANSCRIBER_KEY' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "company_id": 1234,
+    "recording_url": "https://example.com/recordings/call.mp3",
+    "language": "en"
+  }'
 ```
 
-### Response Fields
+```python Python
+import os
+import time
+import requests
 
-<ResponseField name="id" type="string">
-  The unique identifier for this transcription job, prefixed with `txn_` (e.g., `txn_abc123`).
-</ResponseField>
+BASE = "https://api.talkchief.io/public/api"
+HEADERS = {"X-AI-Api-Key": os.environ["TALKCHIEF_AI_KEY"]}
 
-<ResponseField name="status" type="string">
-  The current processing state of the job. One of:
-  <Expandable title="Status values">
-    - `pending` — the job has been received and is waiting to be picked up
-    - `processing` — the AI model is actively transcribing the audio
-    - `completed` — the transcript is ready; see the `transcript` array
-    - `failed` — the job could not be completed; you will not be billed
-  </Expandable>
-</ResponseField>
+submit = requests.post(
+    f"{BASE}/ai/transcriptions",
+    headers=HEADERS,
+    json={
+        "company_id": 1234,
+        "recording_url": "https://example.com/recordings/call.mp3",
+    },
+    timeout=60,
+)
+submit.raise_for_status()  # expect 202
+job_id = submit.json()["data"]["transcription_id"]
 
-<ResponseField name="language_detected" type="string">
-  The BCP 47 language code identified in the audio (e.g., `"en"`, `"ar"`, `"he"`). Present once status is `completed`.
-</ResponseField>
+while True:
+    poll = requests.get(f"{BASE}/ai/transcriptions/{job_id}", headers=HEADERS, timeout=30)
+    data = poll.json()["data"]
+    if data["status"] in ("completed", "error"):
+        break
+    time.sleep(4)
 
-<ResponseField name="duration_seconds" type="number">
-  The total audio duration in seconds, used for billing calculation. Present once status is `completed`.
-</ResponseField>
+if data["status"] == "completed":
+    for u in data["utterances"]:
+        print(f'[{u["speaker"]}] {u["text"]}')
+else:
+    print("Failed:", data["error"])
+```
 
-<ResponseField name="transcript" type="array">
-  An array of speaker-segment objects, each representing a continuous block of speech from a single speaker. Present only when `status` is `completed`.
-  <Expandable title="Segment fields">
-    <ResponseField name="speaker" type="string">
-      The role label assigned to this speaker — e.g., `"agent"` or `"customer"`. Labels are consistent within a single transcript.
-    </ResponseField>
-    <ResponseField name="start" type="number">
-      The start time of this segment in seconds from the beginning of the recording.
-    </ResponseField>
-    <ResponseField name="end" type="number">
-      The end time of this segment in seconds.
-    </ResponseField>
-    <ResponseField name="text" type="string">
-      The transcribed text spoken during this segment.
-    </ResponseField>
-  </Expandable>
-</ResponseField>
+</CodeGroup>
 
-## Transcript Output Format
-
-A completed transcription resource looks like the following. Each element of the `transcript` array represents one contiguous utterance from a single speaker, in chronological order.
-
-```json
+```json 202 Accepted
 {
-  "id": "txn_abc123",
-  "status": "completed",
-  "language_detected": "en",
-  "duration_seconds": 124,
-  "transcript": [
-    {
-      "speaker": "agent",
-      "start": 0.0,
-      "end": 3.2,
-      "text": "Thank you for calling, how can I help?"
-    },
-    {
-      "speaker": "customer",
-      "start": 3.5,
-      "end": 7.1,
-      "text": "I have a question about my account."
-    },
-    {
-      "speaker": "agent",
-      "start": 7.4,
-      "end": 11.0,
-      "text": "Of course, I'd be happy to help with that. Can I get your account number?"
-    },
-    {
-      "speaker": "customer",
-      "start": 11.3,
-      "end": 14.8,
-      "text": "Sure, it's 4-4-7-7-2-1."
-    }
-  ]
+  "success": true,
+  "data": {
+    "transcription_id": "3f1c2b9e-8a41-4d6f-9a0e-2b7c5d1e4f60",
+    "status": "queued",
+    "audio_duration_ms": null,
+    "language": "en"
+  },
+  "message": null
 }
 ```
 
-<Tip>
-  Speaker labels (`"agent"`, `"customer"`) are assigned automatically based on conversation patterns. In multi-party calls, additional labels may appear. You can remap these labels in your application using the speaker strings as stable keys within a given transcript.
-</Tip>
+Save `transcription_id` before you start polling.
 
-## Using Webhooks for Completion
+<Warning>
+  Never submit the same recording again because a request timed out. Each submission is a new job that's billed on its own. Poll the ID you already have instead.
+</Warning>
 
-Rather than polling the GET endpoint, pass a `webhook_url` in your submission request. When the job transitions to `completed` or `failed`, TalkChief sends a `POST` request to that URL with the full transcription object as the request body — identical to the shape returned by the GET endpoint.
+## Get the result
 
-Your webhook endpoint must respond with a `2xx` status code within 10 seconds. If it does not, TalkChief retries delivery with exponential backoff. Implement idempotency on your end using the `id` field to avoid processing the same transcript twice.
-
-```javascript
-// Example webhook handler (Express.js)
-app.post('/webhooks/transcription', express.json(), (req, res) => {
-  const transcript = req.body;
-
-  if (transcript.status === 'completed') {
-    // Store or process transcript.transcript segments
-    console.log(`Transcript ready: ${transcript.id} (${transcript.duration_seconds}s)`);
-  } else if (transcript.status === 'failed') {
-    console.error(`Transcription failed: ${transcript.id}`);
-  }
-
-  res.sendStatus(200); // Always respond 200 quickly
-});
+```text
+GET https://api.talkchief.io/public/api/ai/transcriptions/{transcription_id}
 ```
 
-<Info>
-  Transcription webhooks do not use the same HMAC-SHA256 signing mechanism as CDR webhooks. Validate the payload by checking that the `id` matches a transcription job you previously submitted.
-</Info>
+<ParamField path="transcription_id" type="string" required>
+  The `transcription_id` from the submit response.
+</ParamField>
+
+<ParamField header="X-AI-Api-Key" type="string" required>
+  Your AI Transcriber key. You can only read transcriptions that belong to your own company.
+</ParamField>
+
+Poll every 3 to 5 seconds until `status` is `completed` or `error`. Polling is free. Once a transcript is complete it's stored, so you can fetch it again any time.
+
+<CodeGroup>
+
+```bash curl
+curl 'https://api.talkchief.io/public/api/ai/transcriptions/3f1c2b9e-8a41-4d6f-9a0e-2b7c5d1e4f60' \
+  -H 'X-AI-Api-Key: YOUR_AI_TRANSCRIBER_KEY'
+```
+
+```javascript Node.js
+const res = await fetch(
+  "https://api.talkchief.io/public/api/ai/transcriptions/3f1c2b9e-8a41-4d6f-9a0e-2b7c5d1e4f60",
+  { headers: { "X-AI-Api-Key": process.env.TALKCHIEF_AI_KEY } }
+);
+const { data } = await res.json();
+console.log(data.status, data.text);
+```
+
+</CodeGroup>
+
+```json 200 OK
+{
+  "success": true,
+  "data": {
+    "transcription_id": "3f1c2b9e-8a41-4d6f-9a0e-2b7c5d1e4f60",
+    "status": "completed",
+    "audio_duration_ms": 56232,
+    "language": "en",
+    "languages": ["en"],
+    "text": "Thanks for calling, how can I help you? Hi, I'd like to check my order.",
+    "utterances": [
+      { "speaker": "1", "start_ms": 570, "end_ms": 2010, "text": "Thanks for calling, how can I help you?" },
+      { "speaker": "2", "start_ms": 2400, "end_ms": 4300, "text": "Hi, I'd like to check my order." }
+    ],
+    "billed_amount": 0.015
+  },
+  "message": null
+}
+```
+
+### Response fields
+
+<ResponseField name="success" type="boolean">
+  `false` only when `status` is `error`.
+</ResponseField>
+
+<ResponseField name="data.transcription_id" type="string">
+  The job ID (a UUID).
+</ResponseField>
+
+<ResponseField name="data.status" type="string">
+  One of `queued`, `processing`, `completed` or `error`.
+</ResponseField>
+
+<ResponseField name="data.audio_duration_ms" type="integer | null">
+  Length of the audio in milliseconds, once it's known.
+</ResponseField>
+
+<ResponseField name="data.language" type="string | null">
+  The main language detected. If nothing was detected, this is your `language` hint.
+</ResponseField>
+
+<ResponseField name="data.languages" type="string[]">
+  Every language detected, with the most spoken first. Only present when languages were detected.
+</ResponseField>
+
+<ResponseField name="data.text" type="string">
+  The full transcript. Only present when `status` is `completed`.
+</ResponseField>
+
+<ResponseField name="data.utterances" type="object[]">
+  The transcript split by speaker. Only present when `status` is `completed`. Each item has `speaker`, `start_ms`, `end_ms` and `text`. Speaker labels tell voices apart within one recording. They don't say which speaker is the agent or the customer.
+</ResponseField>
+
+<ResponseField name="data.billed_amount" type="number">
+  The amount in USD charged for this job. Only present when `status` is `completed` and the charge has gone through.
+</ResponseField>
+
+<ResponseField name="data.error" type="string">
+  Only present when `status` is `error`. For example: "The recording could not be processed. Check that the URL is reachable and points to a supported audio file."
+</ResponseField>
+
+## Billing
+
+- Each completed transcription is charged to your company wallet per minute of audio. The current rate is shown in **Settings** → **Integrations** → **AI Transcription**.
+- Every job is billed for at least one minute. After the first minute, billing is per second, so a 26-second recording is billed as 60 seconds and a 73-second recording as 73 seconds.
+- Jobs that end in `error` aren't charged.
+- Before TalkChief accepts a job, your wallet must hold the minimum balance. If it doesn't, you get HTTP `402` with `Error balance is below $5, please topup to proceed`, and nothing is submitted or charged.
+- To check your balance, call `GET /ai/billing/balance` with the same `X-AI-Api-Key` header. The response has `company_id` and `balance` (a string with 5 decimal places).
+
+## Errors
+
+| HTTP status | `message` | What to do |
+|---|---|---|
+| `400` | `Validation Error.` | A field is missing or malformed. Check `errors` for details |
+| `400` | `recording_url must be an https URL` | Use an `https://` URL |
+| `401` | `UnAuthorised` | Check the `X-AI-Api-Key` header. The key may have been rotated |
+| `402` | `Error balance is below $5, please topup to proceed` | Top up your wallet |
+| `403` | `company_id does not match the provided token` | Send the Company ID that belongs to this key |
+| `404` | `transcription not found` | Check the ID. You can only read your own company's jobs |
+| `502` | `billing system unavailable` or `transcription service unavailable` | Temporary. Retry with backoff |
+
+A job that fails after it was accepted still returns HTTP `200` when you poll. The response has `success: false`, `status: "error"` and an `error` message.
+
+## Related
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="key" href="/developers/authentication">
+    Get and rotate the AI Transcriber key.
+  </Card>
+  <Card title="CDR webhook" icon="webhook" href="/developers/webhooks">
+    Get recording URLs for completed calls, ready to transcribe.
+  </Card>
+</CardGroup>

@@ -1,0 +1,170 @@
+---
+title: "AI voice agent tools and integrations | TalkChief"
+sidebarTitle: "Tools and integrations"
+description: "Connect TalkChief AI voice agents to Business APIs, MCP connectors, and workspace email, set caller confirmation, and manage the 25 voice action limit."
+keywords: ["ai voice agent integrations", "ai agent api", "mcp connector", "ai agent tools", "ai agent send email"]
+---
+
+Tools let an agent look up information and take actions during a call. You define each tool once on a workspace page. Then you enable it for the inbound agents and campaigns that need it.
+
+| Tool type | Where you set it up | Example |
+|---|---|---|
+| **Business APIs** | **Tools & APIs** | Look up an order status in your system |
+| **MCP connectors** | **Tools & APIs** | Use tools from a hosted MCP server, such as a calendar or CRM |
+| **Email** | **Email** | Send a confirmation email to the caller |
+| **Call controls** | The agent's **Skills & tools** | End the call, send keypad tones, record do-not-call requests |
+
+<Note>
+Agents can only use tools you enable for them. Connection secrets are stored encrypted and are never shown to the agent or the caller.
+</Note>
+
+## Add a Business API
+
+A Business API is an HTTPS endpoint in your own system. The editor has four steps: **Basics**, **Connection**, **What the agent sends**, and **Test**.
+
+<Steps>
+  <Step title="Open the editor">
+    In the sidebar, click **Tools & APIs**, choose **Business APIs**, and click **Add Business API**.
+  </Step>
+  <Step title="Basics">
+    Enter a **Display name**, for example "Check order status". Under **What does this API do?**, choose **Looks up information** or **Makes a change**. In **When should the agent use it?**, describe the caller request that should trigger it. Under **More details**, you can add what the agent must establish first.
+  </Step>
+  <Step title="Connection">
+    Choose the **Request type** (GET, POST, PUT, PATCH, or DELETE) and enter the **HTTPS endpoint**. Under **Sign-in**, choose **None**, **Bearer token**, or **API key**, and enter the credential.
+  </Step>
+  <Step title="What the agent sends">
+    Click **Add a field** for each detail the agent collects from the caller. Set the **Field name**, **What it is**, an **Example value**, and whether it is **Required**. To ask the caller before each request, turn on **Ask the caller to confirm first**.
+  </Step>
+  <Step title="Test">
+    Enter test values and click **Send test request**. The result shows **Passed**, **Failed**, or **Unknown result**, with the HTTP status and a response preview.
+  </Step>
+  <Step title="Save">
+    Click **Add Business API**.
+  </Step>
+</Steps>
+
+<Frame>
+  ![The Add Business API dialog on step 4 Test, showing a Passed result for a fake order lookup endpoint.](/images/docs/business-api-editor-test.png)
+</Frame>
+
+<Warning>
+For an API that **Makes a change**, the test sends a real request. Use test data your system recognizes.
+</Warning>
+
+## Add an MCP connector
+
+MCP connectors bring in tools from a hosted MCP server over HTTPS. Use them to reach services such as calendars, CRMs, or automation platforms.
+
+<Steps>
+  <Step title="Open the dialog">
+    In **Tools & APIs**, choose **MCP connectors** and click **Add connector**.
+  </Step>
+  <Step title="Enter the connection">
+    Enter a **Name** and the **HTTPS URL**. Under **Authentication**, choose **None**, **Bearer token**, or **API key header**, and enter the **Token or API key**.
+  </Step>
+  <Step title="Connect">
+    Click **Connect and discover**. TalkChief lists every tool the server offers.
+  </Step>
+  <Step title="Review each tool">
+    Click **Edit definition** on a tool. Write **When to use this tool**, set **Execution behavior** to a lookup or an action, and choose the caller confirmation. Click **Save definition**.
+  </Step>
+</Steps>
+
+Every discovered tool is on by default. Turn off any tool agents must never use. A tool marked **Needs classification on Tools & APIs** cannot be enabled until you set its **Execution behavior**.
+
+<Note>
+TalkChief supports hosted HTTPS servers using Streamable HTTP or legacy SSE. Local servers are not supported.
+</Note>
+
+## Connect workspace email
+
+Each workspace has one email sender.
+
+<Steps>
+  <Step title="Add the sender">
+    In the sidebar, click **Email**, then **Add email connection**. Enter the **Display name**, **Mail server**, **Port**, **Connection security**, **Username**, **From email**, and **App password**.
+  </Step>
+  <Step title="Describe when to use it">
+    Under **Agent usage guidance**, fill in **When may an assigned agent use this?**.
+  </Step>
+  <Step title="Verify sending">
+    Save the connection. Under **Verify sending**, enter an address you control and click **Send test email**.
+  </Step>
+</Steps>
+
+Agents can only use email after a test email succeeds.
+
+## Choose caller confirmation
+
+Every Business API, MCP tool, and email connection has a **Caller confirmation** setting.
+
+| Option | What the agent does |
+|---|---|
+| **Run without asking** | Uses the tool as soon as it has the required details |
+| **Confirm first** | Reads back the details and waits for the caller to confirm |
+
+Business APIs default to **Run without asking**.
+
+<Tip>
+Choose **Confirm first** for tools that change data or send email, such as booking, canceling, or updating a record.
+</Tip>
+
+## Enable tools for an agent
+
+Open the agent and go to **Skills & tools**. The section has these tabs: **MCP tools**, **Business APIs & email**, **Transfers**, and **Call controls**.
+
+- **MCP tools**: turn on the switch for each tool the agent may use.
+- **Business APIs & email**: click **Assign to agent**. Under **Optional agent-specific guidance**, you can narrow when this agent uses it.
+- **Call controls**: turn on **Allow the agent to end the call**, **Allow keypad tones**, or **Record do-not-call requests**.
+
+Tool assignments save immediately. **Spoken progress updates** and call controls need **Save changes**.
+
+<Frame>
+  ![The agent's Skills & tools section with the Voice actions meter, the tab row, and the MCP tools list with two tools enabled.](/images/docs/agent-skills-tools.png)
+</Frame>
+
+### Spoken progress updates
+
+Turn on **Spoken progress updates** to have the agent say a short line, such as "Just a moment", before it runs a tool. It needs a primary language, so it is unavailable with **Auto-detect**.
+
+For campaigns, you add tools in the campaign's **Knowledge & actions** section. See [Outbound campaigns](/ai-agents/outbound-campaigns).
+
+## Voice actions limit
+
+Each agent and each campaign can use up to **25 voice actions**. The **Voice actions** meter shows how many slots are in use.
+
+- Transfers reserve one slot. All transfer destinations share it.
+- Email reserves one slot. All email connections share it.
+- Knowledge search uses one slot.
+- Each Business API uses one slot.
+- Each connected MCP tool uses one slot.
+
+When the limit is reached, TalkChief rejects any change that would go over it. To free a slot, disable a tool or remove it from the agent.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="I can't save or assign a tool because of the action limit">
+    The agent already uses 25 voice actions. Open **Skills & tools**, review the **Voice actions** meter, then switch off or remove a tool you do not need. Try again.
+  </Accordion>
+  <Accordion title="The agent says it can't send email">
+    Send a test email from the **Email** page. Agents cannot use a sender until a test email succeeds.
+  </Accordion>
+  <Accordion title="My MCP connector shows Error">
+    Check the URL and credential, then click **Refresh tools**. The connector must be reachable over public HTTPS.
+  </Accordion>
+  <Accordion title="Can I connect my calendar?">
+    Yes, through an MCP connector from a calendar or automation provider. Add it in **Tools & APIs**, then enable its tools for the agent.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Transfers" icon="phone-arrow-right" href="/ai-agents/transfers">
+    Hand callers to the right person.
+  </Card>
+  <Card title="Knowledge base" icon="book" href="/ai-agents/knowledge-base">
+    Give the agent approved documents.
+  </Card>
+</CardGroup>

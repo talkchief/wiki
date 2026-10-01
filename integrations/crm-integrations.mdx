@@ -1,71 +1,98 @@
 ---
 title: "CRM Integrations: HubSpot, Pipedrive, Zoho, and More"
 sidebarTitle: "CRM Integrations"
-description: "Connect TalkChief to HubSpot, Pipedrive, Zoho, Powerlink, or Comeunity for click-to-call, automatic call logging, and contact pop-up on inbound calls."
+description: "Connect TalkChief to HubSpot, Pipedrive, Zoho, Powerlink, or Comeunity so call activity reaches your CRM and inbound callers are named from CRM records."
 ---
 
-CRM integrations close the loop between your calling activity and your customer data. When TalkChief is connected to your CRM, your team can dial contacts without leaving the CRM, inbound calls automatically surface the right contact record, and every call — its duration, direction, and outcome — is written back to the CRM without any manual input. The result is a complete, accurate call history on every contact record and fewer data gaps in your pipeline.
+CRM integrations send your TalkChief call activity to the CRM your team already uses. You connect a CRM once, from **Integrations** in the TalkChief web app, with the credentials that CRM gives you. You can also choose one CRM as the source of caller names for inbound calls.
 
-## What CRM Integrations Do
+## What CRM integrations do
 
-TalkChief CRM integrations deliver four core capabilities across all supported platforms:
+- **Send call activity to your CRM**: while a CRM is connected and switched on, TalkChief sends your company's call events to it.
+- **Name inbound callers**: the CRM you mark as **Is Default** is used to get the caller's name for inbound calls. Only one CRM can be the default.
+- **Create new records**: turn on **Create new leads** (or **Create new Community Members** for Comeunity) to add a record when the caller doesn't exist in the CRM yet.
 
-1. **Click-to-call** — Dial any contact directly from their CRM record. Click a phone number in a deal, contact, or ticket and TalkChief places the call immediately, with no need to type the number manually.
-
-2. **Automatic call logging** — Every call is written to the contact or deal record in your CRM as soon as it ends. Duration, timestamp, direction (inbound or outbound), and the TalkChief user who handled the call are recorded automatically.
-
-3. **Contact screen pop** — When a known number calls in, TalkChief identifies the caller and opens the matching CRM record in your browser before you even answer. Your team greets every caller by name with full context already on screen.
-
-4. **Call outcome sync** — At the end of a call, log the result — connected, left voicemail, follow-up needed, and other outcomes — directly from the TalkChief interface. That outcome is synced back to the CRM record so your pipeline data stays accurate.
+What each CRM stores, and where it shows the call, depends on the CRM. Test with a real call before you roll an integration out to your team.
 
 ## Supported CRMs
 
 ### HubSpot
 
-Calls handled through TalkChief are logged as activities on the HubSpot contact timeline. When a contact calls in, the matching HubSpot record opens so your team has full context before the conversation begins. You can also start outbound calls with one click from a HubSpot contact.
+Connect HubSpot to send your TalkChief call activity to HubSpot.
 
 ### Pipedrive
 
-TalkChief connects to Pipedrive deals and contact records. Click a phone number in Pipedrive to place the call through TalkChief, and the completed call is logged to the Pipedrive activity feed with its duration.
+Connect Pipedrive to send your TalkChief call activity to Pipedrive.
 
 ### Zoho CRM and Zoho PhoneBridge
 
-TalkChief offers two Zoho connections. **Zoho** syncs your call activity to Zoho CRM records. **Zoho PhoneBridge** lets your team place and receive TalkChief calls from inside Zoho CRM, with the caller's record opening automatically. For more on what the Zoho integration covers, visit [TalkChief for Zoho](https://talkchief.io/talkchief-for-zoho).
+TalkChief offers two Zoho connections. **Zoho** sends your call activity to Zoho CRM. **Zoho PhoneBridge** connects TalkChief calling to Zoho CRM member by member: you invite each member, and you can turn click-to-call on or off for each one. For more on what the Zoho integration covers, visit [TalkChief for Zoho](https://talkchief.io/talkchief-for-zoho).
 
 ### Powerlink
 
-The Powerlink integration keeps your Powerlink customer records and TalkChief call activity in sync, so every call appears on the right account without manual entry.
+Connect Powerlink to send your TalkChief call activity to Powerlink.
 
 ### Comeunity
 
-The Comeunity integration syncs TalkChief call activity with your Comeunity CRM records, giving your team one place to see each customer's call history.
+Connect Comeunity to send your TalkChief call activity to Comeunity. For this CRM, the new-record option is called **Create new Community Members**.
 
-## Connecting a CRM
+## Connect a CRM
 
-The steps below apply to all supported CRMs. The exact screens and labels may differ slightly between platforms.
+You need a TalkChief admin account. Get the API token or API key from your CRM's settings before you start.
 
 <Steps>
-  <Step title="Open Integrations in TalkChief">
-    Sign in to TalkChief as an administrator and select **Integrations** under **Configuration** in the sidebar. You will see every integration available on your plan.
+  <Step title="Open Integrations">
+    In the TalkChief web app, select **Integrations** under **Configuration** in the sidebar. Connected CRMs are under **Your connected integrations**. The rest are under **Discover More Integrations**.
   </Step>
-  <Step title="Select Your CRM and Connect">
-    Find your CRM in the list and click **Connect**. This opens the authorisation flow for that platform.
+  <Step title="Open the CRM">
+    On the CRM's card, select **View Integration**. If the card shows **Upgrade Your Plan**, the CRM is not included in your plan. If it shows **Coming Soon**, it isn't available yet.
   </Step>
-  <Step title="Authorise TalkChief">
-    Follow the on-screen prompts to grant TalkChief permission to access your CRM account. You may need to log in to your CRM and approve the connection in a pop-up window.
+  <Step title="Enter the credentials">
+    Fill in the fields the form shows for that CRM. Depending on the CRM, this is a **CRM Token**, an **API Key**, or a **CRM Token** and a **Domain**. Zoho PhoneBridge asks for no credentials.
   </Step>
-  <Step title="Map Users">
-    Match each TalkChief user to their corresponding CRM user. This ensures calls are logged under the right agent's name in your CRM.
+  <Step title="Choose the options">
+    Turn on **Is Default** if this CRM should name your inbound callers. Turn on **Create new leads** (or **Create new Community Members**) if you want new records for unknown callers. Zoho PhoneBridge has no options here: skip to **Install**.
   </Step>
-  <Step title="Test the Integration">
-    Make a test call using TalkChief and then check the contact record in your CRM. Confirm the call has been logged with the correct details before rolling the integration out to your team.
+  <Step title="Connect">
+    Select **Connect** (**Install** for Zoho PhoneBridge). If the CRM needs you to approve access, TalkChief sends you to the CRM's sign-in page to finish. Otherwise you see **Integration added successfully**.
+  </Step>
+  <Step title="Test the integration">
+    Make a test call with TalkChief, then check the contact in your CRM to confirm the call arrived.
   </Step>
 </Steps>
 
+<Frame>
+  ![Integrations > a CRM's connect form with the CRM Token field, the Is Default and Create new leads switches, and the Connect button](/images/docs/crm-connect-form.png)
+</Frame>
+
+## Set up Zoho PhoneBridge members
+
+After you install Zoho PhoneBridge, TalkChief asks you to check your email to complete the Zoho CRM activation. Then manage members from the integration's settings.
+
+<Steps>
+  <Step title="Open the settings">
+    Under **Your connected integrations**, select **Configure** on the Zoho PhoneBridge card.
+  </Step>
+  <Step title="Review the members">
+    The **User Settings** table lists each member with **Member Name** and **Status**. Members who have no Zoho CRM user show "User was not found in CRM".
+  </Step>
+  <Step title="Invite or change members">
+    Use the action on each row: **Invite** or **Re-invite** sends the invitation, **Disable** turns click-to-call off for an active member, and **Enable** turns it back on.
+  </Step>
+</Steps>
+
+## Manage a connected CRM
+
+On each card under **Your connected integrations** you can:
+
+- Use the switch to turn the integration on or off.
+- Select **Configure** to change the credentials, **Is Default**, or **Create new leads**, then save. For Zoho PhoneBridge, **Configure** opens the member list instead (see [Set up Zoho PhoneBridge members](#set-up-zoho-phonebridge-members)).
+- Select **Delete** to remove the integration.
+
 <Note>
-  Exact capabilities — such as which call fields are synced, whether screen pop is available, and which call outcomes can be logged — vary by CRM platform and your TalkChief plan. Refer to the CRM-specific section above or contact TalkChief support if a specific capability is not behaving as expected.
+  Integration availability depends on your TalkChief plan. If a CRM shows **Upgrade Your Plan**, upgrade in **Settings** > **Plans**, or contact TalkChief support.
 </Note>
 
 <Tip>
-  If you need to trigger calls programmatically — for example, from a custom internal tool, an automation workflow, or a platform not listed here — see the [Click-to-Call API](/developers/click-to-call) documentation. The API lets you initiate a TalkChief call from any system that can make an HTTP request.
+  To place calls from your own tools or a CRM not listed here, use the [Click-to-Call API](/developers/click-to-call). It starts a TalkChief call from any system that can make an HTTP request.
 </Tip>

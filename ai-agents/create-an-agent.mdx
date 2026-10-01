@@ -1,0 +1,142 @@
+---
+title: "Create an inbound AI voice agent | TalkChief"
+sidebarTitle: "Create an agent"
+description: "Create an inbound AI voice agent in TalkChief: set its persona, greeting, guardrails, language, dialect, voice, tone, and listening timing."
+keywords: ["create ai voice agent", "ai receptionist setup", "ai agent persona", "ai agent voice", "arabic ai voice agent"]
+---
+
+An inbound agent answers calls that reach your TalkChief numbers. This page covers the agent's identity and how it sounds. You add documents, tools, and routing after that.
+
+<Note>
+You need a TalkChief admin or supervisor account and a free slot under your plan's AI agent limit. To place outbound calls, create a [campaign](/ai-agents/outbound-campaigns) instead.
+</Note>
+
+## Create the agent
+
+<Steps>
+  <Step title="Open Inbound agents">
+    In the agents workspace, click **Inbound agents**, then **New inbound agent**.
+  </Step>
+  <Step title="Name the agent">
+    In **Agent name**, enter a name your team will recognize, for example "Maya — customer care".
+  </Step>
+  <Step title="Create it">
+    Click **Create inbound agent**. TalkChief creates the agent's own phone line and checks it. If the line cannot be verified, no agent is saved.
+  </Step>
+</Steps>
+
+<Frame>
+  ![The Create an inbound service agent dialog with Agent name filled in and the AI agents usage note.](/images/docs/create-inbound-agent-dialog.png)
+</Frame>
+
+The agent editor opens. Its sections are **Persona**, **Language & voice**, **Knowledge**, **Skills & tools**, **Phone connection**, **Add to Callflow**, and **Checks & history**. A colored dot beside each section shows whether it is complete or needs attention.
+
+<Tip>
+The direction is fixed when you create the agent. If the job changes from answering to calling out, create a campaign.
+</Tip>
+
+## Set the persona
+
+Open **Persona**.
+
+| Field | What to enter |
+|---|---|
+| **Agent name** | The name shown in your workspace |
+| **Speaks as** | How the agent introduces itself, for example "Sara from Acme Dental" |
+| **Role** | The job it does, for example "Front desk coordinator" |
+| **Objective** (required) | One clear goal for every call |
+| **Opening line** (required) | The first sentence the agent says when the call connects |
+| **Never do** | Rules the agent must follow whatever the caller asks |
+
+Then choose the service guardrails:
+
+- **Disclose AI when asked**: if the caller asks whether this is AI or a person, the agent answers truthfully.
+- **Honour do-not-call immediately**: an opt-out phrase records the request and ends the call.
+- **Allow small talk**: the agent replies naturally to off-topic remarks before returning to the task.
+
+<Warning>
+Always set an **Opening line**. Without one, the caller hears silence until they speak, and many callers hang up.
+</Warning>
+
+<Frame>
+  ![The Persona section with Identity, Greeting, and Service guardrails cards filled in for a fake dental clinic agent.](/images/docs/agent-persona-section.png)
+</Frame>
+
+## Choose language and voice
+
+Open **Language & voice**.
+
+<Steps>
+  <Step title="Pick the language">
+    In **Primary language**, choose **English**, **Arabic**, **Hebrew**, or **Auto-detect**.
+  </Step>
+  <Step title="Pick the dialect">
+    In **Spoken dialect**, choose how the agent should sound. English offers American and British. Arabic offers Egyptian, Gulf / Najdi, Shami / Levantine, and Modern Standard. Hebrew offers Conversational Israeli.
+  </Step>
+  <Step title="Pick a voice">
+    Choose the **Primary voice** or one of the **Secondary voices**. To see all 30 voices, open **More voice options (all 30)**.
+  </Step>
+  <Step title="Listen before you save">
+    Use **Voice sample** to hear the selected voice in the selected language.
+  </Step>
+  <Step title="Pick a speaking tone">
+    Choose one: **Friendly**, **Happy**, **Warm professional**, **Professional**, **Calm**, **Energetic**, **Direct**, or **Formal**.
+  </Step>
+</Steps>
+
+<Frame>
+  ![The Language & voice section with Arabic and Gulf / Najdi selected, the recommended voice cards, and the speaking tone grid.](/images/docs/agent-language-voice.png)
+</Frame>
+
+### Speaking style and timing
+
+| Setting | What it does |
+|---|---|
+| **Pace** | **Natural**, **Measured**, or **Brisk** delivery |
+| **Response consistency** | Higher values stay closer to your wording; lower values vary the phrasing |
+| **Let callers interrupt** | The caller can talk over the agent; short noises are ignored |
+| **Listening pause** | How long the agent waits after the caller stops, from 350 ms to 1,500 ms. The default is 350 ms |
+
+<Tip>
+If the agent cuts callers off mid-thought, raise **Listening pause** a little at a time.
+</Tip>
+
+## Save your changes
+
+Click **Save changes** at the bottom of the editor. New calls use the saved settings right away. There is no separate publish step for inbound agents.
+
+To undo unsaved edits, click **Discard**.
+
+## Next steps
+
+After the persona and voice, finish the setup in this order:
+
+1. Grant documents in [Knowledge](/ai-agents/knowledge-base).
+2. Turn on tools in [Skills & tools](/ai-agents/tools-and-integrations).
+3. Grant [transfer destinations](/ai-agents/transfers).
+4. [Add the agent to a call flow](/ai-agents/add-to-call-flow) and place a test call.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Which language should I choose if my callers speak several?">
+    Choose **Auto-detect** to let the agent follow the caller. Pick a fixed language if most callers use one, because some features, such as spoken progress updates, need a primary language.
+  </Accordion>
+  <Accordion title="Can I change the voice later?">
+    Yes. Change it in **Language & voice** and click **Save changes**. The next call uses the new voice.
+  </Accordion>
+  <Accordion title="How do I delete an agent?">
+    Open the agent, click the more actions menu (**⋯**), then **Delete agent…**. TalkChief disconnects its phone line first. Existing call reports and transcripts stay available. If a call flow still uses the agent, remove that step first.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Knowledge base" icon="book" href="/ai-agents/knowledge-base">
+    Give the agent approved documents.
+  </Card>
+  <Card title="Tools and integrations" icon="screwdriver-wrench" href="/ai-agents/tools-and-integrations">
+    Let the agent look things up and take actions.
+  </Card>
+</CardGroup>

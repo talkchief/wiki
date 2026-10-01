@@ -1,0 +1,125 @@
+---
+title: "Route inbound calls to an AI voice agent | TalkChief"
+sidebarTitle: "Add to a call flow"
+description: "Send calls on your TalkChief numbers to an inbound AI voice agent with the call flow AI Agent step, then verify the agent with checks and a test call."
+keywords: ["route calls to ai agent", "ai agent call flow", "ai receptionist phone number", "inbound ai voice agent"]
+---
+
+An inbound agent only answers calls that a call flow sends to it. This page shows how to connect the agent, add it to a number's call flow, and test it before real callers reach it.
+
+<Note>
+Each inbound agent uses one slot of your plan's AI agent limit. The **Inbound agents** page shows your usage. To raise the limit, contact TalkChief support.
+</Note>
+
+## Before you start
+
+- Finish the agent's **Persona** and **Language & voice**. See [Create an agent](/ai-agents/create-an-agent).
+- Make sure your TalkChief wallet holds at least $10.
+
+## Step 1: Check the phone connection
+
+TalkChief creates a dedicated phone line for each inbound agent when you create it.
+
+<Steps>
+  <Step title="Open Phone connection">
+    Open the agent and go to **Phone connection**.
+  </Step>
+  <Step title="Check the status">
+    The **TalkChief AI agent line** card shows the agent's extension and status. The page header shows **Phone connected** with the extension.
+  </Step>
+  <Step title="Fix a problem">
+    If the card says **Connection needs attention**, click **Retry connection**.
+  </Step>
+</Steps>
+
+The line stays connected on its own. Closing the browser does not stop the agent.
+
+## Step 2: Add the agent to a call flow
+
+Do this once for each number that should ring the agent.
+
+<Steps>
+  <Step title="Open the number's call flow">
+    In the TalkChief web app, go to **Numbers**. Find the number and click **Callflow**.
+  </Step>
+  <Step title="Add the AI Agent step">
+    Click **Add option** where the call should go, then choose **AI Agent**.
+  </Step>
+  <Step title="Pick the agent">
+    In **Select AI agent**, search for and select your agent. Set **Keep ringing for** between 15 and 60 seconds, then click **Save**.
+  </Step>
+  <Step title="Save the call flow">
+    Click **Save** to apply the call flow.
+  </Step>
+</Steps>
+
+<Frame>
+  ![The TalkChief call flow editor showing an Incoming Call step followed by an AI Agent step, with the Add option menu open and AI Agent highlighted.](/images/docs/call-flow-ai-agent-step.png)
+</Frame>
+
+You can combine the agent with other steps. For example, send calls to the agent outside working hours, or from one option of a phone menu. See [Call flows](/phone/call-flows).
+
+<Tip>
+The agent's **Add to Callflow** section repeats these steps and has an **Open app.talkchief.io** button. The section cannot see your call flows, so it never shows as complete.
+</Tip>
+
+## Step 3: Run the configuration checks
+
+Open the agent and go to **Checks & history**. **Configuration checks** test the saved setup, such as the persona, greeting language, phone line, tools, and transfer directory.
+
+- **Pass** means the item is ready.
+- **Warn** or **Fail** shows what to fix. Click **Fix** to jump to the right section.
+
+The **Test** panel on the right shows the same readiness list at any time.
+
+<Frame>
+  ![The Checks & history section with Configuration checks showing mostly Pass badges and one Warn with a Fix button.](/images/docs/agent-checks-history.png)
+</Frame>
+
+## Step 4: Place a test call
+
+<Steps>
+  <Step title="Save your changes">
+    Click **Save changes**. New calls use the saved settings. There is no separate publish step.
+  </Step>
+  <Step title="Call the agent">
+    From a trusted TalkChief phone, call the extension shown under **Test call**. You can also call the number you routed in step 2.
+  </Step>
+  <Step title="Review the call">
+    The **Latest call** panel shows the first lines of the conversation. Click **Open report** to see the full call in **Call reports**.
+  </Step>
+</Steps>
+
+Confirm the greeting, answers, transfers, and timing before you route customer traffic to the agent.
+
+<Frame>
+  ![The agent editor Test panel showing Readiness, the Test call extension with a Copy button, and the Latest call preview.](/images/docs/agent-test-panel.png)
+</Frame>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The agent does not appear in Select AI agent">
+    Create the agent in the agents workspace first. If the list does not load, refresh the call flow page.
+  </Accordion>
+  <Accordion title="Calls ring but the agent never answers">
+    Open the agent's **Phone connection** and check the line status. Click **Retry connection** if it needs attention. Also check that your wallet holds at least $10.
+  </Accordion>
+  <Accordion title="I reached the AI agent limit">
+    Delete an agent you no longer use, or ask TalkChief support to raise the limit. Remove a deleted agent from any call flow first.
+  </Accordion>
+  <Accordion title="Can the agent run a phone menu?">
+    No. Build the menu in the call flow and route one of its options to the AI Agent step.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Call flows" icon="diagram-project" href="/phone/call-flows">
+    Build the routing for each number.
+  </Card>
+  <Card title="Call reports" icon="file-lines" href="/ai-agents/call-reports">
+    Review the test call.
+  </Card>
+</CardGroup>
