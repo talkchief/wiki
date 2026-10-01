@@ -79,8 +79,7 @@
             "group": "Integrations",
             "pages": [
               "integrations/overview",
-              "integrations/crm-integrations",
-              "integrations/microsoft-teams"
+              "integrations/crm-integrations"
             ]
           }
         ]
@@ -113,5 +112,12 @@
       "x": "https://x.com/talkchief",
       "linkedin": "https://linkedin.com/company/talkchief"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/integrations/microsoft-teams",
+      "destination": "/integrations/overview",
+      "permanent": true
+    }
+  ]
 }
