@@ -3,8 +3,8 @@
   "theme": "luma",
   "name": "TalkChief",
   "colors": {
-    "primary": "#1be49c",
-    "light": "#0c8c5c",
+    "primary": "#1B4DBF",
+    "light": "#415EC6",
     "dark": "#0c0c0c"
   },
   "favicon": {
@@ -12,8 +12,8 @@
     "dark": "/images/favicon.ico"
   },
   "logo": {
-    "light": "/images/talkchief-icon-white.svg",
-    "dark": "/images/talkchief-logo-circle-blue.png"
+    "light": "/images/talkchief-logo-circle-blue.png",
+    "dark": "/images/image-light.png"
   },
   "navbar": {
     "links": [
