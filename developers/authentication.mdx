@@ -1,5 +1,5 @@
 ---
-title: "Authenticate TalkChief API Requests with API Keys"
+title: "TalkChief API Authentication: Keys, Scopes, and Security"
 sidebarTitle: "Authentication"
 description: "TalkChief uses per-capability API keys passed as Bearer tokens. Learn how to provision, use, and secure your keys for every API integration."
 ---
@@ -39,17 +39,17 @@ Authorization: Bearer YOUR_API_KEY
 Here is a complete `curl` example that initiates an outbound call using the Click-to-Call API. Replace `YOUR_API_KEY` with your real key, and use the base URL from your authenticated dashboard — not the placeholder shown here.
 
 ```bash
-curl -X POST https://api.talkchief.io/v1/calls \
+curl -X POST https://{your-api-host}/v1/calls \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "to": "+1234567890",
-    "from": "+10987654321"
+    "to": "+12025551234",
+    "from": "+19175550001"
   }'
 ```
 
 <Note>
-  The base URL `https://api.talkchief.io/v1/` is a placeholder used for illustration only. Your real production API base URL is available in your authenticated TalkChief dashboard and contract documentation. Do not hardcode this placeholder in production code — it will not resolve to a live endpoint.
+  Replace `{your-api-host}` with the customer-specific base URL from your TalkChief dashboard under **Settings → Developers**. Production API hosts are not published publicly — always retrieve your live base URL from the authenticated dashboard or the downloadable OpenAPI spec.
 </Note>
 
 ## Key Scoping

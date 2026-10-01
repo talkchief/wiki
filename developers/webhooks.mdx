@@ -1,5 +1,5 @@
 ---
-title: "CDR Webhooks: Receive Completed-Call Events"
+title: "CDR Webhooks: Receive and Verify Completed-Call Events"
 sidebarTitle: "Webhooks"
 description: "Receive real-time call detail records via HTTPS webhooks — verify HMAC-SHA256 signatures and handle retries for every completed call."
 ---
@@ -57,7 +57,7 @@ TalkChief delivers the following JSON body for a `call.completed` event. All fie
   "duration_seconds": 183,
   "status": "completed",
   "timestamp": "2024-11-15T14:32:00Z",
-  "recording_url": "https://storage.talkchief.io/recordings/c_7f3k9m2.mp3",
+  "recording_url": "https://recordings.example-cdn.talkchief.io/c_7f3k9m2.mp3",
   "queue_id": "q_sales",
   "agent_id": "u_alice",
   "metadata": {}
