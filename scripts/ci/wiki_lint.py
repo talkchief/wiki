@@ -245,7 +245,7 @@ def main():
             if not m:
                 continue
             alt, dest = m.group(1), m.group(2)
-            if not re.fullmatch(r"/images/[\w./-]+\.(png|jpe?g|gif|webp|svg)", dest.strip()):
+            if not re.fullmatch(r"/images/[A-Za-z0-9_./-]+\.(png|jpe?g|gif|webp|svg)", dest.strip()):  # ASCII names only
                 err(rel, f"image {m.group(0)[:60]!r}: use ![alt](/images/name.png) with no title or <...>")
             # Alt text is plain words and punctuation only (allow-list): no Markdown, HTML, entities,
             # escapes or code, so it renders identically in the repo and in Mintlify's <img alt>.

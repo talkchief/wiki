@@ -82,7 +82,7 @@ def wait_for_mintlify():
     return False
 
 
-FENCE = re.compile(r"^(\s*)(`{3,}|~{3,})(.*)$")
+FENCE = re.compile(r"^( {0,3})(`{3,}|~{3,})(.*)$")  # CommonMark: at most 3 spaces before a fence
 
 
 JSX_TAG = re.compile(r"<[A-Z][\w.]*(?:\s[^<>]*)?/?>")
