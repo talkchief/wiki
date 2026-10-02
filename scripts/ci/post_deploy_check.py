@@ -86,7 +86,71 @@ FENCE = re.compile(r"^(\s*)(`{3,}|~{3,})(.*)$")
 
 
 JSX_TAG = re.compile(r"<[A-Z][\w.]*(?:\s[^<>]*)?/?>")
-INLINE_CODE = re.compile(r"(`+)(.+?)\1", re.S)
+INLINE_CODE = re.compile(r"(?<!`)(`+)(?!`)(.+?)(?<!`)\1(?!`)", re.S)  # same rule as wiki_lint.CODE_SPAN
+
+
+# alt text may contain backslash-escaped characters such as \]
+MD_IMG = re.compile(r"!\[((?:\\[^\n]|[^\]\\\n])*)\]\([ \t]*/?(images/[^)\s?#]+)[ \t]*\)")  # single-line only, like lint
+# only Mintlify's own CDN for this site, or a site-relative path, counts as the repo image
+HTML_IMG = re.compile(r'<img\s+src="(?:https://mintcdn\.com/talkchief/[A-Za-z0-9_-]+/|/)'
+                      r'(images/[^"?#]+)(?:\?[^"]*)?"\s+alt="([^"]*)"'
+                      r'((?:\s+[\w:-]+="[^"]*")*)\s*/?>')  # extra attributes are validated in html_token
+IMG_ATTR = re.compile(r'\s+([\w:-]+)="([^"]*)"')
+# Attributes Mintlify adds to repo images (observed on the live site). Anything else, or a srcset /
+# data-path pointing at a different file, leaves the <img> as raw text so the page mismatches.
+IMG_INERT = {"width", "height", "data-og-width", "data-og-height", "data-optimize", "data-opv"}
+SRCSET_URL = re.compile(r"https://mintcdn\.com/talkchief/[A-Za-z0-9_-]+/(images/[^\s?#,]+)(?:\?[^\s,]*)?$")  # no commas anywhere in the URL
+MD_ESC = re.compile(r"\\([!\"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~])")
+
+
+def _canon_images(s):
+    """Mintlify serves repo images as <img src="https://<cdn>/<site>/<hash>/images/x.png?..." alt="...">.
+    Map both that and markdown ![alt](/images/x.png) to one token: same file + same alt text."""
+    # Image tokens use control characters (STX/ETX/US) that cannot occur in page text:
+    # strip them from the input first, so no prose (escaped or not) can ever form a token.
+    s = s.translate({0x02: None, 0x03: None, 0x1F: None})
+    def md_token(m):
+        alt = MD_ESC.sub(lambda e: e.group(1), m.group(1))  # literal text; lint forbids entities in alt
+        return f"\x02{m.group(2)}\x1f{alt}\x03"
+    def escaped(m):  # an odd number of backslashes before "![" or "<img" makes it literal text
+        i, n = m.start(), 0
+        while i - n - 1 >= 0 and m.string[i - n - 1] == "\\":
+            n += 1
+        return n % 2 == 1
+    s = MD_IMG.sub(lambda m: m.group(0) if escaped(m) else md_token(m), s)
+    def html_token(m):
+        path = m.group(1)
+        for name, val in IMG_ATTR.findall(m.group(3)):
+            if name in IMG_INERT:
+                if name in ("width", "height", "data-og-width", "data-og-height") and not val.isdigit():
+                    return m.group(0)
+            elif name == "data-path":
+                if val != path:
+                    return m.group(0)
+            elif name == "srcset":
+                # decode the whole value first (browsers decode &#44; etc. before parsing srcset),
+                # then every candidate must be exactly "<same-image URL> <N>w|<N>x"
+                # Mintlify writes "URL Nw, URL Nw". Requiring ", " separators and comma-free URLs means
+                # our split and the browser's srcset tokeniser always see the same candidates.
+                dec = html.unescape(val)
+                # Browsers split srcset on ASCII whitespace only; anything else (NBSP, other Unicode
+                # spaces, control chars) would become part of a URL, so it is rejected outright.
+                if not re.fullmatch(r"[\x21-\x7e \t\n\r\f]*", dec):
+                    return m.group(0)
+                for cand in re.split(r",[ \t\n\r\f]+", dec.strip(" \t\n\r\f")):
+                    parts = [x for x in re.split(r"[ \t\n\r\f]+", cand) if x]
+                    if not 1 <= len(parts) <= 2:
+                        return m.group(0)
+                    if len(parts) == 2 and not re.fullmatch(r"\d+w|\d+(?:\.\d+)?x", parts[1]):
+                        return m.group(0)
+                    u = SRCSET_URL.match(parts[0])
+                    if not u or u.group(1) != path:  # every candidate must be the same image
+                        return m.group(0)
+            else:
+                return m.group(0)  # unknown attribute: don't treat as the repo image
+        alt = html.unescape(m.group(2).replace("\\'", "'"))  # Mintlify escapes apostrophes as \'; decode entities once
+        return f"\x02{path}\x1f{alt}\x03"
+    return HTML_IMG.sub(lambda m: m.group(0) if escaped(m) else html_token(m), s)
 
 
 def _canon_text(s):
@@ -106,9 +170,25 @@ def _canon_prose(s):
     """Prose outside fences. Inline `code` spans are kept literally (no unescaping, quote
     conversion or whitespace collapsing); only the text between them is normalised.
     No Unicode compatibility folding: URLs and identifiers are compared as written."""
+    def norm(t):  # prose only: decode entities once, then canonicalise
+        return _canon_text(html.unescape(t))
+
     def seg(t):  # normalise, but keep whether (rendered) whitespace existed at each code-span boundary
-        t = html.unescape(t)  # decode first so &#32; / &nbsp; count as the whitespace they render as
-        c = _canon_text(t)
+        t = _canon_images(t)  # on raw text: entity-encoded delimiters can never form an image
+        pieces = re.split(r"(\x02[^\x03]*\x03)", t)
+        built = []
+        for p in pieces:
+            if p.startswith("\x02"):
+                built.append(p)
+                continue
+            n, d = norm(p), html.unescape(p)
+            lead = " " if d[:1].isspace() else ""
+            trail = " " if d[-1:].isspace() else ""
+            built.append((lead + n + trail) if n else (" " if d and d.isspace() else ""))
+        # prose pieces are already single-spaced with at most one edge space, and tokens sit
+        # between them, so joining never creates runs; image tokens are kept byte-for-byte
+        c = "".join(built).strip()
+        t = html.unescape(t)
         if not c:
             return " " if t and t.isspace() else ""
         return (" " if t[:1].isspace() else "") + c + (" " if t[-1:].isspace() else "")
@@ -128,13 +208,14 @@ def canon(s):
     Fenced code: compared literally; only `theme={null}` on the fence line and trailing
     whitespace are dropped."""
     s = s.replace("\r", "")
-    parts, prose, fence, code = [], [], None, []
+    parts, prose, fence, code, indent = [], [], None, [], 0
     for line in s.split("\n"):
         m = FENCE.match(line)
         if fence is None:
             if m:
                 parts.append(_canon_prose("\n".join(prose))); prose = []
                 fence = m.group(2)
+                indent = len(m.group(1))  # CommonMark: strip up to the fence's own indent from content lines
                 meta = re.sub(r"(?:^|\s+)theme=\{null\}\s*$", "", m.group(3)).strip()  # only the trailing attribute Mintlify appends
                 code = [f"{fence}{meta}"]
             else:
@@ -144,7 +225,8 @@ def canon(s):
                 code.append(fence)
                 parts.append("\n".join(l.rstrip() for l in code)); fence, code = None, []
             else:
-                code.append(line)
+                k = len(line) - len(line.lstrip(" "))
+                code.append(line[min(k, indent):])
     if fence is not None:
         parts.append("\n".join(l.rstrip() for l in code))
     parts.append(_canon_prose("\n".join(prose)))
@@ -163,7 +245,11 @@ def split_served(served):
         j += 1
     while j < len(L) and L[j].startswith(">"):
         j += 1
-    return h1, "\n".join(L[j:])
+    body = "\n".join(L[j:])
+    # Mintlify appends a hosting footer line to every served .md copy; it is not page content.
+    body = re.sub(r"\n+This documentation is built and hosted on \[Mintlify\]\(https://mintlify\.com\), "
+                  r"a developer documentation platform\.\s*$", "\n", body)
+    return h1, body
 
 
 def nav_pages(node, acc):
