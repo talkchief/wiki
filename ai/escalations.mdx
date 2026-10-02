@@ -101,11 +101,11 @@ Escalation detection is set on the **Settings** tab of **Insights** > **Escalati
   ![Escalations > Settings tab with the Company default switch turned on and a Teams list where each team follows the company and shows an On badge](/images/docs/escalations-settings-tab.png)
 </Frame>
 
-Detection applies to calls that start after you turn it on. Earlier calls are not checked again. Turning it off takes effect right away, including for alerts that have not been sent yet. Calls with no member follow the company default. When detection is off, the **Open** tab shows a notice, and dashboards show **Not enabled** instead of a 0% escalation rate.
+Detection applies to calls that start after you turn it on. Earlier calls are not checked again. Turning it off takes effect right away, including for alerts that have not been sent yet. Calls with no member follow the company default. When detection is off, the **Open** tab shows a notice. In CoWork, the **AI insights** dashboard shows **Escalations not enabled** instead of a 0% escalation rate when no call in the period had detection on.
 
 ## Create your own escalation rules
 
-Add rules for situations that matter to your business, such as a customer asking for a refund or mentioning a competitor. Your rules are checked on every new call in addition to TalkChief's standard detection. You can have up to 10 active rules.
+Add rules for situations that matter to your business, such as a customer asking for a refund or mentioning a competitor. Active rules are checked in addition to TalkChief's standard detection on new calls where escalation detection is on: company-wide rules on every such call, team rules on that team's calls. You can have up to 10 active rules.
 
 <Steps>
   <Step title="Open Rules">
@@ -118,13 +118,13 @@ Add rules for situations that matter to your business, such as a customer asking
     Select **Validate with AI**. TalkChief rewrites your rule as one clear condition in English, suggests a title, and checks it on short examples that should and should not match. Review the wording before you save. If the rule needs changes, you see why.
   </Step>
   <Step title="Save the draft">
-    Edit the **Title** if you like. It is shown on flagged calls and in alerts. Select **Save draft**.
+    Edit **Title (shown on flagged calls and alerts)** if you like. Select **Save draft**.
   </Step>
   <Step title="Test on recent calls">
-    Select **Test on recent calls** to see which of your recent calls the rule would flag, with the matching line. If your scope has fewer than 10 recent calls, the example check counts as the test.
+    Select **Test on recent calls** to see which of your recent calls the rule would flag, with the matching line. If the rule's scope had fewer than 10 transcribed calls in the last 30 days, a passing example check counts as the test.
   </Step>
   <Step title="Activate">
-    Select **Activate**. The rule applies to calls that start from now on.
+    Select **Activate**. The rule applies to calls processed from now on. Calls already processed are not checked again.
   </Step>
 </Steps>
 
@@ -141,9 +141,9 @@ If calls that match your rule are already flagged with a higher severity by stan
 
 ### Edit, turn off, or delete a rule
 
-- **Edit** saves your changes as a new draft version. The active version keeps working until you test and activate the new one. Earlier versions are listed under **Earlier versions**.
+- **Edit** saves your changes as a new draft version. The active version keeps working until you test and activate the new one. Earlier versions are listed under **Earlier versions**, with their count.
 - **Turn off** stops the rule for new calls. Calls already flagged keep their result.
-- **Delete** removes the rule and all its versions. Calls already flagged keep their result.
+- **Delete rule** (the trash icon) removes the rule and all its versions. Calls already flagged keep their result.
 
 ## Get notified
 
@@ -228,7 +228,7 @@ To stop posting, turn the channel's switch off, or select **Disconnect**. The ch
     Check that escalation detection is on for the company or the member's team on the **Settings** tab. Detection only applies to calls that start after it was turned on.
   </Accordion>
   <Accordion title='"Test this version on recent calls before activating it"'>
-    Each new version must be tested before you activate it. Select **Test on recent calls**, then **Activate**.
+    Test the new version with **Test on recent calls**, then select **Activate**. If the scope had fewer than 10 transcribed calls in the last 30 days, a passing example check is enough.
   </Accordion>
   <Accordion title='"You already have 10 active rules"'>
     Turn off a rule you no longer need, then activate the new one.
