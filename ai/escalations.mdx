@@ -1,14 +1,19 @@
 ---
 title: "Review and acknowledge escalated calls in TalkChief"
 sidebarTitle: "Escalations"
-description: "See transcribed calls that need a supervisor, sorted by severity with reasons. Acknowledge them with a note and send alerts by email or to CoWork channels."
-keywords: ["call escalation", "escalation alerts", "supervisor alerts", "customer complaint alerts", "contact center escalations"]
+description: "Review escalated calls by severity, turn detection on per company or team, add your own escalation rules, and send alerts by email or to CoWork."
+keywords:
+  - "call escalation"
+  - "escalation rules"
+  - "escalation alerts"
+  - "supervisor alerts"
+  - "contact center escalations"
 ---
 
-TalkChief flags transcribed calls that need a supervisor. For example, the customer asked for a manager, was very upset, or threatened action. The member was rude, or a complaint or cancellation was left unresolved. You review these calls on the **Escalations** page and acknowledge them when handled.
+TalkChief flags transcribed calls that need a supervisor. For example, the customer asked for a manager, was very upset, or threatened action. The member was rude, or a complaint or cancellation was left unresolved. You review these calls on the **Escalations** page and acknowledge them when handled. You can also add your own rules for what counts as an escalation in your business.
 
 <Note>
-  Escalations need [AI transcription](/ai/ai-transcription). Admins see escalations for the whole company. Supervisors see their own teams. Agents do not see escalations.
+  Escalations need [AI transcription](/ai/ai-transcription) and must be turned on for your company or team. See [Turn escalation detection on or off](#turn-escalation-detection-on-or-off). Admins see escalations for the whole company. Supervisors see their own teams. Agents do not see escalations.
 </Note>
 
 ## Severity and reasons
@@ -22,6 +27,8 @@ Each escalated call has a severity and one or more reasons.
 | **Low** | **Hinted at wanting a manager**, **Mild threat**, **Upset customer, issue resolved**, **Problem raised and resolved** |
 
 A call is **Low** only when it has no high or medium reason. Low calls are worth a look but rarely urgent.
+
+Calls flagged by one of [your own rules](#create-your-own-escalation-rules) show the rule's title as the reason, with the severity you chose for it.
 
 ## The sidebar badge
 
@@ -73,6 +80,70 @@ The **Acknowledged** tab shows who acknowledged each call, when, and their note.
 <Frame>
   ![Acknowledge this escalation dialog with the Note (optional) field filled in and the Acknowledge button](/images/docs/escalations-acknowledge-dialog.png)
 </Frame>
+
+## Turn escalation detection on or off
+
+Escalation detection is set on the **Settings** tab of **Insights** > **Escalations**. Transcription and AI insights keep running whether it is on or off.
+
+<Steps>
+  <Step title="Open Settings">
+    Go to **Insights** > **Escalations** > **Settings**.
+  </Step>
+  <Step title="Set the company default">
+    Under **Company default**, turn the switch on or off. Only admins can change it.
+  </Step>
+  <Step title="Override a team if needed">
+    Under **Teams**, choose **Follow company**, **On for this team**, or **Off for this team**. A team can be on even when the company default is off, and the other way around.
+  </Step>
+</Steps>
+
+<Frame>
+  ![Escalations > Settings tab with the Company default switch turned on and a Teams list where each team follows the company and shows an On badge](/images/docs/escalations-settings-tab.png)
+</Frame>
+
+Detection applies to calls that start after you turn it on. Earlier calls are not checked again. Turning it off takes effect right away, including for alerts that have not been sent yet. Calls with no member follow the company default. When detection is off, the **Open** tab shows a notice, and dashboards show **Not enabled** instead of a 0% escalation rate.
+
+## Create your own escalation rules
+
+Add rules for situations that matter to your business, such as a customer asking for a refund or mentioning a competitor. Your rules are checked on every new call in addition to TalkChief's standard detection. You can have up to 10 active rules.
+
+<Steps>
+  <Step title="Open Rules">
+    Go to **Insights** > **Escalations** > **Rules** and select **Add rule**.
+  </Step>
+  <Step title="Describe the rule">
+    In **Rule**, describe one thing that can be heard in the call, in any language. Choose the **Severity**, who must say it under **Said by**, and whether it applies to the whole company or one team.
+  </Step>
+  <Step title="Validate with AI">
+    Select **Validate with AI**. TalkChief rewrites your rule as one clear condition in English, suggests a title, and checks it on short examples that should and should not match. Review the wording before you save. If the rule needs changes, you see why.
+  </Step>
+  <Step title="Save the draft">
+    Edit the **Title** if you like. It is shown on flagged calls and in alerts. Select **Save draft**.
+  </Step>
+  <Step title="Test on recent calls">
+    Select **Test on recent calls** to see which of your recent calls the rule would flag, with the matching line. If your scope has fewer than 10 recent calls, the example check counts as the test.
+  </Step>
+  <Step title="Activate">
+    Select **Activate**. The rule applies to calls that start from now on.
+  </Step>
+</Steps>
+
+<Frame>
+  ![New escalation rule dialog: the rule text, Severity, Said by and Applies to fields, a successful AI validation, the English condition, the suggested title, and four example checks](/images/docs/escalations-rule-dialog.png)
+</Frame>
+
+### When your rule overlaps standard detection
+
+If calls that match your rule are already flagged with a higher severity by standard detection, TalkChief tells you before you save. Choose one:
+
+- **Keep standard (highest wins)**: your rule adds its severity, and standard detection keeps its own when it is higher.
+- **Use my rule**: when your rule matches a call, your severity replaces the overlapping standard one for that call. Calls where your rule does not match are unaffected.
+
+### Edit, turn off, or delete a rule
+
+- **Edit** saves your changes as a new draft version. The active version keeps working until you test and activate the new one. Earlier versions are listed under **Earlier versions**.
+- **Turn off** stops the rule for new calls. Calls already flagged keep their result.
+- **Delete** removes the rule and all its versions. Calls already flagged keep their result.
 
 ## Get notified
 
@@ -152,6 +223,15 @@ To stop posting, turn the channel's switch off, or select **Disconnect**. The ch
   </Accordion>
   <Accordion title="&quot;You have reached the maximum number of connected channels&quot;">
     Each team can have up to 10 channels. Disconnect one you no longer use.
+  </Accordion>
+  <Accordion title="New calls are not flagged">
+    Check that escalation detection is on for the company or the member's team on the **Settings** tab. Detection only applies to calls that start after it was turned on.
+  </Accordion>
+  <Accordion title='"Test this version on recent calls before activating it"'>
+    Each new version must be tested before you activate it. Select **Test on recent calls**, then **Activate**.
+  </Accordion>
+  <Accordion title='"You already have 10 active rules"'>
+    Turn off a rule you no longer need, then activate the new one.
   </Accordion>
   <Accordion title="The test message did not arrive">
     Check that the webhook still exists in CoWork. If it was deleted, create a new one and connect it again.
