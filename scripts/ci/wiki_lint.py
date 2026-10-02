@@ -217,6 +217,40 @@ def main():
             err(rel, f"placeholder text {ph.group(0)!r}")
         if EMPTY_LINK.search(plain):
             err(rel, "empty link target []()")
+        # One image form only: ![plain alt](/images/...png). The post-deploy check compares it
+        # to Mintlify's <img>; formatted alt text, titles or <...> destinations would fail there.
+        # Every unescaped "![" must start a construct in the permitted grammar; anything else
+        # (nested brackets, reference images, broken syntax) is rejected, not skipped.
+        strict = re.compile(r"!\[([^\[\]\\\n]*)\]\(([^)\n]*)\)")  # one line only, like MD_IMG
+        # scan with fenced code removed but inline code KEPT, so backticks inside alt are seen
+        imgsrc = re.sub(r"```.*?```", "", body, flags=re.S)
+        # Escaped backticks (\`) are banned: they make code-span boundaries ambiguous between
+        # this lint, the post-deploy check and Mintlify's renderer. Use &#96; or a code block.
+        if re.search(r"(?<!\\)(?:\\\\)*\\`", imgsrc):
+            err(rel, "escaped backtick \\` in prose; rephrase or put it in a code block")
+        code_spans = [m.span() for m in re.finditer(r"(?<!`)(`+)(?!`)(.+?)(?<!`)\1(?!`)", imgsrc, re.S)]  # same rule as post_deploy_check.INLINE_CODE
+        in_code = lambda i: any(a <= i < b for a, b in code_spans)  # "![" written inside `code` is an example
+        def escaped(i):  # odd number of backslashes before "![" makes it literal text
+            n = 0
+            while i - n - 1 >= 0 and imgsrc[i - n - 1] == "\\":
+                n += 1
+            return n % 2 == 1
+        img_starts = [st.start() for st in re.finditer(r"!\[", imgsrc)
+                      if not in_code(st.start()) and not escaped(st.start())]
+        for st in img_starts:
+            if not strict.match(imgsrc, st):
+                err(rel, f"image {imgsrc[st:st + 60]!r}: use ![plain alt](/images/name.png); "
+                         "no brackets in alt, no reference-style images")
+        for m in (strict.match(imgsrc, st) for st in img_starts):
+            if not m:
+                continue
+            alt, dest = m.group(1), m.group(2)
+            if not re.fullmatch(r"/images/[A-Za-z0-9_./-]+\.(png|jpe?g|gif|webp|svg)", dest.strip()):  # ASCII names only
+                err(rel, f"image {m.group(0)[:60]!r}: use ![alt](/images/name.png) with no title or <...>")
+            # Alt text is plain words and punctuation only (allow-list): no Markdown, HTML, entities,
+            # escapes or code, so it renders identically in the repo and in Mintlify's <img alt>.
+            elif not re.fullmatch(r"[\w ,.'\"\-–>/()&:…·?%+]*", alt) or re.search(r"&\w*;|(?:^|\W)_\S|\S_(?:\W|$)", alt):
+                err(rel, f"image alt text must be plain text (no Markdown formatting): {alt[:60]!r}")
         for pat, why in PROSE_BANNED:
             m = pat.search(text) or pat.search(html.unescape(text))
             if m:
