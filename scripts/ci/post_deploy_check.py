@@ -56,7 +56,9 @@ def wait_for_mintlify():
                 r = max(runs, key=lambda x: x.get("started_at") or "")
                 print(f"Mintlify Deployment: {r['status']} / {r.get('conclusion')}")
                 if r["status"] == "completed":
-                    return r.get("conclusion") == "success"
+                    # "skipped": Mintlify had nothing to deploy (e.g. only .mintignore'd files changed).
+                    # Safe to accept: the page comparison below still has to match this commit.
+                    return r.get("conclusion") in ("success", "skipped")
             else:
                 print("Mintlify Deployment not reported yet")
             sleep_upto(20)
