@@ -84,7 +84,8 @@
               "ai/transcripts-and-summaries",
               "ai/call-search",
               "ai/escalations",
-              "ai/ai-insights"
+              "ai/ai-insights",
+              "ai/deep-insights"
             ]
           },
           {
