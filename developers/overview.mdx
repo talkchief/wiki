@@ -5,7 +5,7 @@ description: "Connect TalkChief to your own systems: place calls with Click-to-C
 keywords: ["talkchief api", "click to call api", "call transcription api", "cdr webhook", "developer docs"]
 ---
 
-TalkChief has three integration points for developers. You can start calls from your CRM or website, send call recordings to be transcribed, and receive a record of every completed call at your own endpoint. Company admins set all three up in the TalkChief app under **Settings** → **Integrations**.
+TalkChief has three integration points for developers. You can start calls from your CRM or website, send call recordings to be transcribed, and receive a record of every completed call at your own endpoint. Company admins set all three up in the TalkChief app under **Integrations** (the **API** and **CDR Webhook** tabs).
 
 ## What you can build
 
@@ -17,7 +17,7 @@ TalkChief has three integration points for developers. You can start calls from 
 
 ## Base URL
 
-All API requests go to the base URL shown in **Settings** → **Integrations** → **Overview**:
+All API requests go to the base URL shown in **Integrations** → **API** → **Overview & keys**:
 
 ```text
 https://api.talkchief.io/public/api
@@ -27,12 +27,16 @@ For example, Click-to-Call is `POST https://api.talkchief.io/public/api/calls/cl
 
 ## Where to manage everything
 
-Open **Settings** → **Integrations** in the TalkChief app. The **Integration APIs** page has these tabs:
+Open **Integrations** in the TalkChief app menu. The page has three tabs:
 
-- **Overview**: the base URL and your **Company ID**.
-- **API Keys**: generate, show, copy and rotate the **Click-to-Call** and **AI Transcriber** keys.
-- **Click-to-Call**, **AI Transcription** and **CDR Webhook**: reference material and the webhook settings form.
-- **OpenAPI Spec**: download the specification with **Download JSON** or **Download PDF**.
+- **CRM**: connect HubSpot, Zoho, Pipedrive and the other CRM integrations.
+- **CDR Webhook**: the destinations that receive a record of every completed call, plus the payload reference.
+- **API**: everything for the developer APIs, in four sections:
+  - **Overview & keys**: the base URL, your **Company ID**, and the **Click-to-Call** and **AI Transcriber** keys (generate, show, copy, rotate).
+  - **Click-to-Call** and **AI Transcription**: reference material.
+  - **OpenAPI Spec**: download the specification with **Download JSON** or **Download PDF**.
+
+Old links to **Settings** → **Integrations** open **Integrations** → **API**.
 
 <Note>
   Only company admins can view, generate or rotate API keys and change the webhook settings.

@@ -5,15 +5,18 @@ description: "Set up the TalkChief CDR webhook to get a record of each completed
 keywords: ["cdr webhook", "call detail record webhook", "talkchief webhook", "call completed webhook", "webhook authentication"]
 ---
 
-The CDR webhook sends a call detail record (CDR) to your endpoint after each call ends. You get one delivery per call, with the direction, outcome, timings, the agent who handled it and a link to the recording if there is one. Use it to keep a CRM, data warehouse or billing system up to date without polling.
+The CDR webhook sends a call detail record (CDR) to your endpoints after each call ends. You can add up to five destinations, and each enabled destination gets its own delivery of every call, with the direction, outcome, timings, the agent who handled it and a link to the recording if there is one. Use it to keep a CRM, data warehouse or billing system up to date without polling.
 
 There's one event type: **call completed**. You don't subscribe to individual events.
 
-## Set up the webhook
+## Set up a destination
 
 <Steps>
   <Step title="Open the webhook settings">
-    Sign in as a company admin and go to **Settings** → **Integrations** → **CDR Webhook**. Until you save a webhook, the status shows **Not configured**.
+    Sign in as a company admin and go to **Integrations** → **CDR Webhook**. Until you add a destination, the list shows **No destinations yet**.
+  </Step>
+  <Step title="Add a destination">
+    Click **Add destination** and give it a **Name**, for example `Data warehouse`, so you can tell your destinations apart.
   </Step>
   <Step title="Enter your endpoint">
     In **Endpoint URL**, enter the full `http://` or `https://` address of your receiver, up to 1,024 characters. It must be reachable from the public internet. Use HTTPS in production.
@@ -27,11 +30,24 @@ There's one event type: **call completed**. You don't subscribe to individual ev
     Under **Authentication**, choose an **Authentication type**: **None**, **Bearer token**, **Basic auth** or **Custom header**. Then fill in the fields it shows. See [Authenticate deliveries](#authenticate-deliveries).
   </Step>
   <Step title="Save">
-    Click **Enable webhook**. Saving turns delivery on, and the status changes to **Active**. Later edits use **Save changes**.
+    Click **Save destination**. The destination is enabled straight away and its status shows **Active**.
   </Step>
 </Steps>
 
-Once the webhook exists, the page also shows **Disable** (switch delivery off and keep your settings), **Enable** (switch it back on) and **Delete webhook** (remove the webhook and its endpoint URL). After you delete it, calls are no longer delivered.
+## Manage destinations
+
+Each row in the list shows the destination's name, endpoint, method and format, authentication and status.
+
+- Use the on/off switch to turn one destination off or on. A destination that's off is skipped; the others keep receiving calls.
+- **Edit**: change any setting. Leave the secret blank to keep the saved one, as long as you keep the same authentication type.
+- **⋯** → **Delete**: remove the destination after you confirm. Deleting the last destination removes the webhook, and calls are no longer delivered.
+- **Pause all** / **Resume all**: stop or restart delivery to every destination without changing their settings.
+
+You can have up to five destinations. Two destinations can't use the same endpoint and method.
+
+<Note>
+  If you set up the webhook before multiple destinations were available, your existing endpoint appears as the first destination. Nothing needs to change.
+</Note>
 
 <Note>
   Calls between two internal extensions aren't delivered. The webhook only reports calls with an outside party.
@@ -187,10 +203,11 @@ Every delivery contains these fields. With JSON, the body is UTF-8, and non-Lati
 
 ## Respond and handle retries
 
+- Each destination is delivered and retried on its own. If one endpoint is down, the others still receive the call on time, and a destination that already acknowledged a call isn't sent it again.
 - Reply with any `2xx` status to acknowledge a delivery. Each attempt waits up to 15 seconds for your reply.
-- TalkChief retries when it can't connect, when the request times out, or when you reply with `408`, `425`, `429` or any `5xx`. Retries are spaced further apart each time: after 30 seconds, 2 minutes, 10 minutes, 30 minutes and 1 hour. **Retry attempts** sets how many of these steps are used. A value of 0 is treated as the default of 3.
-- Any other `4xx` reply, such as `400`, `401`, `404` or `422`, counts as a permanent failure, and that call isn't retried.
-- If your endpoint keeps failing, the webhook can be switched off automatically. The CDR Webhook page then shows **Disabled** and the reason. Fix the endpoint and click **Save changes** to switch it back on.
+- TalkChief retries when it can't connect, when the request times out, or when you reply with `408`, `425`, `429` or any `5xx`. Retries are spaced further apart each time: after 30 seconds, 2 minutes, 10 minutes, 30 minutes and 1 hour. Each destination's **Retry attempts** sets how many of these steps are used for that destination. A value of 0 is treated as the default of 3.
+- Any other `4xx` reply, such as `400`, `401`, `404` or `422`, counts as a permanent failure for that destination, and that call isn't retried to it.
+- If your endpoint keeps failing, the webhook can be switched off automatically. The CDR Webhook page then shows **Disabled** and the reason. Fix the endpoint and save the destination to switch it back on.
 
 Each call arrives once in normal operation. A delivery that TalkChief couldn't confirm may be sent again, though, so always deduplicate on `providerCallId`.
 
@@ -202,7 +219,7 @@ TalkChief waits about 90 seconds after a call ends before delivering it. This le
 
 <AccordionGroup>
   <Accordion title="The page says Agent details are missing">
-    Member information isn't being attached to deliveries. Click **Save changes** on the CDR Webhook page to restore it.
+    Member information isn't being attached to deliveries. Edit any destination on the CDR Webhook page and click **Save destination** to restore it.
   </Accordion>
   <Accordion title="The page says Other webhooks may deliver duplicate calls">
     Another webhook on your account also reports completed calls, so the same call can reach you twice. The page lists the other webhooks by name and address. If you don't recognize one, contact TalkChief support.
