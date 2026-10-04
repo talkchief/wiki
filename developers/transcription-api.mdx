@@ -25,7 +25,7 @@ The AI Transcription API turns a call recording into text. Each part of the tran
 
 <Steps>
   <Step title="Get the AI Transcriber key">
-    As a company admin, go to **Settings** → **Integrations** → **API Keys**. On the **AI Transcriber** panel, click **Generate key** if you don't have one yet, then click **Copy**.
+    As a company admin, go to **Integrations** → **API** → **Overview & keys**. On the **AI Transcriber** panel, click **Generate key** if you don't have one yet, then click **Copy**.
   </Step>
   <Step title="Copy your Company ID">
     The **Company ID** appears at the top of the same page. Send it as `company_id` on every submit request.
@@ -239,7 +239,7 @@ console.log(data.status, data.text);
 
 ## Billing
 
-- Each completed transcription is charged to your company wallet per minute of audio. The current rate is shown in **Settings** → **Integrations** → **AI Transcription**.
+- Each completed transcription is charged to your company wallet per minute of audio. The current rate is shown in **Integrations** → **API** → **AI Transcription**.
 - Every job is billed for at least one minute. After the first minute, billing is per second, so a 26-second recording is billed as 60 seconds and a 73-second recording as 73 seconds.
 - Jobs that end in `error` aren't charged.
 - Before TalkChief accepts a job, your wallet must hold the minimum balance. If it doesn't, you get HTTP `402` with `Error balance is below $5, please topup to proceed`, and nothing is submitted or charged.
