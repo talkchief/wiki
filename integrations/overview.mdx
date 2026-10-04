@@ -6,14 +6,34 @@ description: "Connect TalkChief to HubSpot, Pipedrive, Zoho, Powerlink, and Come
 
 Integrations bridge your TalkChief calling activity and your existing business software, so call logs, contact data, and outcomes flow automatically into the tools your teams rely on every day. Whether you run sales in HubSpot or Pipedrive or manage customers in Zoho, TalkChief integrations remove the manual work of copying information between systems and give every team member the full call context they need.
 
+## Where to find integrations
+
+Everything that connects TalkChief to other systems is in one place: **Integrations** under **Configuration** in the sidebar. Only company admins see it. The page has three tabs:
+
+- **CRM**: connect HubSpot, Pipedrive, Zoho, Zoho PhoneBridge, Powerlink and Comeunity. See [CRM integrations](/integrations/crm-integrations).
+- **CDR Webhook**: send a record of every completed call to up to 5 endpoints. See [CDR webhook](/developers/webhooks).
+- **API**: your Company ID, base URL and API keys, plus the Click-to-Call, AI Transcription and OpenAPI references. See [Developer APIs](/developers/overview).
+
+<Note>
+  Click-to-Call, AI Transcription and the CDR webhook used to be under **Settings** > **Integrations**. They moved to **Integrations**, and old links to the Settings page open the **API** tab.
+</Note>
+
+<Frame>
+  ![TalkChief admin sidebar with Integrations selected under the Configuration group, between Working Hours and Settings](/images/docs/integrations-sidebar.png)
+</Frame>
+
+<Frame>
+  ![Integrations page on the CRM tab: the CRM, CDR Webhook and API tabs at the top, Your connected integrations, and the Discover More Integrations cards for Pipedrive, HubSpot, Powerlink, Zoho PhoneBridge, Zoho and Comeunity](/images/docs/integrations-crm-tab.png)
+</Frame>
+
 ## Available Integrations
 
 <CardGroup cols={2}>
   <Card title="HubSpot" icon="hubspot" href="/integrations/crm-integrations#hubspot">
-    Log calls as HubSpot activities, pop contact records on inbound calls, and dial contacts directly from HubSpot.
+    Send TalkChief call activity to HubSpot and name inbound callers from HubSpot records.
   </Card>
   <Card title="Pipedrive" icon="chart-line" href="/integrations/crm-integrations#pipedrive">
-    Click-to-call from Pipedrive deals and contacts, with automatic call logging to the Pipedrive activity feed.
+    Send TalkChief call activity to Pipedrive and name inbound callers from Pipedrive records.
   </Card>
   <Card title="Zoho CRM" icon="database" href="/integrations/crm-integrations#zoho-crm-and-zoho-phonebridge">
     Connect Zoho CRM, or use Zoho PhoneBridge to place and receive TalkChief calls inside Zoho.

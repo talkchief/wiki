@@ -34,6 +34,14 @@ There's one event type: **call completed**. You don't subscribe to individual ev
   </Step>
 </Steps>
 
+<Frame>
+  ![Integrations > CDR Webhook tab with Call records (CDR) destinations, the Add destination button, the No destinations yet empty state and the retry note](/images/docs/integrations-cdr-webhook-tab.png)
+</Frame>
+
+<Frame>
+  ![Add destination dialog with Name, Endpoint URL, Method POST, Body format JSON, Retry attempts 3 and Authentication type None](/images/docs/integrations-cdr-add-destination.png)
+</Frame>
+
 ## Manage destinations
 
 Each row in the list shows the destination's name, endpoint, method and format, authentication and status.
@@ -66,7 +74,7 @@ TalkChief doesn't sign webhook requests. To check that a request came from TalkC
 
 - The credential is one your endpoint expects. It's not a TalkChief API key.
 - Secrets can be up to 2,048 characters and can't contain line breaks. A basic auth username can't contain a colon.
-- A custom header name can only contain letters, digits and ``! # $ % & ' * + . ^ _ ` | ~ -``. You can't use `Host`, `Content-Length`, `Content-Type`, `Transfer-Encoding`, `Connection`, `User-Agent` or `Accept`, because TalkChief sets these itself.
+- A custom header name can only contain letters, digits, the backtick and these symbols: `!` `#` `$` `%` `&` `'` `*` `+` `.` `^` `_` `|` `~` `-`. You can't use `Host`, `Content-Length`, `Content-Type`, `Transfer-Encoding`, `Connection`, `User-Agent` or `Accept`, because TalkChief sets these itself.
 - You enter the secret but never see it again. The app only shows that a secret is saved, plus its last four characters for longer secrets. If you leave the field blank when you save, the stored secret is kept, as long as you haven't changed the authentication type.
 - If you switch the type to **None** and save, the stored credential is removed.
 - TalkChief never follows redirects, so the credential only ever goes to the exact endpoint you entered.
