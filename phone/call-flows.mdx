@@ -105,6 +105,68 @@ The **AI Agent** step rings an AI voice agent the same way a member is rung. Pic
 
 For a full walkthrough, see [Add an AI agent to a call flow](/ai-agents/add-to-call-flow).
 
+## Version history
+
+Every time you select **Save**, TalkChief keeps the call flow as it was before your change and the new one you just saved. You can look back at earlier versions, compare them with today's flow, and bring one back.
+
+- TalkChief keeps the last **15** saved versions of each number's call flow. When a 16th is added, the oldest is removed.
+- Versions are created only when someone selects **Save**. Edits you haven't saved are never stored.
+- If the flow was changed outside the editor (for example by TalkChief support), that state is kept too, the next time someone saves.
+
+### Open the version history
+
+In the call flow editor, select **History** at the top right. The **Version history** panel lists the saved versions, newest first, grouped by day (**Today**, **Yesterday**, then the date). Each row shows the time and who saved it.
+
+<Frame>
+  ![Version history panel listing four saved versions of a demo number's call flow, the newest marked Current](/images/docs/callflow-version-history-panel.png)
+</Frame>
+
+Some rows carry a label:
+
+| Label | Meaning |
+| --- | --- |
+| **Current** | This version is the call flow your number uses right now. |
+| **Restored** | This version was saved after someone restored an older one. |
+| **Edited outside TalkChief** | The flow was changed outside the editor before this save. |
+
+### Preview a version
+
+Select a row to see that version on the canvas. A **Viewing version from** banner shows its date and time. The preview is read-only: you can look at every step, but you can't add, edit, or delete anything. Your own unsaved edits stay safe while you look.
+
+<Frame>
+  ![Read-only preview of an earlier call flow version with the Restore this version, Delete and Back to current buttons](/images/docs/callflow-version-preview.png)
+</Frame>
+
+If a step uses something that was deleted since, such as a member, team, IVR, or media file, it shows a **Deleted** label (for example **Deleted member**). The banner tells you how many items no longer exist, because saving that version may fail until you replace them.
+
+Select **Back to current** to return to your call flow.
+
+### Restore a version
+
+<Steps>
+  <Step title="Preview the version">
+    Select **History**, then select the version you want.
+  </Step>
+  <Step title="Select Restore this version">
+    The version is loaded into the editor. Nothing changes for your callers yet. If you had unsaved edits, TalkChief asks before replacing them.
+  </Step>
+  <Step title="Review and save">
+    The bar at the bottom shows **Restored version, not saved yet**. Check the flow, make any changes you need, and select **Save** to apply it. Select **Cancel** to go back without changing anything.
+  </Step>
+</Steps>
+
+<Frame>
+  ![Restored version loaded in the call flow editor with the Restored version, not saved yet bar and its Save and Cancel buttons](/images/docs/callflow-version-restored.png)
+</Frame>
+
+<Note>
+  Restoring never applies a version on its own. Your callers only get the restored flow after you select **Save**, and that save becomes a new version in the history.
+</Note>
+
+### Delete a version
+
+Preview the version and select **Delete**, then confirm. You can't delete the **Current** version.
+
 ## Frequently asked questions
 
 <AccordionGroup>
@@ -113,6 +175,12 @@ For a full walkthrough, see [Add an AI agent to a call flow](/ai-agents/add-to-c
   </Accordion>
   <Accordion title="Where do the working hours in a Time Condition come from?">
     From each team's **Working Hours** on the team **Settings** tab. See [Working hours and media](/phone/working-hours-and-media).
+  </Accordion>
+  <Accordion title="Save says the call flow was changed elsewhere">
+    Someone else saved this number's call flow after you opened it. Your edits stay on screen. Select **Reload latest** to load the newest flow, then make your change again. The other person's version is kept in **History**.
+  </Accordion>
+  <Accordion title="I see 'Saved, but the version history could not be updated'">
+    Your call flow was saved and is live. Only the history entry for that save was skipped. The next save adds a new entry as usual.
   </Accordion>
   <Accordion title="The editor says the call flow could not be loaded">
     Select **Retry**. If it keeps failing, check that the number is still active in **Calls** → **Numbers**.
