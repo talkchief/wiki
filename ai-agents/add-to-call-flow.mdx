@@ -22,7 +22,7 @@ TalkChief creates a dedicated phone line for each inbound agent when you create 
 
 <Steps>
   <Step title="Open Phone connection">
-    Open the agent and go to **Phone connection**.
+    Open the agent and click the phone status (**ext** and **Connected**) on the agent block on the canvas.
   </Step>
   <Step title="Check the status">
     The **TalkChief AI agent line** card shows the agent's extension and status. The page header shows **Phone connected** with the extension.
@@ -33,6 +33,10 @@ TalkChief creates a dedicated phone line for each inbound agent when you create 
 </Steps>
 
 The line stays connected on its own. Closing the browser does not stop the agent.
+
+<Frame>
+  ![The Phone connection panel showing the TalkChief AI agent line card with extension 8000 and a Connected status.](/images/docs/agent-phone-connection.png)
+</Frame>
 
 ## Step 2: Add the agent to a call flow
 
@@ -59,31 +63,25 @@ Do this once for each number that should ring the agent.
 
 You can combine the agent with other steps. For example, send calls to the agent outside working hours, or from one option of a phone menu. See [Call flows](/phone/call-flows).
 
-<Tip>
-The agent's **Add to Callflow** section repeats these steps and has an **Open app.talkchief.io** button. The section cannot see your call flows, so it never shows as complete.
-</Tip>
-
 ## Step 3: Run the configuration checks
 
-Open the agent and go to **Checks & history**. **Configuration checks** test the saved setup, such as the persona, greeting language, phone line, tools, and transfer directory.
+Open the agent and click **Checks** in the header. The button shows how many checks pass, for example **6/6**. **Configuration checks** test the saved setup, such as the spoken language, phone line, persona, tools, and transfer directory.
 
 - **Pass** means the item is ready.
-- **Warn** or **Fail** shows what to fix. Click **Fix** to jump to the right section.
-
-The **Test** panel on the right shows the same readiness list at any time.
+- **Warn** or **Fail** describes what to fix. Fix it in the matching block on the canvas, then click **Save changes**.
 
 <Frame>
-  ![The Checks & history section with Configuration checks showing mostly Pass badges and one Warn with a Fix button.](/images/docs/agent-checks-history.png)
+  ![The Checks & history panel with six Configuration checks, all showing Pass.](/images/docs/agent-checks-history.png)
 </Frame>
 
 ## Step 4: Place a test call
 
 <Steps>
   <Step title="Save your changes">
-    Click **Save changes**. New calls use the saved settings. There is no separate publish step.
+    Click **Save changes**. New calls use the saved settings, whether the agent is a draft or published.
   </Step>
   <Step title="Call the agent">
-    From a trusted TalkChief phone, call the extension shown under **Test call**. You can also call the number you routed in step 2.
+    In **Checks & history**, find **Test call**. From any TalkChief phone, call the extension shown there. Click **Copy** to copy it. You can also call the number you routed in step 2.
   </Step>
   <Step title="Review the call">
     The **Latest call** panel shows the first lines of the conversation. Click **Open report** to see the full call in **Call reports**.
@@ -93,7 +91,7 @@ The **Test** panel on the right shows the same readiness list at any time.
 Confirm the greeting, answers, transfers, and timing before you route customer traffic to the agent.
 
 <Frame>
-  ![The agent editor Test panel showing Readiness, the Test call extension with a Copy button, and the Latest call preview.](/images/docs/agent-test-panel.png)
+  ![The Test call card in Checks & history, showing extension 8000 with a Copy button and an empty Latest call section.](/images/docs/agent-test-panel.png)
 </Frame>
 
 ## Troubleshooting
