@@ -31,7 +31,7 @@ You need a TalkChief admin or supervisor account and a free slot under your plan
 
 The agent opens on its canvas. The agent block sits at the top, with a group below it for **Language & voice**, **Knowledge**, and **Skills & tools**. Click any block to edit it in the panel on the right. Use **\+** in a group to attach more, and drag blocks to rearrange them. A block marked **!** needs attention.
 
-The header shows the phone line status, **Checks**, **Save changes**, and **Publish**. To switch to another agent, click the agent name in the breadcrumb. To see every setting as a list, click **List view**.
+The header shows the phone line status, **Checks**, **Save changes**, and **Publish**. To switch to another agent, click the arrow next to the agent name in the breadcrumb. To see the blocks as a simple list instead of a canvas, click **List view**.
 
 <Frame>
   ![The agent canvas for a fake Receptionist agent, with the Language & voice, Knowledge, and Skills & tools groups attached to the agent block.](/images/docs/agent-canvas.png)
@@ -45,7 +45,7 @@ The direction is fixed when you create the agent. If the job changes from answer
 
 Click the agent block to open **Persona**.
 
-Under **Agent template**, you can change the **Template** and **Personality**. Your edits stay on this agent; the template itself never changes. **Reset to template defaults** brings back the template's wording.
+Under **Agent template**, pick a **Template** and **Personality**, then click **Change template** (or **Use template** if the agent has none). This applies right away, so save any other persona edits first. Your edits stay on this agent; the template itself never changes. **Reset to template defaults** brings back the template's wording.
 
 | Field | What to enter |
 |---|---|
@@ -54,7 +54,7 @@ Under **Agent template**, you can change the **Template** and **Personality**. Y
 | **Role** | The job it does, for example "Front desk coordinator" |
 | **Objective** (required) | One clear goal for every call |
 | **Opening line** (required) | The first sentence the agent says when the call connects |
-| **Business rules** | Your own **Do** and **Don't** rules for this agent |
+| **Business rules** | Your own **Do** and **Don't** rules. Type a rule and click **Add**; each rule saves as soon as you add it |
 | **Never do** | Rules the agent must follow whatever the caller asks |
 
 Then choose the service guardrails:
@@ -73,7 +73,7 @@ Always set an **Opening line**. Without one, the caller hears silence until they
 
 ## Choose language and voice
 
-Click the **Language & voice** group to open its panel.
+Click the **Language** or **Voice** block in the **Language & voice** group to open its panel.
 
 <Steps>
   <Step title="Pick the language">
@@ -103,7 +103,7 @@ Click **Save changes** in the header. New calls use the saved settings right awa
 
 To undo unsaved edits, click **Discard** at the bottom of the panel.
 
-A new agent starts as a **Draft**. When every item in **Checks** passes, click **Publish** to mark it **Published**. A draft agent still answers the calls your call flow sends to it.
+A new agent starts as a **Draft**. When no item in **Checks** fails, click **Publish** to mark it **Published**. Warnings do not block publishing. A draft agent still answers the calls your call flow sends to it.
 
 ## Next steps
 

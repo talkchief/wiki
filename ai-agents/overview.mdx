@@ -46,7 +46,6 @@ The sidebar groups every page by task.
 |---|---|---|
 | Home | **Overview** | See recent usage, calls in progress, and items that need attention |
 | Build | **Inbound agents** | Create and edit agents that answer calls |
-| Build | **Campaigns** | Create outbound campaigns and caller profiles |
 | Library | **Knowledge** | Upload reference documents once for the whole workspace |
 | Library | **Email** | Connect one sender address the agents can use |
 | Library | **Tools & APIs** | Add MCP connectors and Business APIs |
@@ -91,7 +90,7 @@ Agents do not record call audio. Call reports keep the written transcript only. 
     Your plan sets an AI agent limit. The **Inbound agents** page shows how many you use, for example "2 of 3 AI agents". To get more, delete an agent you no longer need or ask TalkChief support to raise the limit.
   </Accordion>
   <Accordion title="Do changes need a publish step?">
-    No. Click **Save changes** and new calls use the updated settings. **Publish** marks an inbound agent as ready after all its checks pass; a draft agent still answers the calls your call flow sends to it. Outbound caller profiles have a **Publish caller profile** step before their first campaign.
+    No. Click **Save changes** and new calls use the updated settings. **Publish** marks an inbound agent as ready once none of its checks fail; a draft agent still answers the calls your call flow sends to it. Outbound caller profiles have a **Publish caller profile** step before their first campaign.
   </Accordion>
   <Accordion title="Can the agent say it is an AI?">
     Yes. For inbound agents, turn on **Disclose AI when asked**. In outbound campaigns the agent always answers truthfully if a lead asks directly.
