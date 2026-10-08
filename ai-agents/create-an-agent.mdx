@@ -21,15 +21,21 @@ You need a TalkChief admin or supervisor account and a free slot under your plan
     In **Agent name**, enter a name your team will recognize, for example "Maya — customer care".
   </Step>
   <Step title="Create it">
-    Click **Create inbound agent**. TalkChief creates the agent's own phone line and checks it. If the line cannot be verified, no agent is saved.
+    Optionally pick a role in **Start from a template**, such as **AI Receptionist**. Then click **Create inbound agent**. TalkChief creates the agent's own phone line and checks it. If the line cannot be verified, no agent is saved.
   </Step>
 </Steps>
 
 <Frame>
-  ![The Create an inbound service agent dialog with Agent name filled in and the AI agents usage note.](/images/docs/create-inbound-agent-dialog.png)
+  ![The Create an inbound service agent dialog with the Start from a template picker, the Agent name field, and the AI agents usage note.](/images/docs/create-inbound-agent-dialog.png)
 </Frame>
 
-The agent editor opens. Its sections are **Persona**, **Language & voice**, **Knowledge**, **Skills & tools**, **Phone connection**, **Add to Callflow**, and **Checks & history**. A colored dot beside each section shows whether it is complete or needs attention.
+The agent opens on its canvas. The agent block sits at the top, with a group below it for **Language & voice**, **Knowledge**, and **Skills & tools**. Click any block to edit it in the panel on the right. Use **\+** in a group to attach more, and drag blocks to rearrange them. A block marked **!** needs attention.
+
+The header shows the phone line status, **Checks**, **Save changes**, and **Publish**. To switch to another agent, click the agent name in the breadcrumb. To see every setting as a list, click **List view**.
+
+<Frame>
+  ![The agent canvas for a fake Receptionist agent, with the Language & voice, Knowledge, and Skills & tools groups attached to the agent block.](/images/docs/agent-canvas.png)
+</Frame>
 
 <Tip>
 The direction is fixed when you create the agent. If the job changes from answering to calling out, create a campaign.
@@ -37,7 +43,9 @@ The direction is fixed when you create the agent. If the job changes from answer
 
 ## Set the persona
 
-Open **Persona**.
+Click the agent block to open **Persona**.
+
+Under **Agent template**, you can change the **Template** and **Personality**. Your edits stay on this agent; the template itself never changes. **Reset to template defaults** brings back the template's wording.
 
 | Field | What to enter |
 |---|---|
@@ -46,6 +54,7 @@ Open **Persona**.
 | **Role** | The job it does, for example "Front desk coordinator" |
 | **Objective** (required) | One clear goal for every call |
 | **Opening line** (required) | The first sentence the agent says when the call connects |
+| **Business rules** | Your own **Do** and **Don't** rules for this agent |
 | **Never do** | Rules the agent must follow whatever the caller asks |
 
 Then choose the service guardrails:
@@ -59,12 +68,12 @@ Always set an **Opening line**. Without one, the caller hears silence until they
 </Warning>
 
 <Frame>
-  ![The Persona section with Identity, Greeting, and Service guardrails cards filled in for a fake dental clinic agent.](/images/docs/agent-persona-section.png)
+  ![The Persona panel open beside the canvas, showing the Agent template card with AI Receptionist and Professional & Warm selected.](/images/docs/agent-persona-section.png)
 </Frame>
 
 ## Choose language and voice
 
-Open **Language & voice**.
+Click the **Language & voice** group to open its panel.
 
 <Steps>
   <Step title="Pick the language">
@@ -85,27 +94,16 @@ Open **Language & voice**.
 </Steps>
 
 <Frame>
-  ![The Language & voice section with Arabic and Gulf / Najdi selected, the recommended voice cards, and the speaking tone grid.](/images/docs/agent-language-voice.png)
+  ![The Language & voice panel with English selected, the spoken dialect picker, and the recommended voice cards.](/images/docs/agent-language-voice.png)
 </Frame>
-
-### Speaking style and timing
-
-| Setting | What it does |
-|---|---|
-| **Pace** | **Natural**, **Measured**, or **Brisk** delivery |
-| **Response consistency** | Higher values stay closer to your wording; lower values vary the phrasing |
-| **Let callers interrupt** | The caller can talk over the agent; short noises are ignored |
-| **Listening pause** | How long the agent waits after the caller stops, from 350 ms to 1,500 ms. The default is 350 ms |
-
-<Tip>
-If the agent cuts callers off mid-thought, raise **Listening pause** a little at a time.
-</Tip>
 
 ## Save your changes
 
-Click **Save changes** at the bottom of the editor. New calls use the saved settings right away. There is no separate publish step for inbound agents.
+Click **Save changes** in the header. New calls use the saved settings right away. Knowledge and tool assignments save on their own as soon as you change them.
 
-To undo unsaved edits, click **Discard**.
+To undo unsaved edits, click **Discard** at the bottom of the panel.
+
+A new agent starts as a **Draft**. When every item in **Checks** passes, click **Publish** to mark it **Published**. A draft agent still answers the calls your call flow sends to it.
 
 ## Next steps
 
