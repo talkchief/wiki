@@ -50,7 +50,8 @@
               "phone/call-flows",
               "phone/call-routing",
               "phone/voicemail",
-              "phone/working-hours-and-media"
+              "phone/working-hours-and-media",
+              "phone/create-media"
             ]
           },
           {

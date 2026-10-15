@@ -1,0 +1,129 @@
+---
+title: "Create Media: Record Audio or Generate AI Voice Clips"
+sidebarTitle: "Create media"
+description: "Record greetings with your microphone or turn text into a natural AI voice clip in the TalkChief Media Manager, ready for call flows, IVR menus, and queues."
+keywords: ["record greeting", "AI voice clip", "text to speech IVR", "IVR prompt", "phone greeting", "music on hold"]
+---
+
+**Create media** lets you make new audio for your phone system without leaving TalkChief. Record a greeting with your own microphone, or type the words and let AI read them in a natural voice. Every clip is saved to the **Media Manager**, so you can use it in [call flows](/phone/call-flows), IVR menus, team steps, and queues like any uploaded file.
+
+## Before you start
+
+| | Record | AI voice |
+|---|---|---|
+| Who can use it | Anyone who can upload media | Account admins only |
+| Cost | Free | **$1.00 per clip** |
+| Length | Up to 2 minutes 30 seconds | Up to 1,000 characters (about 1 minute of speech) |
+| Saved as | MP3 | MP3 |
+
+Go to **Configuration** → **Media** and select **Create media**. The window has two tabs: **Record** and **AI voice**.
+
+<Frame>
+  ![Media Manager with the Create media button next to Upload Media](/images/docs/create-media-page.png)
+</Frame>
+
+## Record your own voice
+
+<Steps>
+  <Step title="Allow the microphone">
+    Open the **Record** tab and select the red record button. Your browser asks to use your microphone. Select **Allow**.
+  </Step>
+  <Step title="Record">
+    Speak your message. A level meter shows your voice is being picked up, and a timer shows the length. Select stop when you're done. Recording stops by itself at 2:30.
+  </Step>
+  <Step title="Listen back">
+    Play the recording to check it. Select **Record again** to start over.
+  </Step>
+  <Step title="Name and save">
+    Enter a **Media name**, such as "Closed hours message", and select **Save to media**.
+  </Step>
+</Steps>
+
+<Frame>
+  ![Create media window on the Record tab with the record button and timer](/images/docs/create-media-record.png)
+</Frame>
+
+<Tip>
+  Record in a quiet room and keep the microphone at the same distance throughout. Callers hear exactly what you record.
+</Tip>
+
+## Generate an AI voice clip
+
+<Steps>
+  <Step title="Choose a language">
+    Open the **AI voice** tab and pick a **Language**. Arabic has four options: Levantine (Shami), Gulf, Egyptian, and Modern Standard (Fusha). Hebrew, English, and 25 other languages are also available.
+  </Step>
+  <Step title="Choose a voice">
+    The voice marked **Recommended** is the one we tested as the most natural for that language. Select **Sample** to hear a voice before you choose. Samples are free.
+  </Step>
+  <Step title="Write the text">
+    Type the words exactly as they should be spoken, up to 1,000 characters. Numbers and names are read as you write them.
+  </Step>
+  <Step title="Name the clip">
+    Enter a **Media name** so you can find the clip later, such as "Welcome greeting – Arabic".
+  </Step>
+  <Step title="Confirm the price and generate">
+    The form shows **Price: $1.00 per clip**. Select **Generate · $1.00**, check the summary, and select **Confirm & generate · $1.00**. The clip is usually ready in 5 to 15 seconds and is saved to the Media Manager automatically.
+  </Step>
+</Steps>
+
+<Frame>
+  ![AI voice tab with English selected, the recommended voice, the text to speak, a media name, and the price per clip](/images/docs/create-media-ai-voice.png)
+</Frame>
+
+<Frame>
+  ![Confirmation asking to generate the voice clip, with the media name, voice, length, and price](/images/docs/create-media-confirm.png)
+</Frame>
+
+<Note>
+  You're charged only when the clip is created. Generating again with new text or a different voice is a new clip and costs another $1.00.
+</Note>
+
+## Billing
+
+Each AI voice clip costs **$1.00**, charged to your account balance. Your monthly invoice lists the clips in their own section, **AI Voice Clip Generation**, with the number of clips and the total. Each charge in your account history shows the media name you gave the clip, so you can match every charge to a clip.
+
+Recording your own voice is free.
+
+## Use your new clip
+
+New clips appear in the **Media List** right away. Pick them wherever media is used:
+
+| Where | Setting |
+|---|---|
+| Hold audio for the whole account | **Music On-Hold** on the **Media** page |
+| Greetings in a call flow | **Play Media** step |
+| IVR menu prompt | **Media** in **IVR settings** |
+| Audio while a team rings | **Media** in the **Team** step |
+| Queue hold audio | **Media** in the queue settings |
+
+## Frequently asked questions
+
+<AccordionGroup>
+  <Accordion title="My browser says the microphone is blocked. What do I do?">
+    Select the lock icon next to the address bar, set **Microphone** to **Allow**, and select **Try again**. You can also select **Upload a file instead** and upload an MP3.
+  </Accordion>
+  <Accordion title="Why can't I see the AI voice tab options?">
+    Only account admins can generate AI voice clips, because each clip is charged to the account. Ask an admin, or use the **Record** tab.
+  </Accordion>
+  <Accordion title="It says my balance is too low.">
+    You need at least $1.00 in your balance to generate a clip. Nothing was charged. Top up your balance and try again.
+  </Accordion>
+  <Accordion title="The clip was charged but not saved.">
+    Select **Retry save (no new charge)**. Retrying never charges you again. TalkChief also retries by itself, so the clip appears in the Media Manager within a few minutes.
+  </Accordion>
+  <Accordion title="Can I change the text of a clip after it's created?">
+    No. Generate a new clip with the new text, then delete the old one from the **Media List**.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+<CardGroup cols={2}>
+  <Card title="Working hours and media" icon="clock" href="/phone/working-hours-and-media">
+    Upload files, set music on hold, and manage your media list.
+  </Card>
+  <Card title="Call flows" icon="diagram-project" href="/phone/call-flows">
+    Play your new clips to callers.
+  </Card>
+</CardGroup>
