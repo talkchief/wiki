@@ -1,0 +1,85 @@
+---
+title: "Block Unwanted Callers with the TalkChief Blacklist"
+sidebarTitle: "Blacklist"
+description: "Block spam and unwanted callers from any country. Add numbers one at a time or paste a list, and calls are rejected before they reach your call flow."
+keywords: ["block phone numbers", "call blocking", "blacklist", "block spam calls", "block anonymous callers"]
+---
+
+The blacklist rejects calls from numbers you choose before they reach your call flow. It applies to every TalkChief number in your company, and blocked callers are not notified. You can block a number from any country.
+
+Open it in **Settings** → **Blacklist**.
+
+<Note>
+  Only administrators can add or remove numbers. Supervisors can view the blacklist but not change it. Agents don't have access.
+</Note>
+
+<Frame>
+  ![Blacklist settings page with three demo numbers, a count of 3 of 500 numbers, and the Add number and Add many buttons](/images/docs/blacklist-list.png)
+</Frame>
+
+## Block a number
+
+<Steps>
+  <Step title="Open the dialog">
+    Go to **Settings** → **Blacklist** and select **Add number**.
+  </Step>
+  <Step title="Enter the number">
+    In **Phone number**, type the number. To block a number from any country, start with `+` and the country code, for example `+44 20 7946 0958`. If you leave out the `+`, TalkChief reads the number as one from your own country.
+  </Step>
+  <Step title="Add a label">
+    Optionally, add a **Label (optional)**, such as "Telemarketer", so your team remembers why the number is blocked.
+  </Step>
+  <Step title="Save">
+    Select **Add number**. Calls from that number are rejected right away. Select **Add another** first to keep the dialog open for the next number.
+  </Step>
+</Steps>
+
+<Frame>
+  ![Add number dialog with a US demo number and a Telemarketer label entered](/images/docs/blacklist-add-dialog.png)
+</Frame>
+
+<Tip>
+  Always include the `+` and country code for numbers that call you from abroad. A number stored without its country code can't match incoming international calls.
+</Tip>
+
+## Block many numbers at once
+
+Select **Add many**, then paste your list into **Numbers, one per line**. Commas also work. TalkChief shows a **Preview** that marks each entry as **Will be added**, **Already blocked**, or **Not a valid number**. Select **Add numbers (n)** to save the valid ones, where *n* is how many will be added. A summary then tells you how many were added, were already blocked, or were not valid.
+
+<Frame>
+  ![Add many dialog with a pasted list and a preview marking valid, duplicate, and invalid entries](/images/docs/blacklist-add-many.png)
+</Frame>
+
+## Block callers who hide their number
+
+Turn on **Block callers who hide their number** to reject anonymous and withheld callers as well. This setting is off by default.
+
+## Remove a number
+
+Select the trash icon on the number's row and confirm **Remove this number?**. Calls from that number ring your numbers again.
+
+## Search and limits
+
+- Use **Search the blacklist** to find a number or label in a long list.
+- The blacklist holds up to 500 numbers. The counter shows how many you have used, for example **3 of 500 numbers**. When the list is full, remove a number before adding another.
+- A number can only appear once. Adding it again shows **This number is already on the blacklist**.
+- You can't block one of your own TalkChief numbers, because that would block calls to your team.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="I see Saved in TalkChief — applying to calls is retrying">
+    The number is saved, but TalkChief is still applying it to your calls. It retries automatically. Select **Retry now** to try again right away.
+  </Accordion>
+  <Accordion title="A number shows a Local format badge">
+    It was stored without a country code, so it may not match incoming international calls. Remove it and add it again starting with `+` and the country code.
+  </Accordion>
+  <Accordion title="Enter a valid number with its country code">
+    The number is too short, too long, or contains characters that aren't digits. Numbers can have up to 15 digits.
+  </Accordion>
+</AccordionGroup>
+
+## Related pages
+
+- [Phone numbers and caller ID](/phone/numbers-and-caller-id)
+- [Call routing](/phone/call-routing)

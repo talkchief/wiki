@@ -47,6 +47,7 @@
               "phone/overview",
               "phone/web-phone",
               "phone/numbers-and-caller-id",
+              "phone/blacklist",
               "phone/call-flows",
               "phone/call-routing",
               "phone/voicemail",
