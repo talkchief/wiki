@@ -101,7 +101,8 @@
             "pages": [
               "cowork/overview",
               "cowork/channels-and-spaces",
-              "cowork/meetings-and-conferencing"
+              "cowork/meetings-and-conferencing",
+              "cowork/meetings"
             ]
           },
           {
