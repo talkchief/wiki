@@ -45,6 +45,13 @@ You will copy these values into Okta:
 
 Each field has a **Copy** button.
 
+<Frame>
+  <img
+    src="/images/docs/sso-settings-identity-provider.png"
+    alt="Settings > Single sign-on with the Identity provider card showing the ACS (reply) URL, Entity ID (audience), Service provider metadata and OIDC redirect URL, each with a copy button, and the Configure identity provider button"
+  />
+</Frame>
+
 ## Step 2: Create the TalkChief app in Okta
 
 <Steps>
@@ -114,11 +121,25 @@ Only addresses on a verified domain can sign in through Okta. You prove you own 
   </Step>
 </Steps>
 
+<Frame>
+  <img
+    src="/images/docs/sso-email-domains.png"
+    alt="The Email domains card with the domain field, the Add domain button and a domain marked Verified"
+  />
+</Frame>
+
 Add each email domain your team uses. You can remove a domain later with **Remove domain**.
 
 ## Step 5: Choose the sign-in options
 
 Under **Sign-in options**:
+
+<Frame>
+  <img
+    src="/images/docs/sso-sign-in-options.png"
+    alt="The Sign-in options card with the Use single sign-on, Require single sign-on, Owner keeps password access and Create accounts on first sign-in switches"
+  />
+</Frame>
 
 | Option | What it does |
 | --- | --- |
@@ -137,7 +158,7 @@ When **Use single sign-on** is on, the status at the top of the page changes fro
 
 The first time a member signs in through Okta while **Require single sign-on** is on, TalkChief gives the Web Phone and the CoWork apps a new SIP password automatically, so their old TalkChief password no longer works for calls. Desk phones and any other phones you set up keep working with their current settings: you don't need to reconfigure them.
 
-**Recent activity** at the bottom of the page lists setup changes and sign-ins, such as **Domain verified**, **Identity linked** and **Signed in**.
+**Recent activity** at the bottom of the page lists setup changes and sign-ins, such as **Domain verified**, **Identity linked** and **Signed in**. [Manage single sign-on](/security/sso-manage#recent-activity) explains every entry.
 
 ## Invite people on your domain
 
@@ -149,10 +170,24 @@ The first time the invited person signs in through Okta, their TalkChief account
 
 <Steps>
   <Step title="Open the login page">
-    Go to the TalkChief login page and select **Sign in with SSO**.
+    Go to the TalkChief login page and select **Sign in with SSO**, under the **Login** button.
+
+    <Frame>
+      <img
+        src="/images/docs/sso-login-page.png"
+        alt="The TalkChief Sign in page with the Sign in with SSO link under the Login button"
+      />
+    </Frame>
   </Step>
   <Step title="Enter your work email">
-    Enter your work email and select **Continue**. TalkChief sends you to Okta.
+    On **Sign in with SSO**, enter your work email and select **Continue**. TalkChief sends you to Okta.
+
+    <Frame>
+      <img
+        src="/images/docs/sso-login-sso-step.png"
+        alt="The Sign in with SSO step asking for your work email, with the E-mail field and the Continue button"
+      />
+    </Frame>
   </Step>
   <Step title="Sign in to Okta">
     Sign in to Okta if you aren't already. You return to TalkChief, signed in.
@@ -186,4 +221,12 @@ To sign in to CoWork on the web, go to [cowork.talkchief.io](https://cowork.talk
   <Accordion title='"Company sign-in didn’t complete. Please try again."'>
     Okta didn't finish the sign-in. Check that you are assigned to the TalkChief app in Okta and that its **Single sign-on URL** and **Audience URI** match the values in TalkChief exactly.
   </Accordion>
+  <Accordion title='"Your email domain isn’t set up for company sign-in."'>
+    Your email domain isn't verified under **Email domains**. Ask your admin to add and verify it on **Settings** > **Single sign-on**.
+  </Accordion>
+  <Accordion title='"This account can’t sign in right now. Contact your admin."'>
+    Your TalkChief member is deactivated, so sign-in is refused even though Okta let you through. Ask your TalkChief admin to reactivate you. See [Remove someone's access](/security/sso-manage#remove-someones-access).
+  </Accordion>
 </AccordionGroup>
+
+To turn single sign-on off, remove members, or connect directory sync, see [Manage single sign-on](/security/sso-manage).

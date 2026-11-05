@@ -116,7 +116,8 @@
             "group": "Security",
             "pages": [
               "security/sso-overview",
-              "security/sso-okta"
+              "security/sso-okta",
+              "security/sso-manage"
             ]
           }
         ]
