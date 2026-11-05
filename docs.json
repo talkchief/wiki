@@ -114,7 +114,9 @@
           },
           {
             "group": "Security",
-            "pages": []
+            "pages": [
+              "security/sso-okta"
+            ]
           }
         ]
       },
