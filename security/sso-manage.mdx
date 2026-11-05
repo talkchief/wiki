@@ -48,7 +48,7 @@ When you deactivate a member in TalkChief, they can't sign in, even if they are 
 Unassign the person from the TalkChief app in your identity provider, or remove them from your directory. With directory sync connected, your identity provider tells TalkChief straight away: TalkChief switches the member off and signs them out of TalkChief, AI Voice Agents and CoWork. **Recent activity** shows **Member switched off by the directory**.
 
 <Warning>
-  Deleting a member in TalkChief does not remove them from your identity provider. If **Create accounts on first sign-in** is on and the person is still assigned to the TalkChief app in your identity provider, their next single sign-on creates a new TalkChief account for them, using a free seat. To remove someone for good, also unassign them in your identity provider, or use directory sync, which does it automatically.
+  Deleting a member in TalkChief does not remove them from your identity provider. If **Create accounts on first sign-in** is on and the person is still assigned to the TalkChief app in your identity provider, their next single sign-on creates a new TalkChief account for them and adds a seat back to your subscription. To remove someone for good, also unassign them in your identity provider, or use directory sync, which does it automatically.
 </Warning>
 
 ## Directory sync (SCIM)
@@ -87,7 +87,7 @@ Desk phones (Yealink, Cisco and others) and any other devices you set up keep th
 | **Identity provider refused sign-in** | Your identity provider didn't let the person through. Check that they are assigned to the TalkChief app there. |
 | **Sign-in refused: account inactive** | The member is deactivated in TalkChief. |
 | **Sign-in refused: no TalkChief account** | The person has no account or invitation, and **Create accounts on first sign-in** is off. |
-| **Sign-in refused: no free seat** | **Create accounts on first sign-in** is on, but no seat is free for a new account. |
+| **Sign-in refused: no seat could be added** | **Create accounts on first sign-in** is on, but no seat could be added to your subscription for the new account, for example because the subscription has ended. |
 | **Sign-in refused: email domain not verified** | The person's email domain isn't verified under **Email domains**. |
 | **Sign-in refused: member of another company** | The email belongs to a member of a different TalkChief company. |
 
