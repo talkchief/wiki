@@ -35,6 +35,10 @@ The same happens if your company leaves the **Professional** plan: members who o
 
 ## Remove someone's access
 
+### Passwords while single sign-on is required
+
+While **Require single sign-on** is on, members on your verified domains have no TalkChief password to manage. TalkChief hides **Forgot password?** on the login page, **Change password** in their settings, and **Reset password** for them in **Teams & Members**. The company owner keeps these while **Owner keeps password access** is on.
+
 ### Deactivate a member in TalkChief
 
 When you deactivate a member in TalkChief, they can't sign in, even if they are still active in your identity provider. Their sign-in is refused with: "This account can’t sign in right now. Contact your admin." **Recent activity** shows **Sign-in refused: account inactive**.
@@ -61,7 +65,7 @@ Directory sync never switches off the company owner or an AI agent. When your di
 
 ## Phones when single sign-on is required
 
-While **Require single sign-on** is on, a member's first sign-in through your identity provider gives the Web Phone and the TalkChief desktop and mobile apps a new calling password automatically. Their old TalkChief password no longer works for calls, and they don't need to do anything: the apps pick up the new one. **Recent activity** shows **Calling password renewed**.
+While **Require single sign-on** is on, a member's first sign-in through your identity provider gives the Web Phone a new calling password automatically. The Web Phone picks it up on its own, so the member doesn't need to do anything. **Recent activity** shows **Calling password renewed**.
 
 Desk phones (Yealink, Cisco and others) and any other devices you set up keep their settings and keep working. You don't need to reconfigure them.
 
@@ -94,7 +98,7 @@ Desk phones (Yealink, Cisco and others) and any other devices you set up keep th
 | **Identity linked** | An existing member signed in through your identity provider for the first time and was linked by email. |
 | **Invitation completed** | An invited person signed in through your identity provider and their account is ready. |
 | **Account created on first sign-in** | **Create accounts on first sign-in** created a new account. |
-| **Calling password renewed** | A member's Web Phone and TalkChief apps got a new calling password because single sign-on is required. |
+| **Calling password renewed** | A member's Web Phone got a new calling password because single sign-on is required. |
 | **Member switched off by the directory** | Directory sync removed or deactivated the member. |
 | **Member switched back on by the directory** | Directory sync reactivated the member. |
 | **Directory could not create an account** | Directory sync asked for a new member, but TalkChief couldn't create the account. |
