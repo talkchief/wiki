@@ -111,6 +111,10 @@
               "integrations/overview",
               "integrations/crm-integrations"
             ]
+          },
+          {
+            "group": "Security",
+            "pages": []
           }
         ]
       },
