@@ -133,7 +133,17 @@ When **Use single sign-on** is on, the status at the top of the page changes fro
   Turn on **Use single sign-on** first and test with your own account. Turn on **Require single sign-on** only after your team has signed in through Okta, and keep **Owner keeps password access** on.
 </Tip>
 
+### Phones when single sign-on is required
+
+The first time a member signs in through Okta while **Require single sign-on** is on, TalkChief gives the Web Phone and the CoWork apps a new SIP password automatically, so their old TalkChief password no longer works for calls. Desk phones and any other phones you set up keep working with their current settings: you don't need to reconfigure them.
+
 **Recent activity** at the bottom of the page lists setup changes and sign-ins, such as **Domain verified**, **Identity linked** and **Signed in**.
+
+## Invite people on your domain
+
+When you invite a member whose email is on a verified domain, the invitation asks them to sign in with their company account. Its **Sign in with SSO** button opens the TalkChief login page on the single sign-on step with their email filled in. While **Require single sign-on** is off, the invitation also offers to set a TalkChief password instead. When it is on, there is no password option.
+
+The first time the invited person signs in through Okta, their TalkChief account is ready: their extension and phones are set up as with any invitation.
 
 ## Sign in with Okta
 
@@ -152,6 +162,8 @@ When **Use single sign-on** is on, the status at the top of the page changes fro
 You can also type your work email in the normal login form: on a verified domain, **Sign in with your company** appears under it.
 
 From TalkChief, the **CoWork** and **AI Voice Agents** links in the sidebar open those apps with the same sign-in.
+
+To sign in to CoWork on the web, go to [cowork.talkchief.io](https://cowork.talkchief.io) and select **Sign in with SSO** on the login page.
 
 ## Troubleshooting
 
