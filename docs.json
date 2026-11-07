@@ -109,7 +109,8 @@
             "group": "Integrations",
             "pages": [
               "integrations/overview",
-              "integrations/crm-integrations"
+              "integrations/crm-integrations",
+              "integrations/hubspot"
             ]
           },
           {
