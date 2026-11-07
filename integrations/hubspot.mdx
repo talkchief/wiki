@@ -15,6 +15,7 @@ The TalkChief app for HubSpot logs every TalkChief phone call in your HubSpot ac
 - **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number and the caller ID name. You can turn this off.
 - **Assigns the call to the agent**: the call's owner is the HubSpot user whose email matches the TalkChief agent's email.
 - **Adds the recording**: when the call was recorded, the HubSpot call links to the recording so you can play it from the contact record.
+- **Calls from inside HubSpot**: click a phone number in HubSpot and TalkChief places the call through your TalkChief phone. Incoming calls open the caller's record in HubSpot. See [Call from HubSpot](#call-from-hubspot).
 
 Each logged call shows:
 
@@ -70,6 +71,31 @@ On the connected HubSpot card in **Integrations**, you can change three settings
 | **Log unanswered calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
 | **Create contacts** | Unknown numbers get a new HubSpot contact | Calls from unknown numbers are logged without a contact |
 
+## Call from HubSpot
+
+The TalkChief calling panel lets each agent place and receive TalkChief calls from HubSpot records. You talk on your usual TalkChief phone (the TalkChief app or your desk phone), so moving between HubSpot pages never drops a call.
+
+<Steps>
+  <Step title="Choose TalkChief as your calling provider">
+    In HubSpot, open a contact and select **Call**. In the calling panel, choose **TalkChief** as the provider. To also receive incoming calls in HubSpot, go to **Settings** > **General** > **Calling** and choose **TalkChief** under **Make and receive calls through**.
+  </Step>
+  <Step title="Sign in to TalkChief">
+    In the TalkChief panel, select **Sign in to TalkChief**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. Each agent signs in once on their own computer. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
+  </Step>
+  <Step title="Place a call">
+    Click a phone number on a HubSpot record. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. Hang up on your phone.
+  </Step>
+  <Step title="Receive a call">
+    When a call rings your TalkChief phone, HubSpot opens the caller's record. Answer on your TalkChief phone as usual.
+  </Step>
+</Steps>
+
+Calls made or received through the panel appear on the contact once, with the same details as every other logged call: outcome, talk time, owner and recording.
+
+<Note>
+  Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected. Your company admin must have connected HubSpot first (see [Connect HubSpot](#connect-hubspot)).
+</Note>
+
 ## Data TalkChief uses in HubSpot
 
 When you connect, you allow TalkChief to:
@@ -115,6 +141,12 @@ After you uninstall, calls stop being logged and the HubSpot card in TalkChief a
   </Accordion>
   <Accordion title="A call is not on the contact">
     TalkChief matches the contact by its **Phone number** or **Mobile phone number**. Check that the contact has the caller's number in one of those fields. If **Create contacts** is off, calls from numbers HubSpot doesn't have are logged without a contact.
+  </Accordion>
+  <Accordion title="The calling panel says my TalkChief phone is offline">
+    TalkChief rings your own TalkChief phone first, so it must be registered: open the TalkChief app on your computer or phone, or check that your desk phone is connected, then try again.
+  </Accordion>
+  <Accordion title="The calling panel asks me to sign in again">
+    Your TalkChief sign-in in the panel lasts 12 hours. Select **Sign in to TalkChief** to continue.
   </Accordion>
   <Accordion title="A recording does not play">
     The recording link is added only when the call was recorded. Check that call recording is on for that number or team in TalkChief.
