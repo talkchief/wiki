@@ -110,7 +110,8 @@
             "pages": [
               "integrations/overview",
               "integrations/crm-integrations",
-              "integrations/hubspot"
+              "integrations/hubspot",
+              "integrations/monday"
             ]
           },
           {
