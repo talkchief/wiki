@@ -2,8 +2,14 @@
 title: "Connect HubSpot to log TalkChief calls automatically"
 sidebarTitle: "HubSpot"
 description: "Set up the TalkChief app for HubSpot: connect with your HubSpot login, log every call on the right contact with its recording, and disconnect safely."
-keywords: ["hubspot", "crm", "call logging", "oauth", "integration", "setup guide"]
-hidden: true
+keywords:
+  - "hubspot"
+  - "crm"
+  - "call logging"
+  - "oauth"
+  - "integration"
+  - "setup guide"
+hidden: false
 ---
 
 The TalkChief app for HubSpot logs every TalkChief phone call in your HubSpot account without anyone typing it in. You connect once with your HubSpot login, with no API keys or tokens to copy, and from then on each finished call appears on the matching HubSpot contact with its outcome, talk time, the agent who handled it and a link to the recording.
@@ -54,7 +60,7 @@ Calls usually appear in HubSpot within a few minutes of hanging up.
     HubSpot shows the access TalkChief asks for (see [Data TalkChief uses in HubSpot](#data-talkchief-uses-in-hubspot)). Select **Connect app**.
   </Step>
   <Step title="Confirm in TalkChief">
-    HubSpot sends you back to **Integrations** in TalkChief, where the HubSpot card shows as connected with your HubSpot account.
+    HubSpot sends you back to **Integrations** in TalkChief. A message confirms that HubSpot is connected, and the HubSpot card moves to your connected integrations with a **Connected** label.
   </Step>
   <Step title="Test with a real call">
     Make or receive a call with TalkChief. A few minutes after you hang up, open the contact in HubSpot and check that the call is on its activity timeline.
@@ -63,13 +69,13 @@ Calls usually appear in HubSpot within a few minutes of hanging up.
 
 ## Choose what gets logged
 
-On the connected HubSpot card in **Integrations**, you can change three settings at any time. They apply to calls that end after you save.
+On the connected HubSpot card in **Integrations**, select the settings (gear) icon. The **HubSpot settings** window shows the connected HubSpot account and three switches you can change at any time. Each change is saved as soon as you flip the switch and applies to calls that end afterwards.
 
 | Setting | On (default) | Off |
 |---|---|---|
-| **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
-| **Log unanswered calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
-| **Create contacts** | Unknown numbers get a new HubSpot contact | Calls from unknown numbers are logged without a contact |
+| **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place. The other two switches are unavailable while this is off |
+| **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
+| **Create contacts for new numbers** | Unknown numbers get a new HubSpot contact | Calls from unknown numbers are logged without a contact |
 
 ## Call from HubSpot
 
@@ -103,7 +109,7 @@ When you connect, you allow TalkChief to:
 | Access | Why |
 |---|---|
 | Read contacts | Find the contact whose phone or mobile number matches the call |
-| Create and update contacts | Create a contact for a number HubSpot doesn't have (only while **Create contacts** is on) |
+| Create and update contacts | Create a contact for a number HubSpot doesn't have (only while **Create contacts for new numbers** is on) |
 | Read owners (users) | Match the TalkChief agent to their HubSpot user by email, to set the call owner |
 | Create calls | Log each call on the contact's timeline |
 
@@ -111,7 +117,7 @@ TalkChief writes calls and new contacts to HubSpot. It does not read or change y
 
 ## Disconnect HubSpot
 
-To stop logging calls and remove TalkChief's access, open **Integrations** in TalkChief and select **Disconnect** on the HubSpot card.
+To stop logging calls and remove TalkChief's access, open **Integrations** in TalkChief and select the disconnect icon on the HubSpot card (or **Disconnect** in the **HubSpot settings** window), then confirm with **Yes, disconnect**.
 
 When you disconnect:
 
@@ -119,19 +125,19 @@ When you disconnect:
 - TalkChief deletes its access to your HubSpot account.
 - Calls and contacts already in HubSpot stay there. Nothing is deleted from HubSpot.
 
-You can connect again at any time with **Connect**.
+You can connect again at any time: the HubSpot card returns to **Discover more integrations**, where you select **Connect**.
 
 ## Uninstall the app from HubSpot
 
 You can also remove TalkChief from inside HubSpot: in your HubSpot account, go to **Settings** > **Integrations** > **Connected apps**, find **TalkChief**, and uninstall it.
 
-After you uninstall, calls stop being logged and the HubSpot card in TalkChief asks you to reconnect. Calls and contacts already in HubSpot stay there. To remove the connection from TalkChief too, select **Disconnect** on the HubSpot card.
+After you uninstall, calls stop being logged and the HubSpot card in TalkChief shows **Reconnect needed**. Calls and contacts already in HubSpot stay there. To remove the connection from TalkChief too, disconnect it on the HubSpot card.
 
 ## Troubleshooting
 
 <AccordionGroup>
   <Accordion title="The HubSpot card asks me to reconnect">
-    TalkChief lost access to HubSpot, usually because the app was uninstalled in HubSpot or its access was revoked. Select **Connect** and approve access again. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
+    The card shows **Reconnect needed** when TalkChief lost access to HubSpot, usually because the app was uninstalled in HubSpot or its access was revoked. Select **Reconnect** (on the card or in the **HubSpot settings** window) and approve access again. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
   </Accordion>
   <Accordion title="This HubSpot account is already connected to another company">
     A HubSpot account can be connected to only one TalkChief company, so that each company's calls stay in its own CRM. Disconnect it from the other TalkChief company first, or connect a different HubSpot account.
@@ -140,7 +146,7 @@ After you uninstall, calls stop being logged and the HubSpot card in TalkChief a
     The call owner is set only when the agent's TalkChief email matches a HubSpot user's email. Use the same email in both, or add the agent as a user in HubSpot.
   </Accordion>
   <Accordion title="A call is not on the contact">
-    TalkChief matches the contact by its **Phone number** or **Mobile phone number**. Check that the contact has the caller's number in one of those fields. If **Create contacts** is off, calls from numbers HubSpot doesn't have are logged without a contact.
+    TalkChief matches the contact by its **Phone number** or **Mobile phone number**. Check that the contact has the caller's number in one of those fields. If **Create contacts for new numbers** is off, calls from numbers HubSpot doesn't have are logged without a contact.
   </Accordion>
   <Accordion title="The calling panel says my TalkChief phone is offline">
     TalkChief rings your own TalkChief phone first, so it must be registered: open the TalkChief app on your computer or phone, or check that your desk phone is connected, then try again.
