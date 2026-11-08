@@ -19,7 +19,7 @@ The TalkChief app for monday.com logs every TalkChief phone call in your monday.
 ## What the app does
 
 - **Logs every external call**: inbound and outbound calls become items on the **TalkChief Calls** board. Calls between two TalkChief extensions are not logged.
-- **Links the call to the contact or lead**: in monday CRM accounts, TalkChief looks up the caller's number (or the number you dialed) in the phone column of your **Contacts** board, then your **Leads** board, and links the call item to the match.
+- **Links the call to the contact or lead**: in monday CRM accounts, TalkChief looks up the caller's number (or the number you dialed) in the phone columns of your **Contacts** board, then your **Leads** board (up to three phone columns each, such as Phone and Mobile), and links the call item to the match.
 - **Creates leads for new numbers**: when no contact or lead has the number, TalkChief adds a lead to your **Leads** board with the number and the caller ID name (a contact on your **Contacts** board if you have no **Leads** board). You can turn this off.
 - **Adds the call to the timeline**: in monday CRM accounts, each linked call also appears on the contact's or lead's **Emails & Activities** timeline as a **TalkChief call** activity.
 - **Shows the agent**: the call's **Agent** column is set to the monday.com user whose email matches the TalkChief agent's email.
@@ -111,6 +111,8 @@ The **TalkChief** tab on a contact or lead lets each agent place TalkChief calls
 
 A call placed from a contact's or lead's tab is logged on that contact or lead, with the same details as every other logged call: result, talk time, agent and recording.
 
+With the TalkChief desktop app installed, clicking a phone number anywhere in monday.com also calls through TalkChief, and the call is logged on the contact or lead whose number matches. To link a call to the exact item you are on, use the **Call** buttons in the TalkChief tab.
+
 <Note>
   monday.com can't open a record by itself when a call comes in. Incoming calls still ring your TalkChief phone as usual, and they are logged on the matching contact or lead after the call. While the TalkChief tab is open, it also shows the incoming call and lets you open the caller's record.
 </Note>
@@ -164,7 +166,7 @@ You can also remove the TalkChief app from your monday.com account. After that, 
   </Accordion>
 
   <Accordion title="Calls are not linked to a contact or lead and there is no timeline entry">
-    Linking and timeline entries need monday CRM with a **Contacts** board and a **Leads** board that have a phone column, found when you connected. Check that the contact or lead has the caller's number in that phone column. If **Create contacts for new numbers** is off, calls from unknown numbers are logged without a contact or lead. If monday.com could not search your boards for a call, TalkChief logs it without a link and does not create a lead, so nobody is added twice. If you added monday CRM after connecting, contact TalkChief support.
+    Linking and timeline entries need monday CRM with a **Contacts** board and a **Leads** board that have a phone column, found when you connected. Check that the contact or lead has the caller's number in one of the board's first three phone columns. If **Create contacts for new numbers** is off, calls from unknown numbers are logged without a contact or lead. If monday.com could not search your boards for a call, TalkChief logs it without a link and does not create a lead, so nobody is added twice. If you added monday CRM after connecting, contact TalkChief support.
   </Accordion>
 
   <Accordion title="A call has no agent">
