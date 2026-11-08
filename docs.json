@@ -116,6 +116,7 @@
               "integrations/zendesk",
               "integrations/pipedrive",
               "integrations/activecampaign",
+              "integrations/freshsales",
               "integrations/bitrix24"
             ]
           },
