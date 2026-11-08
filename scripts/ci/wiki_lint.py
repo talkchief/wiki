@@ -4,7 +4,8 @@
 Deployed files = everything except Mintlify's built-in exclusions and .mintignore matches
 (gitignore semantics via `git check-ignore`). Pages = nav entries (.mdx/.md) + any .mdx
 outside snippets/ (which must then be in nav):
-  - frontmatter parsed as YAML: title (<=60), description (110-165), unique; sidebarTitle warn
+  - frontmatter parsed as YAML: title and description required and unique (errors);
+    title length (<=60), description length (110-165) and sidebarTitle are SEO warnings only
     (SEO checks are skipped for `noindex: true` pages; content/confidentiality checks never are)
   - navigation: every nav page exists, no duplicates, no orphan published pages
   - body: no H1 (title is the H1), no TODO/TBD/FIXME/lorem, no empty links
@@ -190,13 +191,13 @@ def main():
             if not t:
                 err(rel, "missing title")
             elif len(t) > TITLE_MAX:
-                err(rel, f"title is {len(t)} chars (max {TITLE_MAX}): {t!r}")
+                warn(rel, f"title is {len(t)} chars (SEO: aim for <= {TITLE_MAX}): {t!r}")
             if not fm.get("sidebarTitle"):
                 warn(rel, "missing sidebarTitle")
             if not d:
                 err(rel, "missing description (SEO)")
             elif not (DESC_MIN <= len(d) <= DESC_MAX):
-                err(rel, f"description is {len(d)} chars (want {DESC_MIN}-{DESC_MAX})")
+                warn(rel, f"description is {len(d)} chars (SEO: aim for {DESC_MIN}-{DESC_MAX})")
             if t:
                 if t.lower() in titles:
                     err(rel, f"duplicate title with {titles[t.lower()]}")
