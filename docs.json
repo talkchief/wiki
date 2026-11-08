@@ -114,7 +114,8 @@
               "integrations/monday",
               "integrations/gohighlevel",
               "integrations/zendesk",
-              "integrations/pipedrive"
+              "integrations/pipedrive",
+              "integrations/activecampaign"
             ]
           },
           {
