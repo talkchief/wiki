@@ -33,14 +33,14 @@ Each ticket shows:
 | Requester | The Zendesk user with the caller's number |
 | Assignee | The agent's Zendesk user on answered calls, when their emails match |
 | Call details | From and to numbers, start time, talk time, the agent who answered, and the recording |
-| Tags | `talkchief` |
+| Tags | `talkchief`, plus `talkchief_unknown_caller` when the ticket has no caller record |
 
 Calls usually appear in Zendesk within a few minutes of hanging up.
 
 ## Before you start
 
 - You are a **company admin** in TalkChief.
-- You sign in to Zendesk as an **admin** or **agent** of the Zendesk account you want to connect. End-user logins can't connect.
+- You sign in to Zendesk as an **admin** of the Zendesk account you want to connect. Agent and end-user logins can't connect.
 - You know your Zendesk subdomain: the first part of the address you use to sign in, such as `yourcompany` in `yourcompany.zendesk.com`. Custom domains (host-mapped addresses) can't be used to connect; use the `zendesk.com` address.
 - One Zendesk account can be connected to one TalkChief company.
 
@@ -72,7 +72,7 @@ On the connected Zendesk card in **Integrations**, select the settings (gear) ic
 | --- | --- | --- |
 | **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
-| **Create contacts for new numbers** | Unknown numbers get a new Zendesk end user, who becomes the requester | No user is created; the ticket's requester is the agent who answered (or the Zendesk user who connected TalkChief) |
+| **Create contacts for new numbers** | Unknown numbers get a new Zendesk end user, who becomes the requester | No user is created; the ticket's requester is the agent who answered (or the Zendesk admin who connected TalkChief), and the ticket is tagged `talkchief_unknown_caller` |
 
 ## Call from Zendesk
 
@@ -135,7 +135,7 @@ A Zendesk admin can also end TalkChief's access from inside Zendesk by deleting 
   </Accordion>
 
   <Accordion title="The Zendesk card asks me to reconnect">
-    The card shows **Reconnect needed** when TalkChief lost access to Zendesk, usually because its access was removed in Zendesk or the user who connected it lost their agent or admin role. Select **Reconnect** and approve access again. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
+    The card shows **Reconnect needed** when TalkChief lost access to Zendesk, usually because its access was removed in Zendesk or the admin who connected it lost their role. Select **Reconnect** and approve access again. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
   </Accordion>
 
   <Accordion title="This Zendesk account is already connected to another company">
