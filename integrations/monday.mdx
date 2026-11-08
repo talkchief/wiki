@@ -24,6 +24,7 @@ The TalkChief app for monday.com logs every TalkChief phone call in your monday.
 - **Adds the call to the timeline**: in monday CRM accounts, each linked call also appears on the contact's or lead's **Emails & Activities** timeline as a **TalkChief call** activity.
 - **Shows the agent**: the call's **Agent** column is set to the monday.com user whose email matches the TalkChief agent's email.
 - **Adds the recording**: when the call was recorded, the item links to the recording.
+- **Calls from inside monday.com**: open a contact or lead, add the **TalkChief** tab and click **Call**. TalkChief rings your TalkChief phone first, then dials, and the call is linked to that contact or lead. See [Call from monday.com](#call-from-mondaycom).
 
 ### The TalkChief Calls board
 
@@ -92,6 +93,28 @@ On the connected monday.com card in **Integrations**, select the settings (gear)
 | **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
 | **Create contacts for new numbers** | Unknown numbers get a new lead on your **Leads** board (a contact if you have no **Leads** board) | Calls from unknown numbers are logged without a contact or lead |
 
+## Call from monday.com
+
+The **TalkChief** tab on a contact or lead lets each agent place TalkChief calls from monday.com. You talk on your usual TalkChief phone (the TalkChief app or your desk phone), so moving around monday.com never drops a call.
+
+<Steps>
+  <Step title="Add the TalkChief tab">
+    In monday.com, open a contact or lead. In the tab bar under the item's name, click **\+** and choose **TalkChief**.
+  </Step>
+  <Step title="Sign in to TalkChief">
+    In the TalkChief tab, select **Sign in to TalkChief**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. Each agent signs in once on their own computer. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
+  </Step>
+  <Step title="Place a call">
+    The tab lists the item's phone numbers. Select **Call** next to the one you want (or type any number on the dial pad). TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. Hang up on your phone.
+  </Step>
+</Steps>
+
+A call placed from a contact's or lead's tab is logged on that contact or lead, with the same details as every other logged call: result, talk time, agent and recording.
+
+<Note>
+  monday.com can't open a record by itself when a call comes in. Incoming calls still ring your TalkChief phone as usual, and they are logged on the matching contact or lead after the call. While the TalkChief tab is open, it also shows the incoming call and lets you open the caller's record.
+</Note>
+
 ## Data TalkChief uses in monday
 
 When you connect, you allow TalkChief to:
@@ -154,6 +177,14 @@ You can also remove the TalkChief app from your monday.com account. After that, 
 
   <Accordion title="Calls arrive late or stop for the rest of the day">
     Your monday.com account may have reached its daily API limit (see [Data TalkChief uses in monday](#data-talkchief-uses-in-monday)). The calls are kept and logged after the limit resets at midnight UTC.
+  </Accordion>
+
+  <Accordion title="The TalkChief tab says my TalkChief phone is offline">
+    TalkChief rings your own TalkChief phone first, so it must be registered: open the TalkChief app on your computer or phone, or check that your desk phone is connected, then try again.
+  </Accordion>
+
+  <Accordion title="The TalkChief tab asks me to sign in again">
+    Your TalkChief sign-in in the tab lasts 12 hours. Select **Sign in to TalkChief** to continue.
   </Accordion>
 
   <Accordion title="A recording does not play">
