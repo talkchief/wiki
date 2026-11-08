@@ -19,9 +19,11 @@ The TalkChief app for Pipedrive logs every TalkChief phone call in your Pipedriv
 
 - **Logs every external call**: inbound and outbound calls are logged as Pipedrive call logs. Calls between two TalkChief extensions are not logged.
 - **Finds the right person**: TalkChief looks up the caller's number (or the number you dialed) in the phone numbers of your Pipedrive persons. A call on a person who belongs to an organization is linked to that organization too.
+- **Links the deal**: a call you place from a deal is linked to that deal. Other calls are linked to the person's most recently updated open deal, if they have one.
 - **Creates persons for new numbers**: when no person has the number, TalkChief creates one with the number and the caller ID name. You can turn this off.
-- **Assigns the call to the agent**: the call log belongs to the Pipedrive user whose email matches the TalkChief agent's email.
+- **Assigns the call to the agent**: the call log belongs to the Pipedrive user whose email matches the TalkChief agent's email. If the agent has no Pipedrive user, it belongs to the person's owner, otherwise to the admin who connected Pipedrive.
 - **Links the recording**: when the call was recorded, the call log's note links to the recording so you can play it from Pipedrive.
+- **Calls from inside Pipedrive**: click a phone number in Pipedrive and TalkChief places the call through your TalkChief phone. Incoming calls open the caller's person in Pipedrive. See [Call from Pipedrive](#call-from-pipedrive).
 
 Each logged call shows:
 
@@ -34,7 +36,8 @@ Each logged call shows:
 | From and to numbers | The numbers on the call |
 | Note | Status, the agent's name and extension, talk time and a link to the recording |
 | Person and organization | The matching person, and their organization |
-| User | The agent's Pipedrive user, when their emails match |
+| Deal | The deal you called from, otherwise the person's most recently updated open deal |
+| User | The agent's Pipedrive user, when their emails match; otherwise the person's owner |
 
 Calls usually appear in Pipedrive within a few minutes of hanging up.
 
@@ -81,6 +84,31 @@ On the connected Pipedrive card in **Integrations**, select the settings (gear) 
 | **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
 | **Create contacts for new numbers** | Unknown numbers get a new Pipedrive person | Calls from unknown numbers are logged without a person |
 
+## Call from Pipedrive
+
+The TalkChief calling panel opens in a small window inside Pipedrive, so each agent can place and receive TalkChief calls without leaving Pipedrive. You talk on your usual TalkChief phone (the TalkChief app or your desk phone), so moving between Pipedrive pages never drops a call.
+
+<Steps>
+  <Step title="Choose TalkChief for phone calls">
+    In Pipedrive, click a person's phone number. If Pipedrive asks how to make the call, choose **TalkChief**. You can also set it as your default calling app in Pipedrive's calling settings.
+  </Step>
+  <Step title="Sign in to TalkChief">
+    In the TalkChief window, select **Sign in to TalkChief**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. Each agent signs in once on their own computer. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
+  </Step>
+  <Step title="Place a call">
+    Click a phone number on a person or organization, or use the call tab of a deal, person or organization. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. Hang up on your phone.
+  </Step>
+  <Step title="Receive a call">
+    When a call rings your TalkChief phone, the TalkChief window opens and Pipedrive shows the caller's person. Answer on your TalkChief phone as usual.
+  </Step>
+</Steps>
+
+A call you place from a deal is logged on that deal and its person. Every call made or received through the window appears once, with the same details as every other logged call: outcome, talk time, user and recording link.
+
+<Note>
+  Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected. Incoming calls open the person only while Pipedrive is open in your browser. Your company admin must have connected Pipedrive first (see [Connect Pipedrive](#connect-pipedrive)).
+</Note>
+
 ## Data TalkChief uses in Pipedrive
 
 When you connect, you allow TalkChief to:
@@ -89,10 +117,11 @@ When you connect, you allow TalkChief to:
 | --- | --- |
 | Basic information | Identify the connected Pipedrive company and user |
 | Contacts (full access) | Find the person whose phone number matches the call, and create a person for a number Pipedrive doesn't have (only while **Create contacts for new numbers** is on) |
+| Deals (read only) | Find the person's open deal to link the call to |
 | Read users data | Match the TalkChief agent to their Pipedrive user by email, to set the call's user |
 | Call logs | Log each call with its outcome, duration and numbers |
 
-TalkChief writes call logs and new persons to Pipedrive. It does not read or change your deals, leads, activities, emails or other records, and it does not copy your Pipedrive contacts into TalkChief.
+TalkChief writes call logs and new persons to Pipedrive. It reads deals only to link calls to them and never changes them; it does not read or change your leads, activities, emails or other records, and it does not copy your Pipedrive contacts into TalkChief.
 
 ## Disconnect Pipedrive
 
@@ -137,6 +166,18 @@ Call logs and persons already in Pipedrive stay there.
 
   <Accordion title="Calls arrive late or stop for the day">
     Pipedrive gives each company a daily allowance of API requests, shared by every app the company uses. When it runs out, TalkChief keeps the calls and logs them after Pipedrive resets the allowance.
+  </Accordion>
+
+  <Accordion title="TalkChief is not offered when I click a phone number">
+    The TalkChief app must be installed in your Pipedrive company. Check Pipedrive's calling settings and choose TalkChief as your calling app. If it is not listed, contact TalkChief support.
+  </Accordion>
+
+  <Accordion title="The calling window says my TalkChief phone is offline">
+    TalkChief rings your own TalkChief phone first, so it must be registered: open the TalkChief app on your computer or phone, or check that your desk phone is connected, then try again.
+  </Accordion>
+
+  <Accordion title="The calling window asks me to sign in again">
+    Your TalkChief sign-in in the window lasts 12 hours. Select **Sign in to TalkChief** to continue.
   </Accordion>
 
   <Accordion title="A call has no recording link">
