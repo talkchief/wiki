@@ -19,7 +19,7 @@ The TalkChief app for HighLevel (GoHighLevel) logs every TalkChief phone call in
 
 - **Logs every external call**: inbound and outbound calls are logged as call entries in the contact's conversation. Calls between two TalkChief extensions are not logged.
 - **Finds the right contact**: TalkChief looks up the caller's number (or the number you dialed) among the contacts of the connected sub-account.
-- **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number and the caller ID name, assigned to the agent. You can turn this off.
+- **Creates contacts for new numbers** (when you turn it on): when no contact has the number, TalkChief creates one with the number and the caller ID name, assigned to the agent.
 - **Adds the recording**: when the call was recorded, the call entry carries a link to the recording, and the note repeats it.
 - **Credits the agent**: the note is written by the HighLevel user whose email matches the TalkChief agent's email.
 - **Calls from HighLevel**: the TalkChief calling panel places calls through your TalkChief phone and opens the caller's contact when your phone rings. See [Call from HighLevel](#call-from-highlevel).
@@ -65,14 +65,14 @@ Calls usually appear in HighLevel within a few minutes of hanging up.
 
 On the connected HighLevel card in **Integrations**, select the settings (gear) icon. The **HighLevel settings** window shows the connected sub-account and three switches you can change at any time. Each change applies to calls that end afterwards.
 
-| Setting | On (default) | Off |
+| Setting | On | Off |
 | --- | --- | --- |
-| **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
-| **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
-| **Create contacts for new numbers** | Unknown numbers get a new HighLevel contact | Calls from numbers HighLevel doesn't have are not logged |
+| **Log calls** (on by default) | Every external call is logged | Nothing is logged, and the connection stays in place |
+| **Log missed calls** (on by default) | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
+| **Create contacts for new numbers** (off by default) | Unknown numbers get a new HighLevel contact | Calls from numbers that aren't a HighLevel contact aren't logged |
 
 <Note>
-  HighLevel logs calls only on a contact, so with **Create contacts for new numbers** off, a call from or to a number that no contact has is skipped.
+  HighLevel logs calls only on a contact. With **Create contacts for new numbers** off, calls from numbers that aren't a HighLevel contact aren't logged. To log every call, turn **Create contacts for new numbers** on.
 </Note>
 
 ## Call from HighLevel
@@ -150,7 +150,7 @@ To remove TalkChief completely, uninstall the TalkChief app from the sub-account
   </Accordion>
 
   <Accordion title="A call is missing">
-    TalkChief logs a call only on a contact with the caller's number (or the number you dialed). Check that the contact has that number. If **Create contacts for new numbers** is off, calls from numbers HighLevel doesn't have are not logged.
+    TalkChief logs a call only on a contact with the caller's number (or the number you dialed). Check that the contact has that number. With **Create contacts for new numbers** off (the default), calls from numbers that aren't a HighLevel contact aren't logged: turn it on to log every call.
   </Accordion>
 
   <Accordion title="The note has no agent">
