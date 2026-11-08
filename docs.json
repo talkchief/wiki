@@ -113,7 +113,8 @@
               "integrations/hubspot",
               "integrations/monday",
               "integrations/gohighlevel",
-              "integrations/zendesk"
+              "integrations/zendesk",
+              "integrations/pipedrive"
             ]
           },
           {

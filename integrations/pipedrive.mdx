@@ -1,0 +1,147 @@
+---
+title: "Connect Pipedrive to log TalkChief calls automatically"
+sidebarTitle: "Pipedrive"
+description: "Set up the TalkChief app for Pipedrive: connect with your Pipedrive login, log every call on the right person with a link to its recording, and disconnect safely."
+keywords:
+  - "pipedrive"
+  - "crm"
+  - "call logging"
+  - "call logs"
+  - "oauth"
+  - "integration"
+  - "setup guide"
+hidden: true
+---
+
+The TalkChief app for Pipedrive logs every TalkChief phone call in your Pipedrive company account without anyone typing it in. You connect once with your Pipedrive login, with no API tokens to copy, and from then on each finished call appears as a call log on the matching Pipedrive person, with its outcome, talk time, the agent who handled it and a link to the recording.
+
+## What the app does
+
+- **Logs every external call**: inbound and outbound calls are logged as Pipedrive call logs. Calls between two TalkChief extensions are not logged.
+- **Finds the right person**: TalkChief looks up the caller's number (or the number you dialed) in the phone numbers of your Pipedrive persons. A call on a person who belongs to an organization is linked to that organization too.
+- **Creates persons for new numbers**: when no person has the number, TalkChief creates one with the number and the caller ID name. You can turn this off.
+- **Assigns the call to the agent**: the call log belongs to the Pipedrive user whose email matches the TalkChief agent's email.
+- **Links the recording**: when the call was recorded, the call log's note links to the recording so you can play it from Pipedrive.
+
+Each logged call shows:
+
+| Pipedrive field | What TalkChief puts there |
+| --- | --- |
+| Subject | **Inbound call from** or **Outbound call to**, followed by the other party's number |
+| Outcome | Answered calls show **Connected**; voicemail and busy calls show **Left voicemail** and **Busy**; unanswered, cancelled and failed calls show **No answer** |
+| Start and end time | When the call started and ended |
+| Duration | Talk time |
+| From and to numbers | The numbers on the call |
+| Note | Status, the agent's name and extension, talk time and a link to the recording |
+| Person and organization | The matching person, and their organization |
+| User | The agent's Pipedrive user, when their emails match |
+
+Calls usually appear in Pipedrive within a few minutes of hanging up.
+
+## Before you start
+
+- You are a **company admin** in TalkChief.
+- You are an **admin** in the Pipedrive company account you want to connect. Pipedrive lets only admins log calls for other users, so TalkChief uses the admin's connection to log each call under the right agent.
+- One Pipedrive company account can be connected to one TalkChief company.
+
+## Connect Pipedrive
+
+<Steps>
+  <Step title="Open Integrations in TalkChief">
+    In the TalkChief web app, select **Integrations** under **Configuration** in the sidebar. The page opens on the **CRM** tab.
+  </Step>
+  <Step title="Start the connection">
+    On the **Pipedrive** card, select **Connect**. TalkChief sends you to Pipedrive.
+  </Step>
+  <Step title="Sign in to Pipedrive and choose the company">
+    Sign in with your Pipedrive login. If you belong to more than one Pipedrive company, choose the one to connect.
+  </Step>
+  <Step title="Approve access">
+    Pipedrive shows the access TalkChief asks for (see [Data TalkChief uses in Pipedrive](#data-talkchief-uses-in-pipedrive)). Approve it to install the app.
+  </Step>
+  <Step title="Confirm in TalkChief">
+    Pipedrive sends you back to **Integrations** in TalkChief. A message confirms that Pipedrive is connected, and the Pipedrive card moves to your connected integrations with a **Connected** label.
+  </Step>
+  <Step title="Test with a real call">
+    Make or receive a call with TalkChief. A few minutes after you hang up, open the person in Pipedrive and check that the call is on their history.
+  </Step>
+</Steps>
+
+<Note>
+  If you start the installation from Pipedrive instead, Pipedrive sends you to **Integrations** in TalkChief, where you select **Connect** on the Pipedrive card.
+</Note>
+
+## Choose what gets logged
+
+On the connected Pipedrive card in **Integrations**, select the settings (gear) icon. The **Pipedrive settings** window shows the connected Pipedrive company and three switches you can change at any time. Each change applies to calls that end afterwards.
+
+| Setting | On (default) | Off |
+| --- | --- | --- |
+| **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
+| **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
+| **Create contacts for new numbers** | Unknown numbers get a new Pipedrive person | Calls from unknown numbers are logged without a person |
+
+## Data TalkChief uses in Pipedrive
+
+When you connect, you allow TalkChief to:
+
+| Access | Why |
+| --- | --- |
+| Basic information | Identify the connected Pipedrive company and user |
+| Contacts (full access) | Find the person whose phone number matches the call, and create a person for a number Pipedrive doesn't have (only while **Create contacts for new numbers** is on) |
+| Read users data | Match the TalkChief agent to their Pipedrive user by email, to set the call's user |
+| Call logs | Log each call with its outcome, duration and numbers |
+
+TalkChief writes call logs and new persons to Pipedrive. It does not read or change your deals, leads, activities, emails or other records, and it does not copy your Pipedrive contacts into TalkChief.
+
+## Disconnect Pipedrive
+
+To stop logging calls and remove TalkChief's access, open **Integrations** in TalkChief and select the trash icon on the Pipedrive card (or **Disconnect** in the **Pipedrive settings** window), then confirm with **Yes, disconnect**.
+
+When you disconnect:
+
+- Calls are no longer logged in Pipedrive. Calls that were waiting to be logged are dropped.
+- TalkChief removes its access to your Pipedrive company, which also uninstalls the app for the admin who connected it.
+- Call logs and persons already in Pipedrive stay there. Nothing is deleted from Pipedrive.
+
+You can connect again at any time: the Pipedrive card returns to **Discover more integrations**, where you select **Connect**.
+
+## Uninstall the app from Pipedrive
+
+You can also remove TalkChief from your installed apps inside Pipedrive. When the admin who connected TalkChief uninstalls it, TalkChief disconnects automatically: calls stop being logged and the Pipedrive card returns to **Discover more integrations**. If another Pipedrive user of your company uninstalls the app, calls keep being logged.
+
+Call logs and persons already in Pipedrive stay there.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The Pipedrive card asks me to reconnect">
+    The card shows **Reconnect needed** when TalkChief lost access to Pipedrive, for example because the access was revoked. Select **Reconnect** and approve access again. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
+  </Accordion>
+
+  <Accordion title="This Pipedrive company is already connected to another company">
+    A Pipedrive company account can be connected to only one TalkChief company, so that each company's calls stay in its own CRM. Disconnect it from the other TalkChief company first, or connect a different Pipedrive company.
+  </Accordion>
+
+  <Accordion title="Calls are logged under the admin instead of the agent">
+    Pipedrive lets only users with account settings access log calls for other users. If the person who connected TalkChief is not a Pipedrive admin, every call is logged under them. Disconnect, then connect again as a Pipedrive admin.
+  </Accordion>
+
+  <Accordion title="A call has no user or the wrong user">
+    The call's user is set only when the agent's TalkChief email matches a Pipedrive user's email. Use the same email in both, or add the agent as a user in Pipedrive.
+  </Accordion>
+
+  <Accordion title="A call is not on the person">
+    TalkChief matches the person by their phone numbers. Check that the person has the caller's number, preferably with its country code. If **Create contacts for new numbers** is off, calls from numbers Pipedrive doesn't have are logged without a person.
+  </Accordion>
+
+  <Accordion title="Calls arrive late or stop for the day">
+    Pipedrive gives each company a daily allowance of API requests, shared by every app the company uses. When it runs out, TalkChief keeps the calls and logs them after Pipedrive resets the allowance.
+  </Accordion>
+
+  <Accordion title="A call has no recording link">
+    The recording link is added only when the call was recorded. Check that call recording is on for that number or team in TalkChief.
+  </Accordion>
+</AccordionGroup>
+
+For anything else, contact TalkChief support at [support@talkchief.io](mailto:support@talkchief.io).
