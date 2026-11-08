@@ -111,7 +111,8 @@
               "integrations/overview",
               "integrations/crm-integrations",
               "integrations/hubspot",
-              "integrations/monday"
+              "integrations/monday",
+              "integrations/gohighlevel"
             ]
           },
           {
