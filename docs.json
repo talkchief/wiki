@@ -118,7 +118,8 @@
               "integrations/activecampaign",
               "integrations/freshsales",
               "integrations/bitrix24",
-              "integrations/salesforce"
+              "integrations/salesforce",
+              "integrations/dynamics-365"
             ]
           },
           {

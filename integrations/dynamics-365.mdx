@@ -1,0 +1,174 @@
+---
+title: "Connect Microsoft Dynamics 365 to log TalkChief calls"
+sidebarTitle: "Dynamics 365"
+description: "Connect Microsoft Dynamics 365 Sales with your Microsoft work account and log every TalkChief call as a completed phone call on the right contact or lead."
+keywords:
+  - "dynamics 365"
+  - "microsoft dynamics"
+  - "crm"
+  - "call logging"
+  - "phone call activity"
+  - "setup guide"
+hidden: false
+---
+
+The TalkChief integration for Microsoft Dynamics 365 Sales logs every TalkChief phone call in Dynamics 365 without anyone typing it in. You connect once by signing in with your Microsoft work account, with nothing to install in Dynamics 365 and no keys to copy. From then on, each finished call appears as a completed phone call on the matching contact or lead, with its result, talk time, the agent who handled it and a link to the recording.
+
+## What the integration does
+
+- **Logs every external call**: inbound and outbound calls are logged as Dynamics 365 phone call activities. Calls between two TalkChief extensions are not logged.
+- **Finds the right record**: TalkChief looks up the caller's number (or the number you dialed) in the phone number fields of your active contacts, then of your open leads. Numbers match in international format, in national format and in common written forms such as `054-123-4567`.
+- **Creates leads for new numbers**: when no contact or lead has the number, TalkChief creates a lead with the number and the caller ID name. You can turn this off.
+- **Assigns the call to the agent**: the phone call's owner is the enabled Dynamics 365 user whose primary email matches the TalkChief agent's email.
+- **Adds the recording**: when the call was recorded, the phone call's description links to the recording.
+
+Each logged phone call shows:
+
+| Dynamics 365 field | What TalkChief puts there |
+| --- | --- |
+| Subject | **Inbound call from** or **Outbound call to**, followed by the other party's number |
+| Direction | Incoming or Outgoing |
+| Phone number | The other party's number |
+| Regarding | The matching contact or lead |
+| Call from and call to | The contact or lead and the agent's Dynamics 365 user |
+| Duration | Talk time in whole minutes, rounded up (a 10-second call shows 1 minute) |
+| Actual start and actual end | When the call started and ended |
+| Description | The call status, the agent's name and extension, the exact talk time, the recording link when there is one, and **Logged by TalkChief** |
+| Owner | The agent's Dynamics 365 user, when their emails match |
+| Status | Completed: **Made** for outbound calls, **Received** for inbound calls |
+
+Calls usually appear in Dynamics 365 within a few minutes of hanging up.
+
+## Before you start
+
+- You are a **company admin** in TalkChief.
+- Your company uses **Dynamics 365 Sales** online, in Microsoft's commercial cloud. Government and China clouds are not supported.
+- You sign in with a Microsoft work account that has a Dynamics 365 license in the environment you want to connect. TalkChief works with Dynamics 365 as that user, so use an administrator or a dedicated user for the integration.
+- That user's security role can read contacts, leads and users, create leads and phone calls, and assign them to other users.
+- If your organization doesn't let users approve apps themselves, a Microsoft Entra administrator needs to approve TalkChief when you connect.
+- One Dynamics 365 environment can be connected to one TalkChief company.
+
+## Connect Dynamics 365
+
+<Steps>
+  <Step title="Open Integrations in TalkChief">
+    In the TalkChief web app, select **Integrations** under **Configuration** in the sidebar. The page opens on the **CRM** tab.
+  </Step>
+  <Step title="Start the connection">
+    On the **Microsoft Dynamics 365** card, select **Connect**. TalkChief sends you to the Microsoft sign-in page.
+  </Step>
+  <Step title="Sign in with your Microsoft work account">
+    Choose or enter the work account to connect with, and sign in.
+  </Step>
+  <Step title="Approve access">
+    Microsoft shows the access TalkChief asks for, including **Access Dynamics 365 as organization users** (see [Data TalkChief uses in Dynamics 365](#data-talkchief-uses-in-dynamics-365)). Accept it. If Microsoft says an administrator must approve the app, ask your Microsoft Entra administrator to approve TalkChief, then connect again.
+  </Step>
+  <Step title="Choose the environment, if asked">
+    If your account can reach one Dynamics 365 environment, TalkChief connects to it and you return to **Integrations** with a message that Microsoft Dynamics 365 is connected.
+
+    If your account can reach several environments, for example production and a sandbox, the **Choose your Microsoft Dynamics 365 environment** window opens. It lists each environment's name and address. Select the environment to log calls into, then select **Use this environment**. Calls are logged only into the environment you choose.
+  </Step>
+  <Step title="Test with a real call">
+    Make or receive a call with TalkChief. A few minutes after you hang up, open the contact or lead in Dynamics 365 and check that the phone call is on its timeline.
+  </Step>
+</Steps>
+
+<Note>
+  Until you choose an environment, the card shows **Choose environment** and no calls are logged. To open the window again, select **Choose environment** on the card under **Discover more integrations**, or the settings (gear) icon on the card in your connected integrations.
+</Note>
+
+## Choose what gets logged
+
+On the connected Microsoft Dynamics 365 card in **Integrations**, select the settings (gear) icon. The **Microsoft Dynamics 365 settings** window shows the connected environment and three switches you can change at any time. Each change applies to calls that end afterwards.
+
+| Setting | On (default) | Off |
+| --- | --- | --- |
+| **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
+| **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
+| **Create contacts for new numbers** | Unknown numbers get a new Dynamics 365 lead | Calls from unknown numbers are logged without a contact or lead |
+
+## Switch to another environment
+
+To log calls into a different environment, disconnect Dynamics 365 (see [Disconnect Dynamics 365](#disconnect-dynamics-365)) and connect again, then choose the other environment. When you reconnect and your account can reach several environments, the window pre-selects the environment you were connected to before.
+
+## Data TalkChief uses in Dynamics 365
+
+When you connect, you allow TalkChief to access Dynamics 365 as the user who connected. TalkChief uses that access to:
+
+| Access | Why |
+| --- | --- |
+| List your environments | Find the Dynamics 365 environments your account can reach, so you can choose one |
+| Read contacts and leads | Find the active contact or open lead whose phone number matches the call |
+| Read users | Match the TalkChief agent to their Dynamics 365 user by primary email, to set the owner |
+| Create leads | Create a lead for a number Dynamics 365 doesn't have (only while **Create contacts for new numbers** is on) |
+| Create phone calls | Log each call on the contact's or lead's timeline and mark it completed |
+
+TalkChief writes phone calls and new leads to Dynamics 365. It does not change your contacts, accounts, opportunities or other records, and it does not copy your Dynamics 365 data into TalkChief.
+
+## Disconnect Dynamics 365
+
+To stop logging calls, open **Integrations** in TalkChief and select the trash icon on the Microsoft Dynamics 365 card (or **Disconnect** in the settings window), then confirm with **Yes, disconnect**.
+
+When you disconnect:
+
+- Calls are no longer logged in Dynamics 365. Calls that were waiting to be logged are dropped.
+- TalkChief deletes the access it kept for your account.
+- Phone calls and leads already in Dynamics 365 stay there. Nothing is deleted from Dynamics 365.
+
+Microsoft keeps your approval of TalkChief until you remove it. To remove it too, a Microsoft Entra administrator deletes the **TalkChief** enterprise application in the Microsoft Entra admin center. If you delete or disable it while TalkChief is still connected, the card shows **Reconnect needed**.
+
+You can connect again at any time: the card returns to **Discover more integrations**, where you select **Connect**.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The connection was cancelled">
+    You closed Microsoft's sign-in or declined the access request. Select **Connect** again and accept the access TalkChief asks for.
+  </Accordion>
+
+  <Accordion title="The connection took too long">
+    The sign-in wasn't finished in time. Select **Connect** and sign in again.
+  </Accordion>
+
+  <Accordion title="Could not connect Microsoft Dynamics 365">
+    TalkChief could not finish the connection. Check that the account you signed in with has a Dynamics 365 license and can open an enabled Dynamics 365 environment, then try again. If Microsoft asked for an administrator's approval, the connection works only after your Microsoft Entra administrator has approved TalkChief.
+  </Accordion>
+
+  <Accordion title="This Dynamics 365 account is already connected to another company">
+    A Dynamics 365 environment can be connected to only one TalkChief company, so that each company's calls stay in its own CRM. Disconnect it from the other TalkChief company first, or choose a different environment.
+  </Accordion>
+
+  <Accordion title="The environment list doesn't load">
+    The window says it couldn't load your environments when the choice is no longer waiting, for example after a long pause. Select **Reconnect** and sign in again.
+  </Accordion>
+
+  <Accordion title="The environment is saved, but call logging couldn't start">
+    The environment is connected, but TalkChief could not start sending calls to it. Select **Use this environment** again to retry.
+  </Accordion>
+
+  <Accordion title="The card asks me to reconnect">
+    The card shows **Reconnect needed** when TalkChief can no longer work in Dynamics 365 as the connected user. Common causes: the user's password was reset by an administrator, the user's sign-in now needs multifactor authentication or another sign-in check, the **TalkChief** enterprise application was deleted or disabled, Dynamics 365 is no longer available to the account, or the user's security role can no longer read contacts. Fix the cause, then select **Reconnect** and sign in again. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
+  </Accordion>
+
+  <Accordion title="A call has no owner">
+    The owner is set only when the agent's TalkChief email matches the primary email of an enabled Dynamics 365 user. Use the same email in both. Without a match, the phone call keeps the connected user as its owner.
+  </Accordion>
+
+  <Accordion title="A call is not on the contact or lead">
+    TalkChief matches active contacts first, then open leads, by their phone number fields. Check that the record has the caller's number in one of those fields and is active. If **Create contacts for new numbers** is off, calls from numbers Dynamics 365 doesn't have are logged without a contact or lead.
+  </Accordion>
+
+  <Accordion title="No lead was created for a new number">
+    Leads are created only while **Create contacts for new numbers** is on. If the connected user's security role can't create leads, or your leads require a custom field that TalkChief doesn't fill, the call is logged without a lead.
+  </Accordion>
+
+  <Accordion title="A phone call stays open">
+    TalkChief marks each phone call completed after logging it. If your organization has customized the phone call statuses so that this is refused, the phone call is logged but stays open.
+  </Accordion>
+
+  <Accordion title="A recording does not play">
+    The recording link is added only when the call was recorded. Check that call recording is on for that number or team in TalkChief.
+  </Accordion>
+</AccordionGroup>
+
+For anything else, contact TalkChief support at [support@talkchief.io](mailto:support@talkchief.io).
