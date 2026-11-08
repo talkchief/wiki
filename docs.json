@@ -115,7 +115,10 @@
               "integrations/gohighlevel",
               "integrations/zendesk",
               "integrations/pipedrive",
-              "integrations/activecampaign"
+              "integrations/activecampaign",
+              "integrations/freshsales",
+              "integrations/bitrix24",
+              "integrations/salesforce"
             ]
           },
           {
