@@ -1,0 +1,189 @@
+---
+title: "Connect ActiveCampaign to log calls and start automations"
+sidebarTitle: "ActiveCampaign"
+description: "Connect ActiveCampaign with your API URL and key so every TalkChief call becomes a note on the contact and a tag that can start your automations."
+keywords:
+  - "activecampaign"
+  - "crm"
+  - "call logging"
+  - "automations"
+  - "tags"
+  - "api key"
+  - "setup guide"
+hidden: true
+---
+
+The TalkChief integration for ActiveCampaign logs every TalkChief phone call on the matching ActiveCampaign contact and tags the contact with the call's outcome, such as **TalkChief - Missed call**. Because tags can start ActiveCampaign automations, a call can trigger a follow-up sequence on its own, for example a "sorry we missed you" email after a missed call. ActiveCampaign doesn't offer a sign-in flow for apps, so you connect with your account's API URL and API key.
+
+## What the integration does
+
+- **Logs every external call as a note**: each inbound and outbound call adds a note to the contact. Calls between two TalkChief extensions are not logged.
+- **Finds the right contact**: TalkChief looks up the caller's number (or the number you dialed) in the contact's **Phone** field, in the formats people usually type, such as `+15551234567`, `5551234567` or `+1 555-555-1234`.
+- **Tags the call's outcome**: the contact gets one TalkChief outcome tag that shows how its last call went (see [Start automations from calls](#start-automations-from-calls)).
+- **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number and the caller ID name, and tags it **TalkChief - Created from call**. This needs phone-only contacts in your ActiveCampaign account (see [Before you start](#before-you-start)). You can turn it off.
+- **Adds the recording**: when the call was recorded, the note includes a link to the recording.
+
+Each note looks like this:
+
+```text
+Inbound call from +15551234567 - Answered
+Agent: Dana Cohen (ext 101)
+Talk time: 02:05
+Time: 2026-11-12 08:00 UTC
+Recording: https://...
+Call ID: ...
+Logged by TalkChief
+```
+
+The note's author in ActiveCampaign is the user whose API key you connected; the agent who handled the call is named in the note. Calls usually appear in ActiveCampaign within a few minutes of hanging up.
+
+<Note>
+  There is no calling panel inside ActiveCampaign, because ActiveCampaign has no calling framework for apps. Place and answer calls with your TalkChief app or desk phone as usual; every call is logged in ActiveCampaign the same way. To start calls from your own tools, see the [Click-to-Call API](/developers/click-to-call).
+</Note>
+
+## Before you start
+
+- You are a **company admin** in TalkChief.
+- You have the **API URL** and **API key** of an ActiveCampaign user in the **Admin** group. We recommend a dedicated user for TalkChief (for example "TalkChief integration"): notes in ActiveCampaign show that user as the author, and the connection stops working if that user is deleted.
+- To create contacts for new numbers, your ActiveCampaign account must allow contacts without an email address (phone-only contacts). Without it, calls from numbers ActiveCampaign doesn't have are not logged. Ask ActiveCampaign support if you're not sure whether your account has it.
+- One ActiveCampaign account can be connected to one TalkChief company.
+
+## Find your API URL and key
+
+<Steps>
+  <Step title="Sign in as the integration user">
+    Sign in to ActiveCampaign as the Admin user whose key TalkChief will use. Each ActiveCampaign user has their own API URL and key.
+  </Step>
+  <Step title="Open Developer settings">
+    Select **Settings** (gear icon), then **Developer**.
+  </Step>
+  <Step title="Copy both values">
+    Copy the **API URL** (it looks like `https://yourcompany.api-us1.com`) and the **API key**. Use the API URL exactly as shown there. The address you see in your browser while using ActiveCampaign (`yourcompany.activehosted.com`) is not the API URL and is not accepted.
+  </Step>
+</Steps>
+
+## Connect ActiveCampaign
+
+<Steps>
+  <Step title="Open Integrations in TalkChief">
+    In the TalkChief web app, select **Integrations** under **Configuration** in the sidebar. The page opens on the **CRM** tab.
+  </Step>
+  <Step title="Start the connection">
+    On the **ActiveCampaign** card, select **Connect**. A window asks for your API URL and API key.
+  </Step>
+  <Step title="Enter the API URL and key">
+    Paste the **API URL** and the **API key**, then select **Connect**. TalkChief checks them with ActiveCampaign right away.
+  </Step>
+  <Step title="Confirm in TalkChief">
+    A message confirms that ActiveCampaign is connected, and the card moves to your connected integrations with a **Connected** label.
+  </Step>
+  <Step title="Test with a real call">
+    Make or receive a call with TalkChief. A few minutes after you hang up, open the contact in ActiveCampaign and check that the note and the outcome tag are there.
+  </Step>
+</Steps>
+
+TalkChief stores the API key encrypted and uses it only to log calls in ActiveCampaign.
+
+## Choose what gets logged
+
+On the connected ActiveCampaign card in **Integrations**, select the settings (gear) icon. The **ActiveCampaign settings** window shows the connected account and three switches you can change at any time. Each change applies to calls that end afterwards.
+
+| Setting | On (default) | Off |
+| --- | --- | --- |
+| **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
+| **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged and tagged too | Only answered calls are logged |
+| **Create contacts for new numbers** | Unknown numbers get a new contact (needs phone-only contacts) | Calls from numbers ActiveCampaign doesn't have are not logged |
+
+## Start automations from calls
+
+After each call, TalkChief removes the contact's previous TalkChief outcome tag and applies the tag for this call:
+
+| Tag | When |
+| --- | --- |
+| **TalkChief - Inbound answered** | An incoming call was answered |
+| **TalkChief - Missed call** | An incoming call was not answered (for example busy, no answer, cancelled or abandoned) |
+| **TalkChief - Voicemail** | The caller reached voicemail |
+| **TalkChief - Outbound answered** | A call you made was answered |
+| **TalkChief - Outbound no answer** | A call you made was not answered |
+
+Contacts that TalkChief creates also get **TalkChief - Created from call**, so you can leave them out of email sends until you know more about them.
+
+To follow up automatically, create an automation in ActiveCampaign with the **Tag is added** start trigger, choose one of the TalkChief tags, and set it to run **multiple times**. ActiveCampaign starts such an automation again only when the tag was removed and added again, which TalkChief does on every call, so the automation runs after each matching call. The **Tag is added** trigger is available on every ActiveCampaign plan.
+
+<Tip>
+  Each tag appears in ActiveCampaign after the first call that uses it. To build an automation before that, create the tag yourself in ActiveCampaign with exactly the name shown above; TalkChief then uses your tag.
+</Tip>
+
+## Data TalkChief uses in ActiveCampaign
+
+With your API key, TalkChief:
+
+| Access | Why |
+| --- | --- |
+| Reads contacts | Find the contact whose phone number matches the call |
+| Creates contacts | Create a contact for a number ActiveCampaign doesn't have (only while **Create contacts for new numbers** is on) |
+| Creates notes | Log each call on the contact |
+| Creates, applies and removes tags | Set the TalkChief outcome tags on the contact. Only TalkChief's own tags are removed |
+| Reads account settings | Check the key when you connect and show the account's name in TalkChief |
+
+TalkChief does not read or change your deals, lists, campaigns, automations or other tags, and it does not copy your ActiveCampaign contacts into TalkChief.
+
+## Disconnect ActiveCampaign
+
+To stop logging calls, open **Integrations** in TalkChief and select the trash icon on the ActiveCampaign card (or **Disconnect** in the **ActiveCampaign settings** window), then confirm with **Yes, disconnect**.
+
+When you disconnect:
+
+- Calls are no longer logged in ActiveCampaign. Calls that were waiting to be logged are dropped.
+- TalkChief deletes the API key it stored.
+- Notes, tags and contacts already in ActiveCampaign stay there. Nothing is deleted from ActiveCampaign.
+
+The API key itself keeps working in ActiveCampaign until you reset it. If no other app uses that key, reset it: in ActiveCampaign, go to **Settings** > **Developer** and select **Reset API Key**. Any other app that uses the key must then be updated with the new one.
+
+You can connect again at any time: the ActiveCampaign card returns to **Discover more integrations**, where you select **Connect**.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="This is not an ActiveCampaign API URL">
+    Copy the API URL from **Settings** > **Developer** in ActiveCampaign. It looks like `https://yourcompany.api-us1.com`. The address of the ActiveCampaign app in your browser (`yourcompany.activehosted.com`) is not accepted. If your Developer page shows an API URL in a different form and TalkChief refuses it, contact TalkChief support.
+  </Accordion>
+
+  <Accordion title="ActiveCampaign did not accept this API key">
+    Copy the key again from **Settings** > **Developer**, signed in as the same user as the API URL. A key stops working when it is reset or its user is deleted.
+  </Accordion>
+
+  <Accordion title="ActiveCampaign could not be reached or is busy">
+    If TalkChief says it could not reach ActiveCampaign at this API URL, check the URL. If it says ActiveCampaign is busy, wait a minute and try again.
+  </Accordion>
+
+  <Accordion title="The ActiveCampaign card asks me to reconnect">
+    The card shows **Reconnect needed** when ActiveCampaign no longer accepts the API key, usually because the key was reset or its user was deleted. Select **Reconnect** and enter a current API URL and key. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
+  </Accordion>
+
+  <Accordion title="Calls from new numbers are not logged">
+    Your ActiveCampaign account requires an email address for every contact, so TalkChief can't create a contact for a new number. The **ActiveCampaign settings** window shows this under **Last problem**. Turn on phone-only contacts in ActiveCampaign (ask ActiveCampaign support if you can't find it), or add the contact yourself. TalkChief tries new numbers again a few hours later.
+  </Accordion>
+
+  <Accordion title="Calls are logged without tags">
+    The API key's ActiveCampaign user may not manage tags. Connect with the key of a user in the **Admin** group.
+  </Accordion>
+
+  <Accordion title="This ActiveCampaign account is already connected to another company">
+    An ActiveCampaign account can be connected to only one TalkChief company, so that each company's calls stay in its own CRM. Disconnect it from the other TalkChief company first.
+  </Accordion>
+
+  <Accordion title="A call is not on the contact">
+    TalkChief matches the contact by its **Phone** field. Check that the contact has the caller's number there. If **Create contacts for new numbers** is off, calls from numbers ActiveCampaign doesn't have are not logged.
+  </Accordion>
+
+  <Accordion title="My automation ran only once">
+    In the automation's **Tag is added** trigger, set it to run **multiple times**. Otherwise ActiveCampaign runs it only the first time the tag is added to a contact.
+  </Accordion>
+
+  <Accordion title="A recording does not play">
+    The recording link is added only when the call was recorded. Check that call recording is on for that number or team in TalkChief.
+  </Accordion>
+</AccordionGroup>
+
+For anything else, contact TalkChief support at [support@talkchief.io](mailto:support@talkchief.io).
