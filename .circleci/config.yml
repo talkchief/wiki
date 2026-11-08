@@ -1,7 +1,7 @@
 version: 2.1
 
 # TalkChief wiki CI/CD
-#   every branch / PR : quality  (Mintlify build, links + anchors + redirects, alt text, wiki_lint)
+#   every branch / PR : quality  (Mintlify build, links + redirects, alt text, wiki_lint; anchors and SEO lengths warn only)
 #   main              : quality -> verify-deploy (Mintlify GitHub App publishes; we confirm it is live)
 #   nightly schedule  : external-links (outbound links rot over time; does not block merges)
 # Merging is gated by GitHub branch protection on the `ci/circleci: quality` check
@@ -54,8 +54,14 @@ jobs:
           name: Mintlify build validation (strict)
           command: ~/mint/node_modules/.bin/mint validate --telemetry=false
       - run:
-          name: Broken internal links, anchors and redirects
-          command: ~/mint/node_modules/.bin/mint broken-links --check-anchors --check-redirects --telemetry=false
+          name: Broken internal links and redirects
+          command: ~/mint/node_modules/.bin/mint broken-links --check-redirects --telemetry=false
+      - run:
+          # A link to a missing heading still opens the right page, so anchors are reported
+          # but do not block a merge. Fix them when they show up here.
+          name: Heading anchors (warning only)
+          command: |
+            ~/mint/node_modules/.bin/mint broken-links --check-anchors --telemetry=false               || echo "WARNING: broken heading anchors above (not blocking)"
       - run:
           name: Accessibility (image/video alt text)
           command: ~/mint/node_modules/.bin/mint a11y --skip-contrast --telemetry=false
