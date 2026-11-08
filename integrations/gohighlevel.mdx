@@ -22,6 +22,7 @@ The TalkChief app for HighLevel (GoHighLevel) logs every TalkChief phone call in
 - **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number and the caller ID name, assigned to the agent. You can turn this off.
 - **Adds the recording**: when the call was recorded, the call entry carries a link to the recording, and the note repeats it.
 - **Credits the agent**: the note is written by the HighLevel user whose email matches the TalkChief agent's email.
+- **Calls from HighLevel**: the TalkChief calling panel places calls through your TalkChief phone and opens the caller's contact when your phone rings. See [Call from HighLevel](#call-from-highlevel).
 
 Each logged call adds:
 
@@ -72,6 +73,34 @@ On the connected HighLevel card in **Integrations**, select the settings (gear) 
 
 <Note>
   HighLevel logs calls only on a contact, so with **Create contacts for new numbers** off, a call from or to a number that no contact has is skipped.
+</Note>
+
+## Call from HighLevel
+
+The TalkChief calling panel lets each agent place TalkChief calls and see incoming ones while working in HighLevel. You talk on your usual TalkChief phone (the TalkChief app or your desk phone), and the panel runs in its own small window, so moving between HighLevel pages never closes it.
+
+<Steps>
+  <Step title="Open the panel">
+    In your HighLevel sub-account, select **TalkChief** in the left menu, then **Open the TalkChief panel**. The panel opens in its own window; keep it open while you work.
+  </Step>
+  <Step title="Sign in to TalkChief">
+    In the panel, select **Sign in**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. Each agent signs in once per browser. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
+  </Step>
+  <Step title="Allow pop-ups for TalkChief">
+    When your browser asks, allow pop-ups for app.talkchief.io. The panel needs them to open the caller's contact in HighLevel.
+  </Step>
+  <Step title="Place a call">
+    Type or paste the number on the panel's dial pad and select **Call**. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. Hang up on your phone.
+  </Step>
+  <Step title="Receive a call">
+    When a call rings your TalkChief phone, the panel shows it and opens the caller's contact in a HighLevel tab. If your browser blocked that, select **Open record** in the panel. Answer on your TalkChief phone as usual.
+  </Step>
+</Steps>
+
+Calls made or received with the panel are logged once, like every other call: a call entry in the contact's conversation and a note with the talk time and agent.
+
+<Note>
+  HighLevel's own call buttons on a contact still use HighLevel's phone system, not TalkChief: place TalkChief calls from the panel. Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected. Your company admin must have connected HighLevel first (see [Connect HighLevel](#connect-highlevel)).
 </Note>
 
 ## Data TalkChief uses in HighLevel
@@ -126,6 +155,18 @@ To remove TalkChief completely, uninstall the TalkChief app from the sub-account
 
   <Accordion title="The note has no agent">
     The note is written by the agent's HighLevel user only when the agent's TalkChief email matches a HighLevel user's email in the sub-account. Use the same email in both.
+  </Accordion>
+
+  <Accordion title="The panel doesn't open the caller's contact">
+    Your browser is blocking pop-ups from app.talkchief.io. Allow them in your browser's settings, or select **Open record** in the panel for each call. The contact opens only when a contact in the connected sub-account has the caller's number.
+  </Accordion>
+
+  <Accordion title="The panel says my TalkChief phone is offline">
+    TalkChief rings your own TalkChief phone first, so it must be registered: open the TalkChief app on your computer or phone, or check that your desk phone is connected, then try again.
+  </Accordion>
+
+  <Accordion title="The panel asks me to sign in again">
+    Your TalkChief sign-in in the panel lasts 12 hours. Select **Sign in** to continue.
   </Accordion>
 
   <Accordion title="A call has no recording">
