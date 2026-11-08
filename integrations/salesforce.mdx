@@ -1,0 +1,179 @@
+---
+title: "Connect Salesforce to log TalkChief calls automatically"
+sidebarTitle: "Salesforce"
+description: "Set up TalkChief for Salesforce: install the app, connect your org, log every call as a task on the matching contact or lead with its recording, and disconnect."
+keywords:
+  - "salesforce"
+  - "sales cloud"
+  - "crm"
+  - "call logging"
+  - "oauth"
+  - "integration"
+  - "setup guide"
+hidden: false
+---
+
+TalkChief for Salesforce logs every TalkChief phone call in your Salesforce org without anyone typing it in. A Salesforce admin installs the TalkChief app once and connects it with their Salesforce login, with no API keys or tokens to copy. From then on, each finished call appears as a completed call task on the matching contact or lead, with its result, talk time, the agent who handled it and a link to the recording.
+
+## What the integration does
+
+- **Logs every external call as a task**: inbound and outbound calls are logged as completed Salesforce tasks of type call. Calls between two TalkChief extensions are not logged.
+- **Finds the right contact or lead**: TalkChief searches the phone fields of your contacts (**Phone**, **Mobile**, **Home Phone**, **Other Phone**) and of your leads that are not converted yet (**Phone**, **Mobile**), in any format. When both a contact and a lead have the number, the contact wins. When several records match, the most recently updated one is used.
+- **Creates leads for new numbers**: when no contact or lead has the number, TalkChief creates a lead for the caller. You can turn this off.
+- **Assigns the task to the agent**: the task is assigned to the active Salesforce user whose email matches the TalkChief agent's email.
+- **Adds the recording**: when the call was recorded, the task's comments include a link to the recording.
+
+Each logged call shows:
+
+| Salesforce task field | What TalkChief puts there |
+| --- | --- |
+| Subject | **Inbound call from** or **Outbound call to**, followed by the other party's number |
+| Task subtype | Call |
+| Call Type | Inbound or Outbound |
+| Call Duration | Talk time, in seconds |
+| Call Result | **Connected**, **Busy**, **No answer**, **Left voicemail**, **Cancelled**, **Abandoned**, **Network busy** or **Failed** |
+| Call Object Identifier | The TalkChief call ID |
+| Status | Completed |
+| Due Date | The day of the call |
+| Comments | Status, the agent's name and extension, talk time, the recording link, and **Logged by TalkChief** |
+| Name | The matching contact or lead |
+| Assigned To | The agent's Salesforce user, when their emails match |
+
+Calls usually appear in Salesforce within a few minutes of hanging up, under **Activity** on the contact or lead.
+
+<Note>
+  If your org doesn't accept the call fields (**Call Type**, **Call Duration**, **Call Result**, **Call Object Identifier**) or uses a different name for the **Completed** status, TalkChief logs the task without them instead of failing, and keeps doing so for your org.
+</Note>
+
+## Before you start
+
+- You are a **company admin** in TalkChief.
+- You are a **Salesforce admin** in the org you want to connect. TalkChief logs calls with the access of the Salesforce user who connects it, so that user needs to read contacts, leads and users, create tasks and leads, and assign tasks to other users.
+- Your Salesforce edition includes API access: Enterprise, Unlimited, Performance and Developer editions do, and Professional Edition does with the API add-on. The user who connects needs the **API Enabled** permission.
+- One Salesforce org can be connected to one TalkChief company.
+
+## Install the TalkChief app in Salesforce
+
+Before you connect, a Salesforce admin installs the TalkChief app (a managed package) in your org. Ask TalkChief support at [support@talkchief.io](mailto:support@talkchief.io) for the install link.
+
+<Steps>
+  <Step title="Open the install link">
+    Open the install link and sign in to Salesforce as an admin of the org you want to connect.
+  </Step>
+  <Step title="Install for admins only">
+    Choose **Install for Admins Only** and select **Install**. Only the admin who connects TalkChief authorizes the app, so no other user needs access to it.
+  </Step>
+</Steps>
+
+## Connect Salesforce
+
+<Steps>
+  <Step title="Open Integrations in TalkChief">
+    In the TalkChief web app, select **Integrations** under **Configuration** in the sidebar. The page opens on the **CRM** tab.
+  </Step>
+  <Step title="Start the connection">
+    On the **Salesforce** card, select **Connect**. TalkChief sends you to Salesforce.
+  </Step>
+  <Step title="Sign in to Salesforce">
+    Sign in with your Salesforce admin login for the org where you installed the TalkChief app.
+  </Step>
+  <Step title="Approve access">
+    Salesforce shows the access TalkChief asks for (see [Data TalkChief uses in Salesforce](#data-talkchief-uses-in-salesforce)). Select **Allow**.
+  </Step>
+  <Step title="Confirm in TalkChief">
+    Salesforce sends you back to **Integrations** in TalkChief. A message confirms that Salesforce is connected, and the Salesforce card moves to your connected integrations with a **Connected** label.
+  </Step>
+  <Step title="Test with a real call">
+    Make or receive a call with TalkChief. A few minutes after you hang up, open the contact or lead in Salesforce and check that the call is under **Activity**.
+  </Step>
+</Steps>
+
+## Choose what gets logged
+
+On the connected Salesforce card in **Integrations**, select the settings (gear) icon. The **Salesforce settings** window shows the connected Salesforce org and three switches you can change at any time. Each change applies to calls that end afterwards.
+
+| Setting | On (default) | Off |
+| --- | --- | --- |
+| **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
+| **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
+| **Create contacts for new numbers** | A number that matches no contact or lead gets a new Salesforce **lead** | Calls from unknown numbers are logged as tasks without a contact or lead |
+
+A lead that TalkChief creates has:
+
+| Lead field | Value |
+| --- | --- |
+| Last Name | The caller ID name, or the phone number when there is no name |
+| Company | Unknown (TalkChief caller) |
+| Phone | The caller's number |
+| Lead Owner | The agent's Salesforce user, when their emails match |
+| Description | Created by TalkChief for a caller not found in Salesforce |
+
+Salesforce's search finds new records only a few minutes after they are created, so TalkChief remembers each lead it creates for 30 minutes: more calls from the same number in that time go to the same lead instead of creating another. If one of your duplicate rules blocks the new lead, TalkChief logs the call on the existing record the rule points to.
+
+## Data TalkChief uses in Salesforce
+
+When you connect, you allow TalkChief to manage data through the Salesforce APIs and to keep working when you are not signed in, with the access of the user who connected. TalkChief uses that access to:
+
+| Access | Why |
+| --- | --- |
+| Search contacts and leads | Find the contact or lead whose phone number matches the call |
+| Read users | Match the TalkChief agent to their Salesforce user by email, to assign the task |
+| Create leads | Create a lead for a number Salesforce doesn't have (only while **Create contacts for new numbers** is on) |
+| Create tasks | Log each call as a completed call task |
+| Read your org's name | Show which org is connected |
+
+TalkChief does not read or change your accounts, opportunities, cases, emails or other records, and it does not copy your Salesforce data into TalkChief.
+
+## Disconnect Salesforce
+
+To stop logging calls and remove TalkChief's access, open **Integrations** in TalkChief and select the trash icon on the Salesforce card, then confirm.
+
+When you disconnect:
+
+- Calls are no longer logged in Salesforce. Calls that were waiting to be logged are dropped.
+- TalkChief revokes its access in Salesforce and deletes its tokens.
+- Tasks and leads already in Salesforce stay there. Nothing is deleted from Salesforce.
+
+You can connect again at any time from the Salesforce card.
+
+## Remove TalkChief from Salesforce
+
+A Salesforce admin can also remove TalkChief from inside Salesforce by uninstalling the TalkChief package in **Setup** > **Installed Packages**. Calls then stop being logged and the Salesforce card in TalkChief shows **Reconnect needed**. Tasks and leads already in Salesforce stay there, because they are standard Salesforce records. To remove the connection from TalkChief too, disconnect it on the Salesforce card.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="TalkChief says it could not connect Salesforce">
+    Check that the TalkChief app is installed in the org you signed in to (see [Install the TalkChief app in Salesforce](#install-the-talkchief-app-in-salesforce)), that your Salesforce edition includes API access, and that your user has the **API Enabled** permission. Then select **Connect** again.
+  </Accordion>
+
+  <Accordion title="The connection was cancelled in Salesforce">
+    You selected **Deny** or closed the Salesforce approval page. Select **Connect** again and choose **Allow**.
+  </Accordion>
+
+  <Accordion title="The connection took too long">
+    The connection has to be approved within 15 minutes of selecting **Connect**. Select **Connect** again and finish the steps without waiting.
+  </Accordion>
+
+  <Accordion title="This Salesforce account is already connected to another company">
+    A Salesforce org can be connected to only one TalkChief company, so that each company's calls stay in its own CRM. Disconnect it from the other TalkChief company first, or connect a different org.
+  </Accordion>
+
+  <Accordion title="The Salesforce card asks me to reconnect">
+    The card shows **Reconnect needed** when TalkChief lost access to Salesforce: the TalkChief package was uninstalled, its access was revoked, the user who connected was deactivated, or that user or your org lost API access. Select **Reconnect** and approve access again, with an active admin user. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
+  </Accordion>
+
+  <Accordion title="A task is not assigned to the agent">
+    The task is assigned to the agent only when the agent's TalkChief email matches the email of an active Salesforce user. Otherwise it is assigned to the user who connected TalkChief. Use the same email in both, or add the agent as a user in Salesforce.
+  </Accordion>
+
+  <Accordion title="A call is not on the contact or lead">
+    TalkChief matches contacts by **Phone**, **Mobile**, **Home Phone** and **Other Phone**, and leads that are not converted by **Phone** and **Mobile**. Check that the record has the caller's number in one of those fields. A record created or changed in the last few minutes may not be found yet. If **Create contacts for new numbers** is off, calls from numbers Salesforce doesn't have are logged without a contact or lead.
+  </Accordion>
+
+  <Accordion title="A recording link is missing">
+    The recording link is added to the task's comments only when the call was recorded. Check that call recording is on for that number or team in TalkChief.
+  </Accordion>
+</AccordionGroup>
+
+For anything else, contact TalkChief support at [support@talkchief.io](mailto:support@talkchief.io).

@@ -117,7 +117,8 @@
               "integrations/pipedrive",
               "integrations/activecampaign",
               "integrations/freshsales",
-              "integrations/bitrix24"
+              "integrations/bitrix24",
+              "integrations/salesforce"
             ]
           },
           {
