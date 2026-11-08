@@ -19,8 +19,9 @@ The TalkChief app for Pipedrive logs every TalkChief phone call in your Pipedriv
 
 - **Logs every external call**: inbound and outbound calls are logged as Pipedrive call logs. Calls between two TalkChief extensions are not logged.
 - **Finds the right person**: TalkChief looks up the caller's number (or the number you dialed) in the phone numbers of your Pipedrive persons. A call on a person who belongs to an organization is linked to that organization too.
+- **Links the deal**: a call you place from a deal is linked to that deal. Other calls are linked to the person's most recently updated open deal, if they have one.
 - **Creates persons for new numbers**: when no person has the number, TalkChief creates one with the number and the caller ID name. You can turn this off.
-- **Assigns the call to the agent**: the call log belongs to the Pipedrive user whose email matches the TalkChief agent's email.
+- **Assigns the call to the agent**: the call log belongs to the Pipedrive user whose email matches the TalkChief agent's email. If the agent has no Pipedrive user, it belongs to the person's owner, otherwise to the admin who connected Pipedrive.
 - **Links the recording**: when the call was recorded, the call log's note links to the recording so you can play it from Pipedrive.
 - **Calls from inside Pipedrive**: click a phone number in Pipedrive and TalkChief places the call through your TalkChief phone. Incoming calls open the caller's person in Pipedrive. See [Call from Pipedrive](#call-from-pipedrive).
 
@@ -35,7 +36,8 @@ Each logged call shows:
 | From and to numbers | The numbers on the call |
 | Note | Status, the agent's name and extension, talk time and a link to the recording |
 | Person and organization | The matching person, and their organization |
-| User | The agent's Pipedrive user, when their emails match |
+| Deal | The deal you called from, otherwise the person's most recently updated open deal |
+| User | The agent's Pipedrive user, when their emails match; otherwise the person's owner |
 
 Calls usually appear in Pipedrive within a few minutes of hanging up.
 
@@ -115,10 +117,11 @@ When you connect, you allow TalkChief to:
 | --- | --- |
 | Basic information | Identify the connected Pipedrive company and user |
 | Contacts (full access) | Find the person whose phone number matches the call, and create a person for a number Pipedrive doesn't have (only while **Create contacts for new numbers** is on) |
+| Deals (read only) | Find the person's open deal to link the call to |
 | Read users data | Match the TalkChief agent to their Pipedrive user by email, to set the call's user |
 | Call logs | Log each call with its outcome, duration and numbers |
 
-TalkChief writes call logs and new persons to Pipedrive. It does not read or change your deals, leads, activities, emails or other records, and it does not copy your Pipedrive contacts into TalkChief.
+TalkChief writes call logs and new persons to Pipedrive. It reads deals only to link calls to them and never changes them; it does not read or change your leads, activities, emails or other records, and it does not copy your Pipedrive contacts into TalkChief.
 
 ## Disconnect Pipedrive
 
