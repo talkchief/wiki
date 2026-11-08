@@ -1,0 +1,136 @@
+---
+title: "Connect Zendesk to log TalkChief calls as tickets"
+sidebarTitle: "Zendesk"
+description: "Set up TalkChief for Zendesk Support: connect with your Zendesk subdomain and login, log every call as a ticket for the caller with its recording, and disconnect."
+keywords:
+  - "zendesk"
+  - "zendesk support"
+  - "helpdesk"
+  - "call logging"
+  - "talk partner edition"
+  - "oauth"
+  - "setup guide"
+hidden: true
+---
+
+TalkChief for Zendesk turns every TalkChief phone call into a Zendesk Support ticket for the caller, without anyone typing it in. You connect once with your Zendesk subdomain and your Zendesk login, with no API tokens to copy, and from then on each finished call appears as a ticket with the numbers, talk time, the agent who answered and the call recording.
+
+## What the integration does
+
+- **Logs every external call as a ticket**: each inbound, outbound or voicemail call becomes one ticket. Calls between two TalkChief extensions are not logged.
+- **Shows the call like a phone ticket**: on Zendesk plans that include Talk Partner Edition (all Zendesk Suite plans), the ticket is a phone-call ticket. Its call details show the numbers, start time, talk time, the agent who answered, and a player for the recording. On other plans, the ticket gets an internal note with the same details and a link to the recording.
+- **Finds the caller**: TalkChief looks up the caller's number (or the number you dialed) among your Zendesk users and makes that user the ticket's requester.
+- **Creates users for new numbers**: when no Zendesk user has the number, TalkChief creates an end user with the caller ID name and the number. You can turn this off.
+- **Assigns the ticket to the agent**: answered calls are assigned to the Zendesk agent whose email matches the TalkChief agent's email.
+
+Each ticket shows:
+
+| Zendesk field | What TalkChief puts there |
+| --- | --- |
+| Subject | **Inbound call from**, **Outbound call to** or **Voicemail from**, followed by the other party's number |
+| Channel | Phone call (inbound or outbound) or voicemail, on plans with Talk Partner Edition |
+| Requester | The Zendesk user with the caller's number |
+| Assignee | The agent's Zendesk user on answered calls, when their emails match |
+| Call details | From and to numbers, start time, talk time, the agent who answered, and the recording |
+| Tags | `talkchief` |
+
+Calls usually appear in Zendesk within a few minutes of hanging up.
+
+## Before you start
+
+- You are a **company admin** in TalkChief.
+- You sign in to Zendesk as an **admin** or **agent** of the Zendesk account you want to connect. End-user logins can't connect.
+- You know your Zendesk subdomain: the first part of the address you use to sign in, such as `yourcompany` in `yourcompany.zendesk.com`. Custom domains (host-mapped addresses) can't be used to connect; use the `zendesk.com` address.
+- One Zendesk account can be connected to one TalkChief company.
+
+## Connect Zendesk
+
+<Steps>
+  <Step title="Open Integrations in TalkChief">
+    In the TalkChief web app, select **Integrations** under **Configuration** in the sidebar. The page opens on the **CRM** tab.
+  </Step>
+  <Step title="Enter your Zendesk address">
+    On the **Zendesk** card, select **Connect**. In the **Connect Zendesk** window, enter your subdomain or full address in **Zendesk address** (for example `yourcompany.zendesk.com`), then select **Connect**. TalkChief sends you to your Zendesk account.
+  </Step>
+  <Step title="Sign in and approve access">
+    Sign in to Zendesk if asked. Zendesk shows the access TalkChief asks for (see [Data TalkChief uses in Zendesk](#data-talkchief-uses-in-zendesk)). Approve it.
+  </Step>
+  <Step title="Confirm in TalkChief">
+    Zendesk sends you back to **Integrations** in TalkChief. A message confirms that Zendesk is connected, and the Zendesk card moves to your connected integrations with a **Connected** label.
+  </Step>
+  <Step title="Test with a real call">
+    Make or receive a call with TalkChief. A few minutes after you hang up, open Zendesk and check that a ticket for the call is in your views.
+  </Step>
+</Steps>
+
+## Choose what gets logged
+
+On the connected Zendesk card in **Integrations**, select the settings (gear) icon. The settings window shows the connected Zendesk account and three switches you can change at any time. Each change applies to calls that end afterwards.
+
+| Setting | On (default) | Off |
+| --- | --- | --- |
+| **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
+| **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
+| **Create contacts for new numbers** | Unknown numbers get a new Zendesk end user, who becomes the requester | No user is created; the ticket's requester is the agent who answered (or the Zendesk user who connected TalkChief) |
+
+## Data TalkChief uses in Zendesk
+
+When you connect, you allow TalkChief to read and write data in your Zendesk account. TalkChief uses that access to:
+
+| Access | Why |
+| --- | --- |
+| Read users | Find the user whose phone number matches the call, and the agent whose email matches the TalkChief agent |
+| Create users | Create an end user for a number Zendesk doesn't have (only while **Create contacts for new numbers** is on) |
+| Create and update tickets | Create one ticket per call, with its call details or internal note |
+
+TalkChief does not read, change or delete your other tickets, users, organizations or settings, and it does not copy your Zendesk data into TalkChief.
+
+## Disconnect Zendesk
+
+To stop logging calls and remove TalkChief's access, open **Integrations** in TalkChief and select the trash icon on the Zendesk card, then confirm.
+
+When you disconnect:
+
+- Calls are no longer logged in Zendesk. Calls that were waiting to be logged are dropped.
+- TalkChief deletes its access token for your Zendesk account.
+- Tickets and users already in Zendesk stay there. Nothing is deleted from Zendesk.
+
+You can connect again at any time from the Zendesk card.
+
+## Remove TalkChief's access from Zendesk
+
+A Zendesk admin can also end TalkChief's access from inside Zendesk by deleting the OAuth tokens of the TalkChief client in Admin Center. Calls then stop being logged and the Zendesk card in TalkChief shows **Reconnect needed**. Tickets and users already in Zendesk stay there. To remove the connection from TalkChief too, disconnect it on the Zendesk card.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="TalkChief says my Zendesk address is not valid">
+    Enter your Zendesk subdomain (`yourcompany`) or the address ending in `.zendesk.com`. Custom domains such as `support.yourcompany.com` are not accepted.
+  </Accordion>
+
+  <Accordion title="The Zendesk card asks me to reconnect">
+    The card shows **Reconnect needed** when TalkChief lost access to Zendesk, usually because its access was removed in Zendesk or the user who connected it lost their agent or admin role. Select **Reconnect** and approve access again. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
+  </Accordion>
+
+  <Accordion title="This Zendesk account is already connected to another company">
+    A Zendesk account can be connected to only one TalkChief company, so that each company's calls stay in its own account. Disconnect it from the other TalkChief company first, or connect a different Zendesk account.
+  </Accordion>
+
+  <Accordion title="Tickets have an internal note instead of call details">
+    Phone-call tickets need Talk Partner Edition, which all Zendesk Suite plans include. Other plans need Talk Partner Edition licences for your agents. Without it, TalkChief logs each call as a ticket with an internal note. TalkChief tries phone-call tickets again every week, and every time you reconnect.
+  </Accordion>
+
+  <Accordion title="A ticket has no assignee">
+    TalkChief assigns answered calls only when the agent's TalkChief email matches a Zendesk agent's email, and only if Zendesk accepts that agent as assignee. Use the same email in both, or add the agent to Zendesk.
+  </Accordion>
+
+  <Accordion title="A ticket has the wrong requester">
+    TalkChief matches the caller by the phone number on the Zendesk user. Check that the user's phone number is saved with its country code (for example `+15551234567`). If **Create contacts for new numbers** is off, calls from unknown numbers use the answering agent as requester.
+  </Accordion>
+
+  <Accordion title="A recording does not play">
+    Zendesk keeps only a link to the recording and plays it in the agent's browser. The recording is added only when the call was recorded: check that call recording is on for that number or team in TalkChief.
+  </Accordion>
+</AccordionGroup>
+
+For anything else, contact TalkChief support at [support@talkchief.io](mailto:support@talkchief.io).

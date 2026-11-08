@@ -112,7 +112,8 @@
               "integrations/crm-integrations",
               "integrations/hubspot",
               "integrations/monday",
-              "integrations/gohighlevel"
+              "integrations/gohighlevel",
+              "integrations/zendesk"
             ]
           },
           {
