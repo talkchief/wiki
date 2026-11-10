@@ -126,6 +126,7 @@ When you install the app, you allow TalkChief to:
 | Read users | Match the TalkChief agent to their HighLevel user by email |
 | Read the sub-account | Show the connected sub-account's name in TalkChief |
 | Read opportunities | Name the contact's open opportunity in the call note |
+| Manage the app's installation | Uninstall the TalkChief app from your sub-account when you disconnect in TalkChief |
 
 TalkChief writes call entries, notes and new contacts to HighLevel. It does not change your opportunities, calendars, campaigns or other records, does not send messages to your contacts, and does not copy your HighLevel contacts into TalkChief.
 
@@ -136,20 +137,20 @@ To stop logging calls, open **Integrations** in TalkChief and select the trash i
 When you disconnect:
 
 - Calls are no longer logged in HighLevel. Calls that were waiting to be logged are dropped.
-- TalkChief deletes its access tokens for your sub-account.
+- TalkChief uninstalls its app from your HighLevel sub-account and deletes its access tokens.
 - Calls, notes and contacts already in HighLevel stay there. Nothing is deleted from HighLevel.
 
-The TalkChief app stays installed in your HighLevel sub-account until you uninstall it there (see below). You can connect again at any time from the HighLevel card.
+You can connect again at any time from the HighLevel card: TalkChief installs the app again when you approve access.
 
 ## Uninstall the app from HighLevel
 
-To remove TalkChief completely, uninstall the TalkChief app from the sub-account in HighLevel. After you uninstall, calls stop being logged and the HighLevel card in TalkChief shows **Reconnect needed**. Calls, notes and contacts already in HighLevel stay there. To remove the connection from TalkChief too, disconnect it on the HighLevel card.
+You can also uninstall the TalkChief app from the sub-account in HighLevel. HighLevel tells TalkChief right away: calls stop being logged and the HighLevel card in TalkChief shows it is no longer connected. Calls, notes and contacts already in HighLevel stay there. Connect again from the HighLevel card at any time.
 
 ## Troubleshooting
 
 <AccordionGroup>
   <Accordion title="The HighLevel card asks me to reconnect">
-    The card shows **Reconnect needed** when TalkChief lost access to HighLevel, usually because the app was uninstalled from the sub-account. Select **Reconnect** and approve access again. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
+    The card shows **Reconnect needed** when TalkChief lost access to HighLevel, for example because the access was revoked. Select **Reconnect** and approve access again. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
   </Accordion>
 
   <Accordion title="Connecting fails after I approve access">
