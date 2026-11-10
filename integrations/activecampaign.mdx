@@ -20,7 +20,7 @@ The TalkChief integration for ActiveCampaign logs every TalkChief phone call on 
 - **Logs every external call as a note**: each inbound and outbound call adds a note to the contact. Calls between two TalkChief extensions are not logged.
 - **Finds the right contact**: TalkChief looks up the caller's number (or the number you dialed) in the contact's **Phone** field, in the formats people usually type, such as `+15551234567`, `5551234567` or `+1 555-555-1234`.
 - **Tags the call's outcome**: the contact gets one TalkChief outcome tag that shows how its last call went (see [Start automations from calls](#start-automations-from-calls)).
-- **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number and the caller ID name, and tags it **TalkChief - Created from call**. This needs phone-only contacts in your ActiveCampaign account (see [Before you start](#before-you-start)). You can turn it off.
+- **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number and the caller ID name, and tags it **TalkChief - Created from call**. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)) and needs phone-only contacts in your ActiveCampaign account (see [Before you start](#before-you-start)).
 - **Adds the recording**: when the call was recorded, the note includes a link to the recording.
 
 Each note looks like this:
@@ -86,13 +86,13 @@ TalkChief stores the API key encrypted and uses it only to log calls in ActiveCa
 
 ## Choose what gets logged
 
-On the connected ActiveCampaign card in **Integrations**, select the settings (gear) icon. The **ActiveCampaign settings** window shows the connected account and three switches you can change at any time. Each change applies to calls that end afterwards.
+On the connected ActiveCampaign card in **Integrations**, select the settings (gear) icon. The **ActiveCampaign settings** window shows the connected account and three switches you can change at any time. Each change applies to calls that end afterwards. **Log calls** and **Log missed calls** start on; **Create contacts for new numbers** starts off.
 
-| Setting | On (default) | Off |
+| Setting | On | Off |
 | --- | --- | --- |
 | **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged and tagged too | Only answered calls are logged |
-| **Create contacts for new numbers** | Unknown numbers get a new contact (needs phone-only contacts) | Calls from numbers ActiveCampaign doesn't have are not logged |
+| **Create contacts for new numbers** | Unknown numbers get a new contact (needs phone-only contacts) | Calls from numbers ActiveCampaign doesn't have are not logged, because ActiveCampaign keeps notes only on a contact |
 
 ## Start automations from calls
 
