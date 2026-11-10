@@ -22,6 +22,7 @@ TalkChief for Salesforce logs every TalkChief phone call in your Salesforce org 
 - **Creates leads for new numbers, if you want**: when no contact or lead has the number, TalkChief can create a lead for the caller. This is off until you turn it on; while it is off, the call is logged as a task without a contact or lead.
 - **Assigns the task to the agent**: the task is assigned to the active Salesforce user whose email matches the TalkChief agent's email. When the agent has no Salesforce user, it goes to the owner of the matching contact or lead, and otherwise to the user who connected TalkChief.
 - **Adds the recording**: when the call was recorded, the task's comments include a link to the recording.
+- **Calls from inside Salesforce**: with the TalkChief softphone in your Lightning app's utility bar, click a phone number in Salesforce and TalkChief places the call through your TalkChief phone. Incoming calls open the caller's record. See [Call from Salesforce](#call-from-salesforce).
 
 Each logged call shows:
 
@@ -110,6 +111,49 @@ A lead that TalkChief creates has:
 
 Salesforce's search finds new records only a few minutes after they are created, so TalkChief remembers each lead it creates for 30 minutes: more calls from the same number in that time go to the same lead instead of creating another. If one of your duplicate rules blocks the new lead, TalkChief logs the call on the existing record the rule points to.
 
+## Call from Salesforce
+
+The TalkChief softphone lets each agent place and receive TalkChief calls from Salesforce records. It sits in the utility bar of your Lightning app. You talk on your usual TalkChief phone (the TalkChief app or your desk phone), so moving between Salesforce pages never drops a call.
+
+### Set up the softphone
+
+A Salesforce admin does this once for your org, after installing the TalkChief app and connecting Salesforce (see [Connect Salesforce](#connect-salesforce)). Ask TalkChief support at [support@talkchief.io](mailto:support@talkchief.io) for the TalkChief call center file.
+
+<Steps>
+  <Step title="Import the TalkChief call center">
+    In Salesforce **Setup**, search for **Call Centers**, open **Call Centers** and select **Import**. Choose the TalkChief call center file and import it. You need the **Customize Application** and **Manage Call Centers** permissions.
+  </Step>
+  <Step title="Add your agents to the call center">
+    Open the **TalkChief** call center and, under **Call Center Users**, select **Manage Call Center Users** (or **Add**), then add each agent who calls from Salesforce. A user can belong to one call center at a time.
+  </Step>
+  <Step title="Add the softphone to your Lightning app">
+    In **Setup**, open **App Manager**, find the Lightning app your agents use (for example **Sales**) and select **Edit**. Under **Utility Items (Desktop Only)**, select **Add Utility Item**, choose **Open CTI Softphone** and save. The softphone works only in Lightning apps.
+  </Step>
+</Steps>
+
+### Use the softphone
+
+<Steps>
+  <Step title="Sign in to TalkChief">
+    Open the **TalkChief** softphone from the utility bar and select **Sign in**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. If nothing opens, allow pop-ups for Salesforce in your browser. Each agent signs in once on their own computer. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
+  </Step>
+  <Step title="Place a call">
+    Click a phone number on a contact, lead, account or opportunity. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. Hang up on your phone.
+  </Step>
+  <Step title="Receive a call">
+    When a call rings your TalkChief phone, the softphone opens and Salesforce opens the caller's contact or lead. Answer on your TalkChief phone as usual.
+  </Step>
+  <Step title="Add a note after the call">
+    When the call ends, type a note in the softphone, choose an **Outcome** if you want, and select **Save**. The note appears in the task's comments and the outcome in **Call Result**. Saving again replaces your earlier note.
+  </Step>
+</Steps>
+
+Each call through the softphone is logged once, as one call task with the same details as every other logged call. A call you place from a contact or lead goes on that record. A call from an account or opportunity is also related to it.
+
+<Note>
+  Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected. Salesforce is retiring the Open CTI softphone framework on February 28, 2028, and newly created Agentforce Service orgs can't add it. Call logging is not affected.
+</Note>
+
 ## Data TalkChief uses in Salesforce
 
 When you connect, you allow TalkChief to manage data through the Salesforce APIs and to keep working when you are not signed in, with the access of the user who connected. TalkChief uses that access to:
@@ -169,6 +213,22 @@ A Salesforce admin can also remove TalkChief from inside Salesforce by uninstall
 
   <Accordion title="A call is not on the contact or lead">
     TalkChief matches contacts by **Phone**, **Mobile**, **Home Phone** and **Other Phone**, and leads that are not converted by **Phone** and **Mobile**. Check that the record has the caller's number in one of those fields. A record created or changed in the last few minutes may not be found yet. While **Create contacts for new numbers** is off (the default), calls from numbers Salesforce doesn't have are logged without a contact or lead: search **Tasks** for **Call with** and the number to find them.
+  </Accordion>
+
+  <Accordion title="The softphone says my TalkChief phone is offline">
+    TalkChief rings your own TalkChief phone first, so it must be registered: open the TalkChief app on your computer or phone, or check that your desk phone is connected, then try again.
+  </Accordion>
+
+  <Accordion title="The softphone asks me to sign in again">
+    Your TalkChief sign-in in the softphone lasts 12 hours. Select **Sign in** to continue. If nothing opens, allow pop-ups for Salesforce in your browser.
+  </Accordion>
+
+  <Accordion title="The softphone doesn't appear in Salesforce">
+    Check that you are in a Lightning app with **Open CTI Softphone** in its utility bar, and that your user is in the TalkChief call center. A user can belong to only one call center, so remove yourself from any other call center first.
+  </Accordion>
+
+  <Accordion title="The softphone won't call or open records">
+    The softphone only works with the Salesforce org your TalkChief company is connected to. If you are signed in to TalkChief for another company, sign out in the softphone and sign in with your account for this company.
   </Accordion>
 
   <Accordion title="A recording link is missing">
