@@ -19,15 +19,15 @@ TalkChief for Salesforce logs every TalkChief phone call in your Salesforce org 
 
 - **Logs every external call as a task**: inbound and outbound calls are logged as completed Salesforce tasks of type call. Calls between two TalkChief extensions are not logged.
 - **Finds the right contact or lead**: TalkChief searches the phone fields of your contacts (**Phone**, **Mobile**, **Home Phone**, **Other Phone**) and of your leads that are not converted yet (**Phone**, **Mobile**), in any format. When both a contact and a lead have the number, the contact wins. When several records match, the most recently updated one is used.
-- **Creates leads for new numbers**: when no contact or lead has the number, TalkChief creates a lead for the caller. You can turn this off.
-- **Assigns the task to the agent**: the task is assigned to the active Salesforce user whose email matches the TalkChief agent's email.
+- **Creates leads for new numbers, if you want**: when no contact or lead has the number, TalkChief can create a lead for the caller. This is off until you turn it on; while it is off, the call is logged as a task without a contact or lead.
+- **Assigns the task to the agent**: the task is assigned to the active Salesforce user whose email matches the TalkChief agent's email. When the agent has no Salesforce user, it goes to the owner of the matching contact or lead, and otherwise to the user who connected TalkChief.
 - **Adds the recording**: when the call was recorded, the task's comments include a link to the recording.
 
 Each logged call shows:
 
 | Salesforce task field | What TalkChief puts there |
 | --- | --- |
-| Subject | **Inbound call from** or **Outbound call to**, followed by the other party's number |
+| Subject | **Call with**, followed by the name of the matching contact or lead, or the other party's number when no named record matches |
 | Task subtype | Call |
 | Call Type | Inbound or Outbound |
 | Call Duration | Talk time, in seconds |
@@ -37,7 +37,7 @@ Each logged call shows:
 | Due Date | The day of the call |
 | Comments | Status, the agent's name and extension, talk time, the recording link, and **Logged by TalkChief** |
 | Name | The matching contact or lead |
-| Assigned To | The agent's Salesforce user, when their emails match |
+| Assigned To | The agent's Salesforce user, when their emails match; otherwise the contact's or lead's owner, or the user who connected TalkChief |
 
 Calls usually appear in Salesforce within a few minutes of hanging up, under **Activity** on the contact or lead.
 
@@ -92,11 +92,11 @@ Before you connect, a Salesforce admin installs the TalkChief app (a managed pac
 
 On the connected Salesforce card in **Integrations**, select the settings (gear) icon. The **Salesforce settings** window shows the connected Salesforce org and three switches you can change at any time. Each change applies to calls that end afterwards.
 
-| Setting | On (default) | Off |
-| --- | --- | --- |
-| **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
-| **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
-| **Create contacts for new numbers** | A number that matches no contact or lead gets a new Salesforce **lead** | Calls from unknown numbers are logged as tasks without a contact or lead |
+| Setting | Default | On | Off |
+| --- | --- | --- | --- |
+| **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place |
+| **Log missed calls** | On | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
+| **Create contacts for new numbers** | Off | A number that matches no contact or lead gets a new Salesforce **lead** | Calls from unknown numbers are logged as tasks without a contact or lead |
 
 A lead that TalkChief creates has:
 
@@ -164,11 +164,11 @@ A Salesforce admin can also remove TalkChief from inside Salesforce by uninstall
   </Accordion>
 
   <Accordion title="A task is not assigned to the agent">
-    The task is assigned to the agent only when the agent's TalkChief email matches the email of an active Salesforce user. Otherwise it is assigned to the user who connected TalkChief. Use the same email in both, or add the agent as a user in Salesforce.
+    The task is assigned to the agent only when the agent's TalkChief email matches the email of an active Salesforce user. Otherwise it goes to the owner of the matching contact or lead (when that owner is a user, not a queue), and if there is none, to the user who connected TalkChief. Use the same email in both, or add the agent as a user in Salesforce.
   </Accordion>
 
   <Accordion title="A call is not on the contact or lead">
-    TalkChief matches contacts by **Phone**, **Mobile**, **Home Phone** and **Other Phone**, and leads that are not converted by **Phone** and **Mobile**. Check that the record has the caller's number in one of those fields. A record created or changed in the last few minutes may not be found yet. If **Create contacts for new numbers** is off, calls from numbers Salesforce doesn't have are logged without a contact or lead.
+    TalkChief matches contacts by **Phone**, **Mobile**, **Home Phone** and **Other Phone**, and leads that are not converted by **Phone** and **Mobile**. Check that the record has the caller's number in one of those fields. A record created or changed in the last few minutes may not be found yet. While **Create contacts for new numbers** is off (the default), calls from numbers Salesforce doesn't have are logged without a contact or lead: search **Tasks** for **Call with** and the number to find them.
   </Accordion>
 
   <Accordion title="A recording link is missing">
