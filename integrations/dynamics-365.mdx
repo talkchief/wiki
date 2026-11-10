@@ -18,7 +18,7 @@ The TalkChief integration for Microsoft Dynamics 365 Sales logs every TalkChief 
 
 - **Logs every external call**: inbound and outbound calls are logged as Dynamics 365 phone call activities. Calls between two TalkChief extensions are not logged.
 - **Finds the right record**: TalkChief looks up the caller's number (or the number you dialed) in the phone number fields of your active contacts, then of your open leads. Numbers match in international format, in national format and in common written forms such as `054-123-4567`.
-- **Can create leads for new numbers**: when you turn on **Create contacts for new numbers** and no contact or lead has the number, TalkChief creates a lead with the number and the caller ID name. This is off by default.
+- **Can create leads for new numbers**: when you turn on **Create leads for new numbers** and no contact or lead has the number, TalkChief creates a lead with the number and the caller ID name. This is off by default.
 - **Assigns the call to the agent**: the phone call's owner is the enabled Dynamics 365 user whose primary email matches the TalkChief agent's email. When the agent has no Dynamics 365 user, the owner of the matching contact or lead owns the call.
 - **Adds the recording**: when the call was recorded, the phone call's description links to the recording.
 - **Calls from inside Dynamics 365**: in organizations that have the Channel Integration Framework, click a phone number in Dynamics 365 and TalkChief places the call through your TalkChief phone. Incoming calls open the caller's record. See [Call from Dynamics 365](#call-from-dynamics-365).
@@ -86,7 +86,7 @@ On the connected Microsoft Dynamics 365 card in **Integrations**, select the set
 | --- | --- | --- | --- |
 | **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | On | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
-| **Create contacts for new numbers** | Off | Unknown numbers get a new Dynamics 365 lead | Calls from unknown numbers are logged without a contact or lead |
+| **Create leads for new numbers** | Off | Unknown numbers get a new Dynamics 365 lead | Calls from unknown numbers are logged without a contact or lead |
 
 ## Switch to another environment
 
@@ -144,7 +144,7 @@ When you connect, you allow TalkChief to access Dynamics 365 as the user who con
 | List your environments | Find the Dynamics 365 environments your account can reach, so you can choose one |
 | Read contacts and leads | Find the active contact or open lead whose phone number matches the call |
 | Read users | Match the TalkChief agent to their Dynamics 365 user by primary email, to set the owner |
-| Create leads | Create a lead for a number Dynamics 365 doesn't have (only while **Create contacts for new numbers** is on) |
+| Create leads | Create a lead for a number Dynamics 365 doesn't have (only while **Create leads for new numbers** is on) |
 | Create phone calls | Log each call on the contact's or lead's timeline and mark it completed |
 
 TalkChief writes phone calls and new leads to Dynamics 365. It does not change your contacts, accounts, opportunities or other records, and it does not copy your Dynamics 365 data into TalkChief.
@@ -199,11 +199,11 @@ You can connect again at any time: the card returns to **Discover more integrati
   </Accordion>
 
   <Accordion title="A call is not on the contact or lead">
-    TalkChief matches active contacts first, then open leads, by their phone number fields. Check that the record has the caller's number in one of those fields and is active. If **Create contacts for new numbers** is off, calls from numbers Dynamics 365 doesn't have are logged without a contact or lead.
+    TalkChief matches active contacts first, then open leads, by their phone number fields. Check that the record has the caller's number in one of those fields and is active. If **Create leads for new numbers** is off, calls from numbers Dynamics 365 doesn't have are logged without a contact or lead.
   </Accordion>
 
   <Accordion title="No lead was created for a new number">
-    Leads are created only while **Create contacts for new numbers** is on; it is off until you turn it on. If the connected user's security role can't create leads, or your leads require a custom field that TalkChief doesn't fill, the call is logged without a lead.
+    Leads are created only while **Create leads for new numbers** is on; it is off until you turn it on. If the connected user's security role can't create leads, or your leads require a custom field that TalkChief doesn't fill, the call is logged without a lead.
   </Accordion>
 
   <Accordion title="A phone call stays open">
