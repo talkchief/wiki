@@ -21,7 +21,9 @@ The TalkChief app for HighLevel (GoHighLevel) logs every TalkChief phone call in
 - **Finds the right contact**: TalkChief looks up the caller's number (or the number you dialed) among the contacts of the connected sub-account.
 - **Creates contacts for new numbers** (when you turn it on): when no contact has the number, TalkChief creates one with the number and the caller ID name, assigned to the agent.
 - **Adds the recording**: when the call was recorded, the call entry carries a link to the recording, and the note repeats it.
-- **Credits the agent**: the note is written by the HighLevel user whose email matches the TalkChief agent's email.
+- **Credits the agent**: the note is written by the HighLevel user whose email matches the TalkChief agent's email. When the agent has no HighLevel user, it is written by the contact's owner, or else by the person who installed the app.
+- **Names the opportunity**: when the contact has one open opportunity, the note names it.
+- **Adds the agent's note and outcome**: after a call, agents can add a note and pick an outcome in the TalkChief calling panel. TalkChief adds them to the call's note in HighLevel.
 - **Calls from HighLevel**: the TalkChief calling panel places calls through your TalkChief phone and opens the caller's contact when your phone rings. See [Call from HighLevel](#call-from-highlevel).
 
 Each logged call adds:
@@ -30,7 +32,7 @@ Each logged call adds:
 | --- | --- |
 | Call entry in the contact's conversation | Direction (inbound or outbound), the numbers on the call, the call status and the recording link when there is one. On incoming calls, the entry's text also shows the talk time and the agent |
 | Call status | Answered calls show as completed; busy, unanswered, cancelled, voicemail and failed calls show as such |
-| Note on the contact | **Inbound call from** or **Outbound call to** with the other party's number, the status, talk time, the agent's name and extension, and the recording link |
+| Note on the contact | **Inbound call from** or **Outbound call to** with the other party's number, the status, talk time, the agent's name and extension, the recording link, and the contact's open opportunity when there is exactly one. After the agent saves a note in the panel, the outcome they picked and their note, under **Agent note** |
 | New contact (only for unknown numbers) | The number, the caller ID name when there is one, source **TalkChief**, assigned to the agent |
 
 Calls usually appear in HighLevel within a few minutes of hanging up.
@@ -95,9 +97,17 @@ The TalkChief calling panel lets each agent place TalkChief calls and see incomi
   <Step title="Receive a call">
     When a call rings your TalkChief phone, the panel shows it and opens the caller's contact in a HighLevel tab. If your browser blocked that, select **Open record** in the panel. Answer on your TalkChief phone as usual.
   </Step>
+  <Step title="Add a note after the call">
+    When the call ends, type a **Note**, pick an **Outcome** (or keep the logged outcome) and select **Save**. TalkChief adds them to the call's note in HighLevel. Saving again replaces the earlier note; it never adds a second one.
+  </Step>
+  <Step title="Call someone back">
+    The panel lists the last callers it matched to a HighLevel contact. Select **Call** and the name to call them back. The call is logged on that contact.
+  </Step>
 </Steps>
 
 Calls made or received with the panel are logged once, like every other call: a call entry in the contact's conversation and a note with the talk time and agent.
+
+The panel only works in the HighLevel sub-account that is connected to your TalkChief company. If you open it from another sub-account, it says so and doesn't place calls or open contacts.
 
 <Note>
   HighLevel's own call buttons on a contact still use HighLevel's phone system, not TalkChief: place TalkChief calls from the panel. Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected. Your company admin must have connected HighLevel first (see [Connect HighLevel](#connect-highlevel)).
@@ -115,8 +125,9 @@ When you install the app, you allow TalkChief to:
 | Write conversation messages | Add the call entry with its recording link |
 | Read users | Match the TalkChief agent to their HighLevel user by email |
 | Read the sub-account | Show the connected sub-account's name in TalkChief |
+| Read opportunities | Name the contact's open opportunity in the call note |
 
-TalkChief writes call entries, notes and new contacts to HighLevel. It does not read or change your opportunities, calendars, campaigns or other records, does not send messages to your contacts, and does not copy your HighLevel contacts into TalkChief.
+TalkChief writes call entries, notes and new contacts to HighLevel. It does not change your opportunities, calendars, campaigns or other records, does not send messages to your contacts, and does not copy your HighLevel contacts into TalkChief.
 
 ## Disconnect HighLevel
 
@@ -154,7 +165,7 @@ To remove TalkChief completely, uninstall the TalkChief app from the sub-account
   </Accordion>
 
   <Accordion title="The note has no agent">
-    The note is written by the agent's HighLevel user only when the agent's TalkChief email matches a HighLevel user's email in the sub-account. Use the same email in both.
+    The note is written by the agent's HighLevel user only when the agent's TalkChief email matches a HighLevel user's email in the sub-account. Otherwise it is written by the contact's owner, or by the person who installed the app. Use the same email in both to credit the agent.
   </Accordion>
 
   <Accordion title="The panel doesn't open the caller's contact">
@@ -166,7 +177,7 @@ To remove TalkChief completely, uninstall the TalkChief app from the sub-account
   </Accordion>
 
   <Accordion title="The panel asks me to sign in again">
-    Your TalkChief sign-in in the panel lasts 12 hours. Select **Sign in** to continue.
+    Your TalkChief sign-in in the panel lasts 30 days and renews while you use the panel. Select **Sign in** to continue.
   </Accordion>
 
   <Accordion title="A call has no recording">
