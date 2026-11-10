@@ -21,6 +21,7 @@ The TalkChief integration for Microsoft Dynamics 365 Sales logs every TalkChief 
 - **Can create leads for new numbers**: when you turn on **Create contacts for new numbers** and no contact or lead has the number, TalkChief creates a lead with the number and the caller ID name. This is off by default.
 - **Assigns the call to the agent**: the phone call's owner is the enabled Dynamics 365 user whose primary email matches the TalkChief agent's email. When the agent has no Dynamics 365 user, the owner of the matching contact or lead owns the call.
 - **Adds the recording**: when the call was recorded, the phone call's description links to the recording.
+- **Calls from inside Dynamics 365**: in organizations that have the Channel Integration Framework, click a phone number in Dynamics 365 and TalkChief places the call through your TalkChief phone. Incoming calls open the caller's record. See [Call from Dynamics 365](#call-from-dynamics-365).
 
 Each logged phone call shows:
 
@@ -90,6 +91,49 @@ On the connected Microsoft Dynamics 365 card in **Integrations**, select the set
 ## Switch to another environment
 
 To log calls into a different environment, disconnect Dynamics 365 (see [Disconnect Dynamics 365](#disconnect-dynamics-365)) and connect again, then choose the other environment. When you reconnect and your account can reach several environments, the window pre-selects the environment you were connected to before.
+
+## Call from Dynamics 365
+
+The TalkChief calling panel lets each agent place and receive TalkChief calls from Dynamics 365 records. You talk on your usual TalkChief phone (the TalkChief app or your desk phone), so moving between Dynamics 365 pages never drops a call.
+
+<Info>
+  The panel uses Microsoft's Channel Integration Framework, which Microsoft makes available to organizations that have Dynamics 365 Customer Service. Call logging works in every Dynamics 365 Sales organization, with or without the panel.
+</Info>
+
+<Steps>
+  <Step title="Add TalkChief as a channel provider (administrator, once)">
+    In Dynamics 365, open the **Channel Integration Framework** app and go to **Active Channel Providers**. Select **New** and enter:
+
+    | Field | Value |
+    | --- | --- |
+    | Name and Label | `TalkChief` |
+    | Channel URL | `https://app.talkchief.io/crm-dialer/dynamics?ucilib=https://<your org address>/webresources/Widget/msdyn_ciLibrary.js`, where `<your org address>` is your Dynamics 365 address, for example `contoso.crm4.dynamics.com` |
+    | Enable Outbound Communication | Yes |
+    | Channel Order | 1 |
+    | API Version | 1.0 |
+    | Trusted Domain | `https://app.talkchief.io` |
+    | Unified Interface apps | **Sales Hub** (and any other sales app your team uses) |
+    | Roles | The security roles of the people who make calls |
+
+    Save the channel provider.
+  </Step>
+  <Step title="Sign in to TalkChief">
+    Open Sales Hub. The TalkChief panel appears in the side panel. Select **Sign in to TalkChief**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. Each agent signs in once on their own computer. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
+  </Step>
+  <Step title="Place a call">
+    Click a phone number on a contact, lead, account or opportunity. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. The logged phone call is on the record you called from.
+  </Step>
+  <Step title="Receive a call">
+    When a call rings your TalkChief phone, Dynamics 365 opens the matching contact or lead. Answer on your TalkChief phone as usual.
+  </Step>
+  <Step title="Add a note and an outcome">
+    After the call, write a note and choose an outcome in the panel, then select **Save**. The note and the outcome appear in the phone call's description under **[Agent note]**. If you save again, the note is replaced, not added twice.
+  </Step>
+</Steps>
+
+<Note>
+  The panel works only inside the Dynamics 365 organization your company connected to TalkChief. Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected.
+</Note>
 
 ## Data TalkChief uses in Dynamics 365
 
@@ -164,6 +208,18 @@ You can connect again at any time: the card returns to **Discover more integrati
 
   <Accordion title="A phone call stays open">
     TalkChief marks each phone call completed after logging it. If your organization has customized the phone call statuses so that this is refused, the phone call is logged but stays open.
+  </Accordion>
+
+  <Accordion title="The calling panel does not appear in Dynamics 365">
+    The panel needs the Channel Integration Framework app and a TalkChief channel provider for the app and security role you use (see [Call from Dynamics 365](#call-from-dynamics-365)). Check that **Sales Hub** and your role are selected on the channel provider.
+  </Accordion>
+
+  <Accordion title="The calling panel says it belongs to another organization">
+    The panel only works in the Dynamics 365 environment your company connected in TalkChief. Open that environment, or connect TalkChief to this one.
+  </Accordion>
+
+  <Accordion title="The calling panel asks me to sign in again">
+    Your TalkChief sign-in in the panel lasts 30 days. Select **Sign in to TalkChief** to continue.
   </Accordion>
 
   <Accordion title="A recording does not play">
