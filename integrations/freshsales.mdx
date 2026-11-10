@@ -19,7 +19,7 @@ TalkChief logs every TalkChief phone call in your Freshsales Suite account witho
 - **Logs every external call**: inbound and outbound calls are logged. Calls between two TalkChief extensions are not logged.
 - **Two records per call**: a phone call on the contact's timeline, and a sales activity of your account's **Phone** type with the call's start and end time, owner and outcome.
 - **Finds the right contact**: TalkChief looks up the caller's number (or the number you dialed) in the **Mobile** and **Work** phone numbers of your Freshsales contacts.
-- **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number as its mobile number and the caller ID name as its name (or the number, when there is no name). When your account has a lifecycle stage named **Lead**, the new contact gets that stage. You can turn this off.
+- **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number as its mobile number and the caller ID name as its name (or the number, when there is no name). When your account has a lifecycle stage named **Lead**, the new contact gets that stage. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)); while it is off, calls from numbers Freshsales doesn't have are not logged.
 - **Assigns the activity to the agent**: the sales activity's owner is the Freshsales user whose email matches the TalkChief agent's email. When no user matches, the contact's owner is used.
 - **Adds the recording**: when the call was recorded, the notes of both records include a link to the recording.
 
@@ -71,11 +71,15 @@ Calls usually appear in Freshsales within a few minutes of hanging up.
 
 On the connected Freshsales card in **Integrations**, select the settings (gear) icon. The **Freshsales settings** window shows the connected Freshsales account and three switches you can change at any time. Each change is saved as soon as you flip the switch and applies to calls that end afterwards.
 
-| Setting | On (default) | Off |
-| --- | --- | --- |
-| **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place. The other two switches are unavailable while this is off |
-| **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
-| **Create contacts for new numbers** | Unknown numbers get a new Freshsales contact | Calls from numbers Freshsales doesn't have are not logged, because Freshsales logs calls only on a record |
+| Setting | Default | On | Off |
+| --- | --- | --- | --- |
+| **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place. The other two switches are unavailable while this is off |
+| **Log missed calls** | On | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
+| **Create contacts for new numbers** | Off | Unknown numbers get a new Freshsales contact, so their calls are logged too | Calls from numbers Freshsales doesn't have are not logged, because Freshsales logs calls only on a record |
+
+<Tip>
+  Turn on **Create contacts for new numbers** if you want every call in Freshsales, including calls from people who are not contacts yet.
+</Tip>
 
 ## Data TalkChief uses in Freshsales
 
@@ -123,7 +127,7 @@ You can connect again at any time: the Freshsales card returns to **Discover mor
   </Accordion>
 
   <Accordion title="A call is not in Freshsales">
-    TalkChief matches the contact by its **Mobile** or **Work** phone number. Check that the contact has the caller's number in one of those fields. If **Create contacts for new numbers** is off, calls from numbers Freshsales doesn't have are not logged.
+    TalkChief matches the contact by its **Mobile** or **Work** phone number. Check that the contact has the caller's number in one of those fields. **Create contacts for new numbers** is off by default; while it is off, calls from numbers Freshsales doesn't have are not logged.
   </Accordion>
 
   <Accordion title="The activity is owned by someone other than the agent">
