@@ -96,7 +96,7 @@ On the connected Salesforce card in **Integrations**, select the settings (gear)
 | --- | --- | --- | --- |
 | **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | On | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
-| **Create contacts for new numbers** | Off | A number that matches no contact or lead gets a new Salesforce **lead** | Calls from unknown numbers are logged as tasks without a contact or lead |
+| **Create leads for new numbers** | Off | A number that matches no contact or lead gets a new Salesforce **lead** | Calls from unknown numbers are logged as tasks without a contact or lead |
 
 A lead that TalkChief creates has:
 
@@ -118,7 +118,7 @@ When you connect, you allow TalkChief to manage data through the Salesforce APIs
 | --- | --- |
 | Search contacts and leads | Find the contact or lead whose phone number matches the call |
 | Read users | Match the TalkChief agent to their Salesforce user by email, to assign the task |
-| Create leads | Create a lead for a number Salesforce doesn't have (only while **Create contacts for new numbers** is on) |
+| Create leads | Create a lead for a number Salesforce doesn't have (only while **Create leads for new numbers** is on) |
 | Create tasks | Log each call as a completed call task |
 | Read your org's name | Show which org is connected |
 
@@ -168,7 +168,7 @@ A Salesforce admin can also remove TalkChief from inside Salesforce by uninstall
   </Accordion>
 
   <Accordion title="A call is not on the contact or lead">
-    TalkChief matches contacts by **Phone**, **Mobile**, **Home Phone** and **Other Phone**, and leads that are not converted by **Phone** and **Mobile**. Check that the record has the caller's number in one of those fields. A record created or changed in the last few minutes may not be found yet. While **Create contacts for new numbers** is off (the default), calls from numbers Salesforce doesn't have are logged without a contact or lead: search **Tasks** for **Call with** and the number to find them.
+    TalkChief matches contacts by **Phone**, **Mobile**, **Home Phone** and **Other Phone**, and leads that are not converted by **Phone** and **Mobile**. Check that the record has the caller's number in one of those fields. A record created or changed in the last few minutes may not be found yet. While **Create leads for new numbers** is off (the default), calls from numbers Salesforce doesn't have are logged without a contact or lead: search **Tasks** for **Call with** and the number to find them.
   </Accordion>
 
   <Accordion title="A recording link is missing">

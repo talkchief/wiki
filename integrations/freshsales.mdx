@@ -75,10 +75,10 @@ On the connected Freshsales card in **Integrations**, select the settings (gear)
 | --- | --- | --- | --- |
 | **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place. The other two switches are unavailable while this is off |
 | **Log missed calls** | On | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
-| **Create contacts for new numbers** | Off | Unknown numbers get a new Freshsales contact, so their calls are logged too | Calls from numbers Freshsales doesn't have are not logged, because Freshsales logs calls only on a record |
+| **Create leads for new numbers** | Off | Unknown numbers get a new Freshsales contact, so their calls are logged too | Calls from numbers Freshsales doesn't have are not logged, because Freshsales logs calls only on a record |
 
 <Tip>
-  Turn on **Create contacts for new numbers** if you want every call in Freshsales, including calls from people who are not contacts yet.
+  Turn on **Create leads for new numbers** if you want every call in Freshsales, including calls from people who are not contacts yet.
 </Tip>
 
 ## Data TalkChief uses in Freshsales
@@ -88,7 +88,7 @@ When you connect, you allow TalkChief to:
 | Access | Why |
 | --- | --- |
 | Read contacts | Find the contact whose mobile or work number matches the call |
-| Create contacts | Create a contact for a number Freshsales doesn't have (only while **Create contacts for new numbers** is on) |
+| Create contacts | Create a contact for a number Freshsales doesn't have (only while **Create leads for new numbers** is on) |
 | Read users | Match the TalkChief agent to their Freshsales user by email, to set the activity's owner |
 | Read sales activity types, outcomes and lifecycle stages | Find your **Phone** activity type, the outcome that matches the call, and the **Lead** stage for new contacts |
 | Create phone calls and sales activities | Log each call on the contact |
@@ -127,7 +127,7 @@ You can connect again at any time: the Freshsales card returns to **Discover mor
   </Accordion>
 
   <Accordion title="A call is not in Freshsales">
-    TalkChief matches the contact by its **Mobile** or **Work** phone number. Check that the contact has the caller's number in one of those fields. **Create contacts for new numbers** is off by default; while it is off, calls from numbers Freshsales doesn't have are not logged.
+    TalkChief matches the contact by its **Mobile** or **Work** phone number. Check that the contact has the caller's number in one of those fields. **Create leads for new numbers** is off by default; while it is off, calls from numbers Freshsales doesn't have are not logged.
   </Accordion>
 
   <Accordion title="The activity is owned by someone other than the agent">

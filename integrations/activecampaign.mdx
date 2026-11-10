@@ -86,13 +86,13 @@ TalkChief stores the API key encrypted and uses it only to log calls in ActiveCa
 
 ## Choose what gets logged
 
-On the connected ActiveCampaign card in **Integrations**, select the settings (gear) icon. The **ActiveCampaign settings** window shows the connected account and three switches you can change at any time. Each change applies to calls that end afterwards. **Log calls** and **Log missed calls** start on; **Create contacts for new numbers** starts off.
+On the connected ActiveCampaign card in **Integrations**, select the settings (gear) icon. The **ActiveCampaign settings** window shows the connected account and three switches you can change at any time. Each change applies to calls that end afterwards. **Log calls** and **Log missed calls** start on; **Create leads for new numbers** starts off.
 
 | Setting | On | Off |
 | --- | --- | --- |
 | **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged and tagged too | Only answered calls are logged |
-| **Create contacts for new numbers** | Unknown numbers get a new contact (needs phone-only contacts) | Calls from numbers ActiveCampaign doesn't have are not logged, because ActiveCampaign keeps notes only on a contact |
+| **Create leads for new numbers** | Unknown numbers get a new contact (needs phone-only contacts) | Calls from numbers ActiveCampaign doesn't have are not logged, because ActiveCampaign keeps notes only on a contact |
 
 ## Start automations from calls
 
@@ -121,7 +121,7 @@ With your API key, TalkChief:
 | Access | Why |
 | --- | --- |
 | Reads contacts | Find the contact whose phone number matches the call |
-| Creates contacts | Create a contact for a number ActiveCampaign doesn't have (only while **Create contacts for new numbers** is on) |
+| Creates contacts | Create a contact for a number ActiveCampaign doesn't have (only while **Create leads for new numbers** is on) |
 | Creates notes | Log each call on the contact |
 | Creates, applies and removes tags | Set the TalkChief outcome tags on the contact. Only TalkChief's own tags are removed |
 | Reads account settings | Check the key when you connect and show the account's name in TalkChief |
@@ -174,7 +174,7 @@ You can connect again at any time: the ActiveCampaign card returns to **Discover
   </Accordion>
 
   <Accordion title="A call is not on the contact">
-    TalkChief matches the contact by its **Phone** field. Check that the contact has the caller's number there. If **Create contacts for new numbers** is off, calls from numbers ActiveCampaign doesn't have are not logged.
+    TalkChief matches the contact by its **Phone** field. Check that the contact has the caller's number there. If **Create leads for new numbers** is off, calls from numbers ActiveCampaign doesn't have are not logged.
   </Accordion>
 
   <Accordion title="My automation ran only once">
