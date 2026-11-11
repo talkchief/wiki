@@ -65,6 +65,9 @@ Calls usually appear in Pipedrive within a few minutes of hanging up.
   <Step title="Confirm in TalkChief">
     Pipedrive sends you back to **Integrations** in TalkChief. A message confirms that Pipedrive is connected, and the Pipedrive card moves to your connected integrations with a **Connected** label.
   </Step>
+  <Step title="Make TalkChief your calling app in Pipedrive">
+    TalkChief shows **One more step**: in Pipedrive, open **Settings** > **Tools and apps** > **Phone calls**, choose **TalkChief** under **Default calling app** and select **Save settings**. Ask each agent to do the same in their own Pipedrive account (see [Call from Pipedrive](#call-from-pipedrive)).
+  </Step>
   <Step title="Test with a real call">
     Make or receive a call with TalkChief. A few minutes after you hang up, open the person in Pipedrive and check that the call is on their history.
   </Step>
@@ -89,8 +92,14 @@ On the connected Pipedrive card in **Integrations**, select the settings (gear) 
 The TalkChief calling panel opens in a small window inside Pipedrive, so each agent can place and receive TalkChief calls without leaving Pipedrive. You talk on your usual TalkChief phone (the TalkChief app or your desk phone), so moving between Pipedrive pages never drops a call.
 
 <Steps>
-  <Step title="Choose TalkChief for phone calls">
-    In Pipedrive, click a person's phone number. If Pipedrive asks how to make the call, choose **TalkChief**. You can also set it as your default calling app in Pipedrive's calling settings.
+  <Step title="Make TalkChief your calling app in Pipedrive">
+    Pipedrive sends a click on a phone number to your **default calling app**. Pipedrive doesn't let apps set this, so each agent does it once in their own Pipedrive account:
+
+    1. In Pipedrive, open **Settings** > **Tools and apps** > **Phone calls**.
+    2. Under **Default calling app**, choose **TalkChief** (listed under **Installed apps**).
+    3. Select **Save settings**.
+
+    Until you do this, Pipedrive uses its own "callto" handler: hovering a number shows **Click to call from Pipedrive**, and the click doesn't reach TalkChief. After connecting Pipedrive, TalkChief shows these steps and a button that opens Pipedrive's phone call settings.
   </Step>
   <Step title="Sign in to TalkChief">
     In the TalkChief window, select **Sign in**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. Each agent signs in once on their own computer. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
@@ -177,7 +186,7 @@ Call logs and persons already in Pipedrive stay there.
   </Accordion>
 
   <Accordion title="TalkChief is not offered when I click a phone number">
-    The TalkChief app must be installed in your Pipedrive company. Check Pipedrive's calling settings and choose TalkChief as your calling app. If it is not listed, contact TalkChief support.
+    Pipedrive uses your default calling app for every number you click. In Pipedrive, open **Settings** > **Tools and apps** > **Phone calls**, choose **TalkChief** under **Default calling app** and select **Save settings**. Each agent does this in their own Pipedrive account. If TalkChief is not listed under **Installed apps**, ask your admin to connect Pipedrive in TalkChief first (see [Connect Pipedrive](#connect-pipedrive)), or contact TalkChief support.
   </Accordion>
 
   <Accordion title="The calling window says my TalkChief phone is offline">
