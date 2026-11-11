@@ -21,6 +21,7 @@ The TalkChief integration for Microsoft Dynamics 365 Sales logs every TalkChief 
 - **Can create leads for new numbers**: when you turn on **Create leads for new numbers** and no contact or lead has the number, TalkChief creates a lead with the number and the caller ID name. This is off by default.
 - **Assigns the call to the agent**: the phone call's owner is the enabled Dynamics 365 user whose primary email matches the TalkChief agent's email. When the agent has no Dynamics 365 user, the owner of the matching contact or lead owns the call.
 - **Adds the recording**: when the call was recorded, the phone call's description links to the recording.
+- **Can add the AI call summary**: when you turn on **Add the AI call summary to each call** and your company has [AI transcription](/ai/ai-transcription), TalkChief adds the call's AI summary to the phone call's description after the call has been transcribed. This is off by default (see [AI call summary](#ai-call-summary)).
 
 Each logged phone call shows:
 
@@ -33,7 +34,7 @@ Each logged phone call shows:
 | Call from and call to | The contact or lead and the agent's Dynamics 365 user |
 | Duration | Talk time in whole minutes, rounded up (a 10-second call shows 1 minute) |
 | Actual start and actual end | When the call started and ended |
-| Description | The call status, the agent's name and extension, the exact talk time, the recording link when there is one, and **Logged by TalkChief** |
+| Description | The call status, the agent's name and extension, the exact talk time, the recording link when there is one, and **Logged by TalkChief**; later, the AI call summary when that setting is on |
 | Owner | The agent's Dynamics 365 user when their emails match, else the owner of the matching contact or lead |
 | Status | Completed: **Made** for outbound calls, **Received** for inbound calls |
 
@@ -44,7 +45,7 @@ Calls usually appear in Dynamics 365 within a few minutes of hanging up.
 - You are a **company admin** in TalkChief.
 - Your company uses **Dynamics 365 Sales** online, in Microsoft's commercial cloud. Government and China clouds are not supported.
 - You sign in with a Microsoft work account that has a Dynamics 365 license in the environment you want to connect. TalkChief works with Dynamics 365 as that user, so use an administrator or a dedicated user for the integration.
-- That user's security role can read contacts, leads and users, create leads and phone calls, and assign them to other users.
+- That user's security role can read contacts, leads and users, create leads and phone calls, and assign them to other users. For the AI call summary, it also needs to update phone calls, including ones it assigned to other users.
 - If your organization doesn't let users approve apps themselves, a Microsoft Entra administrator needs to approve TalkChief when you connect.
 - One Dynamics 365 environment can be connected to one TalkChief company.
 
@@ -79,13 +80,30 @@ Calls usually appear in Dynamics 365 within a few minutes of hanging up.
 
 ## Choose what gets logged
 
-On the connected Microsoft Dynamics 365 card in **Integrations**, select the settings (gear) icon. The **Microsoft Dynamics 365 settings** window shows the connected environment and three switches you can change at any time. Each change applies to calls that end afterwards.
+On the connected Microsoft Dynamics 365 card in **Integrations**, select the settings (gear) icon. The **Microsoft Dynamics 365 settings** window shows the connected environment and four switches you can change at any time. Each change applies to calls that end afterwards.
 
 | Setting | Default | On | Off |
 | --- | --- | --- | --- |
 | **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | On | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
 | **Create leads for new numbers** | Off | Unknown numbers get a new Dynamics 365 lead | Calls from unknown numbers are logged without a contact or lead |
+| **Add the AI call summary to each call** | Off | When a call's AI summary is ready, it's added to the phone call's description, with a link to the full transcript | Descriptions have no summary |
+
+## AI call summary
+
+With **Add the AI call summary to each call** on, TalkChief adds each call's AI summary to the description of the phone call it logged in Dynamics 365. This is off until you turn it on.
+
+The switch needs [AI transcription](/ai/ai-transcription). Until your company has it, the switch is locked:
+
+- Without AI transcription, it shows **Needs AI transcription.** Select **Turn it on** to open **Settings** > **AI transcription**.
+- If your plan doesn't include AI transcription, it shows **Needs a plan with AI transcription.** Select **See plans** to upgrade.
+
+The summary is added after the call has been transcribed, so it can appear a while after the call itself. It goes in the phone call's **Description**, below the call details, between `[AI summary]` and `[End of AI summary]`. It has the summary of the call, then its key points and action items, then a **Full transcript in TalkChief** link.
+
+- **Only covered calls**: only calls that AI transcription covers get a summary. Short calls, internal calls and calls from before AI transcription was turned on are not transcribed.
+- **The status stays the same**: Dynamics 365 doesn't let anyone change a completed phone call, so TalkChief reopens the phone call, adds the summary, and completes it again as **Made** or **Received**, as it was. A phone call that is still open stays open.
+- **One summary per call**: if a summary is created again, TalkChief replaces its earlier summary instead of adding a second one. The rest of the description stays as it is.
+- **Long descriptions**: Dynamics 365 keeps at most 2,000 characters in a description. When the summary doesn't fit, TalkChief shortens it and keeps the transcript link. If there still isn't room, the call details are shortened too.
 
 ## Switch to another environment
 
@@ -102,8 +120,9 @@ When you connect, you allow TalkChief to access Dynamics 365 as the user who con
 | Read users | Match the TalkChief agent to their Dynamics 365 user by primary email, to set the owner |
 | Create leads | Create a lead for a number Dynamics 365 doesn't have (only while **Create leads for new numbers** is on) |
 | Create phone calls | Log each call on the contact's or lead's timeline and mark it completed |
+| Update phone calls | Add the AI call summary to the phone calls TalkChief logged (only while **Add the AI call summary to each call** is on) |
 
-TalkChief writes phone calls and new leads to Dynamics 365. It does not change your contacts, accounts, opportunities or other records, and it keeps no copy of your Dynamics 365 records: only the connected environment's name and address, and the record ids it needs for a short time (at most 6 hours).
+TalkChief writes phone calls and new leads to Dynamics 365, and changes only the phone calls it logged. It does not change your contacts, accounts, opportunities or other records, and it keeps no copy of your Dynamics 365 records: only the connected environment's name and address, and the record ids it needs for a short time (at most 6 hours).
 
 ## Disconnect Dynamics 365
 
@@ -164,6 +183,10 @@ You can connect again at any time: the card returns to **Discover more integrati
 
   <Accordion title="A phone call stays open">
     TalkChief marks each phone call completed after logging it. If your organization has customized the phone call statuses so that this is refused, the phone call is logged but stays open.
+  </Accordion>
+
+  <Accordion title="A phone call has no AI summary">
+    Check that **Add the AI call summary to each call** is on in the **Microsoft Dynamics 365 settings** window. If the switch is locked, your company needs [AI transcription](/ai/ai-transcription) first. Only calls that AI transcription covers get a summary, and the summary is added after the call has been transcribed, so it can appear a while after the call itself. It's not added if the phone call was deleted, or if Dynamics 365 refused the change: for example, when the connected user's security role can't update phone calls, or your organization has customized the phone call statuses so that a completed phone call can't be reopened. Calls are still logged either way.
   </Accordion>
 
   <Accordion title="A recording does not play">
