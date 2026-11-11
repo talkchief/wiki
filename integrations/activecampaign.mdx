@@ -20,8 +20,9 @@ The TalkChief integration for ActiveCampaign logs every TalkChief phone call on 
 - **Logs every external call as a note**: each inbound and outbound call adds a note to the contact. Calls between two TalkChief extensions are not logged.
 - **Finds the right contact**: TalkChief looks up the caller's number (or the number you dialed) in the contact's **Phone** field, in the formats people usually type, such as `+15551234567`, `5551234567` or `+1 555-555-1234`.
 - **Tags the call's outcome**: the contact gets one TalkChief outcome tag that shows how its last call went (see [Start automations from calls](#start-automations-from-calls)).
-- **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number and the caller ID name, and tags it **TalkChief - Created from call**. This needs phone-only contacts in your ActiveCampaign account (see [Before you start](#before-you-start)). You can turn it off.
+- **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number and the caller ID name, and tags it **TalkChief - Created from call**. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)) and needs phone-only contacts in your ActiveCampaign account (see [Before you start](#before-you-start)).
 - **Adds the recording**: when the call was recorded, the note includes a link to the recording.
+- **Adds the AI call summary, if you want**: with [AI transcription](/ai/ai-transcription) on, TalkChief can add the call's AI summary to the same note once it's ready, with a link to the full transcript. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)).
 
 Each note looks like this:
 
@@ -33,6 +34,16 @@ Time: 2026-11-12 08:00 UTC
 Recording: https://...
 Call ID: ...
 Logged by TalkChief
+```
+
+With **Add the AI call summary to each call** on, the summary is added at the end of the same note after the call has been transcribed:
+
+```text
+[AI summary]
+The customer asked to move their delivery to Friday. The agent confirmed the new date and will send a confirmation email.
+
+Full transcript in TalkChief: https://...
+[End of AI summary]
 ```
 
 The note's author in ActiveCampaign is the user whose API key you connected; the agent who handled the call is named in the note. Calls usually appear in ActiveCampaign within a few minutes of hanging up.
@@ -86,13 +97,16 @@ TalkChief stores the API key encrypted and uses it only to log calls in ActiveCa
 
 ## Choose what gets logged
 
-On the connected ActiveCampaign card in **Integrations**, select the settings (gear) icon. The **ActiveCampaign settings** window shows the connected account and three switches you can change at any time. Each change applies to calls that end afterwards.
+On the connected ActiveCampaign card in **Integrations**, select the settings (gear) icon. The **ActiveCampaign settings** window shows the connected account and switches you can change at any time. Each change applies to calls that end afterwards. **Log calls** and **Log missed calls** start on; **Create leads for new numbers** and **Add the AI call summary to each call** start off. **Add the AI call summary to each call** appears only when your company has [AI transcription](/ai/ai-transcription).
 
-| Setting | On (default) | Off |
+| Setting | On | Off |
 | --- | --- | --- |
 | **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged and tagged too | Only answered calls are logged |
-| **Create contacts for new numbers** | Unknown numbers get a new contact (needs phone-only contacts) | Calls from numbers ActiveCampaign doesn't have are not logged |
+| **Create leads for new numbers** | Unknown numbers get a new contact (needs phone-only contacts) | Calls from numbers ActiveCampaign doesn't have are not logged, because ActiveCampaign keeps notes only on a contact |
+| **Add the AI call summary to each call** | When a call's AI summary is ready, it's added to the call's note with a link to the full transcript | Notes have no summary |
+
+The summary is added only to calls that AI transcription covers. If a summary is created again, TalkChief replaces its earlier summary in the note instead of adding a second one. Anything else in the note stays as it is.
 
 ## Start automations from calls
 
@@ -121,8 +135,8 @@ With your API key, TalkChief:
 | Access | Why |
 | --- | --- |
 | Reads contacts | Find the contact whose phone number matches the call |
-| Creates contacts | Create a contact for a number ActiveCampaign doesn't have (only while **Create contacts for new numbers** is on) |
-| Creates notes | Log each call on the contact |
+| Creates contacts | Create a contact for a number ActiveCampaign doesn't have (only while **Create leads for new numbers** is on) |
+| Creates and updates notes | Log each call on the contact, and add the AI call summary to that note (only while **Add the AI call summary to each call** is on). TalkChief changes only the notes it wrote |
 | Creates, applies and removes tags | Set the TalkChief outcome tags on the contact. Only TalkChief's own tags are removed |
 | Reads account settings | Check the key when you connect and show the account's name in TalkChief |
 
@@ -174,11 +188,15 @@ You can connect again at any time: the ActiveCampaign card returns to **Discover
   </Accordion>
 
   <Accordion title="A call is not on the contact">
-    TalkChief matches the contact by its **Phone** field. Check that the contact has the caller's number there. If **Create contacts for new numbers** is off, calls from numbers ActiveCampaign doesn't have are not logged.
+    TalkChief matches the contact by its **Phone** field. Check that the contact has the caller's number there. If **Create leads for new numbers** is off, calls from numbers ActiveCampaign doesn't have are not logged.
   </Accordion>
 
   <Accordion title="My automation ran only once">
     In the automation's **Tag is added** trigger, set it to run **multiple times**. Otherwise ActiveCampaign runs it only the first time the tag is added to a contact.
+  </Accordion>
+
+  <Accordion title="A call's note has no AI summary">
+    Check that **Add the AI call summary to each call** is on in the **ActiveCampaign settings** window. The switch appears only when your company has [AI transcription](/ai/ai-transcription). Only calls that AI transcription covers get a summary; short calls, internal calls and calls from before it was turned on are not transcribed. The summary is added after the call has been transcribed, so it can appear a while after the call itself. It's not added if the note was deleted, or if the note was logged with another ActiveCampaign user's API key, because ActiveCampaign lets only a note's author change it.
   </Accordion>
 
   <Accordion title="A recording does not play">
