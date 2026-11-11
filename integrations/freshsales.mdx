@@ -22,6 +22,7 @@ TalkChief logs every TalkChief phone call in your Freshsales Suite account witho
 - **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number as its mobile number and the caller ID name as its name (or the number, when there is no name). When your account has a lifecycle stage named **Lead**, the new contact gets that stage. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)); while it is off, calls from numbers Freshsales doesn't have are not logged.
 - **Assigns the activity to the agent**: the sales activity's owner is the Freshsales user whose email matches the TalkChief agent's email. When no user matches, the contact's owner is used.
 - **Adds the recording**: when the call was recorded, the notes of both records include a link to the recording.
+- **Calls from inside Freshsales**: with the TalkChief app installed, click a phone number in Freshsales and TalkChief places the call through your TalkChief phone. Incoming calls open the caller's contact. See [Call from Freshsales](#call-from-freshsales).
 
 Each logged call shows:
 
@@ -80,6 +81,34 @@ On the connected Freshsales card in **Integrations**, select the settings (gear)
 <Tip>
   Turn on **Create leads for new numbers** if you want every call in Freshsales, including calls from people who are not contacts yet.
 </Tip>
+
+## Call from Freshsales
+
+The TalkChief app adds a TalkChief calling panel to the left navigation of Freshsales. You place and receive TalkChief calls from Freshsales records and talk on your usual TalkChief phone (the TalkChief app or your desk phone), so moving between Freshsales pages never drops a call. The app needs the Freshsales Growth plan or higher, and your company admin must have connected Freshsales first (see [Connect Freshsales](#connect-freshsales)).
+
+<Steps>
+  <Step title="Install the TalkChief app (admin, once)">
+    TalkChief support adds the TalkChief app to your Freshsales account; contact [support@talkchief.io](mailto:support@talkchief.io). Then, in Freshsales, go to **Admin Settings** > **Apps & Integrations** > **Marketplace Apps**, find **TalkChief** under your custom apps, and select **Install**. The app asks for no settings.
+  </Step>
+  <Step title="Open the panel and sign in to TalkChief">
+    Select the TalkChief icon in the Freshsales left navigation. In the panel, select **Sign in**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. Each agent signs in once per browser. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
+  </Step>
+  <Step title="Place a call">
+    Click a contact's work or mobile number, or use **Make call** on a contact. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. Hang up on your phone.
+  </Step>
+  <Step title="Receive a call">
+    When a call rings your TalkChief phone, the panel shows the caller and Freshsales opens the caller's contact. Answer on your TalkChief phone as usual.
+  </Step>
+  <Step title="Add a note after the call">
+    When the call ends, type a **Note** in the panel, choose an **Outcome** if you want to change the logged one, and select **Save**. The note and outcome are added to the call's Phone sales activity. Saving again replaces your note; it never adds a second one.
+  </Step>
+</Steps>
+
+Calls made or received through the panel are logged once, with the same details as every other logged call.
+
+<Note>
+  The panel works only for the Freshsales account your TalkChief company is connected to. If you sign in to the panel with a TalkChief user from another company, the panel says it is signed in to a different Freshsales account and does not place or show calls.
+</Note>
 
 ## Data TalkChief uses in Freshsales
 
@@ -140,6 +169,22 @@ You can connect again at any time: the Freshsales card returns to **Discover mor
 
   <Accordion title="A recording link is missing">
     The recording link is added only when the call was recorded. Check that call recording is on for that number or team in TalkChief.
+  </Accordion>
+
+  <Accordion title="The calling panel says my TalkChief phone is offline">
+    TalkChief rings your own TalkChief phone first, so it must be registered: open the TalkChief app on your computer or phone, or check that your desk phone is connected, then try again.
+  </Accordion>
+
+  <Accordion title="The calling panel says it is signed in to a different Freshsales account">
+    The TalkChief user you signed in with belongs to a TalkChief company connected to another Freshsales account. Select **Sign out** in the panel and sign in with a user of the company connected to this Freshsales account.
+  </Accordion>
+
+  <Accordion title="The sign-in window does not open">
+    Your browser blocked the window. Allow pop-ups for Freshsales and try again.
+  </Accordion>
+
+  <Accordion title="My note is not on the call">
+    The note goes on the call's Phone sales activity. If your Freshsales account has no **Phone** activity type, TalkChief cannot add notes. A note saved before the call is logged is added when the call is logged, usually within a few minutes.
   </Accordion>
 
   <Accordion title="Calls appear late on a very busy account">
