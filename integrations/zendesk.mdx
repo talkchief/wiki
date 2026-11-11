@@ -21,7 +21,8 @@ TalkChief for Zendesk turns every TalkChief phone call into a Zendesk Support ti
 - **Shows the call like a phone ticket**: on Zendesk plans that include Talk Partner Edition (all Zendesk Suite plans), the ticket is a phone-call ticket. Its call details show the numbers, start time, talk time, the agent who answered, and a player for the recording. On other plans, the ticket gets an internal note with the same details and a link to the recording.
 - **Finds the caller**: TalkChief looks up the caller's number (or the number you dialed) among your Zendesk users and makes that user the ticket's requester.
 - **Creates users for new numbers, if you want**: when **Create contacts for new numbers** is on, a number no Zendesk user has gets a new end user with the caller ID name and the number. It is off by default: the call is then logged with the agent as requester and the tag `talkchief_unknown_caller`.
-- **Assigns the ticket to the agent**: answered calls are assigned to the Zendesk agent whose email matches the TalkChief agent's email.
+- **Assigns the ticket to the agent**: answered calls are assigned to the Zendesk agent whose email matches the TalkChief agent's email, or to the Zendesk admin who connected TalkChief when there is no match. Missed calls stay unassigned for your Zendesk routing.
+- **Calls from inside Zendesk**: with the TalkChief app in Zendesk's top bar, click a phone number and TalkChief places the call through your TalkChief phone. Incoming calls open the caller's profile, and after a call you can add a note and an outcome. See [Call from Zendesk](#call-from-zendesk).
 
 Each ticket shows:
 
@@ -30,9 +31,9 @@ Each ticket shows:
 | Subject | **Inbound call from**, **Outbound call to** or **Voicemail from**, followed by the other party's number |
 | Channel | Phone call (inbound or outbound) or voicemail, on plans with Talk Partner Edition |
 | Requester | The Zendesk user with the caller's number |
-| Assignee | The agent's Zendesk user on answered calls, when their emails match |
+| Assignee | On answered calls, the agent's Zendesk user when their emails match, else the Zendesk admin who connected TalkChief |
 | Call details | From and to numbers, start time, talk time, the agent who answered, and the recording |
-| Tags | `talkchief`, plus `talkchief_unknown_caller` when the ticket has no caller record |
+| Tags | `talkchief`; the call's result `talkchief_call_answered`, `talkchief_call_no_answer`, `talkchief_call_busy`, `talkchief_call_voicemail` or `talkchief_call_failed`; `talkchief_unknown_caller` when the ticket has no caller record; and the outcome an agent picks after the call (see [Add a note after the call](#add-a-note-after-the-call)) |
 
 Calls usually appear in Zendesk within a few minutes of hanging up.
 
@@ -72,6 +73,40 @@ On the connected Zendesk card in **Integrations**, select the settings (gear) ic
 | **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | On | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
 | **Create contacts for new numbers** | Off | Unknown numbers get a new Zendesk end user, who becomes the requester | No user is created; the ticket's requester is the agent who answered (or the Zendesk admin who connected TalkChief), and the ticket is tagged `talkchief_unknown_caller` |
+
+## Call from Zendesk
+
+The TalkChief app adds a TalkChief panel to the top bar of Zendesk Support, so each agent can place and receive TalkChief calls while working in Zendesk. You talk on your usual TalkChief phone (the TalkChief app or your desk phone), so moving between tickets never drops a call.
+
+<Steps>
+  <Step title="Install the TalkChief app in Zendesk">
+    A Zendesk admin installs the **TalkChief** app in your Zendesk account. Its icon then appears in the top bar of Zendesk Support. Your TalkChief admin must also have connected Zendesk (see [Connect Zendesk](#connect-zendesk)).
+  </Step>
+  <Step title="Sign in to TalkChief">
+    Open the TalkChief panel from the top bar and select **Sign in to TalkChief**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. Each agent signs in once on their own computer. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
+  </Step>
+  <Step title="Place a call">
+    Click a phone number in a ticket or a user profile, or type a number in the panel and select **Call**. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. Hang up on your phone.
+  </Step>
+  <Step title="Receive a call">
+    When a call rings your TalkChief phone, the TalkChief panel opens and Zendesk shows the caller's profile. Answer on your TalkChief phone as usual.
+  </Step>
+</Steps>
+
+A call you place from a ticket is added to that ticket when it ends. Other calls get their own ticket, like every logged call.
+
+<Note>
+  Clicking phone numbers in Zendesk needs Talk Partner Edition, which all Zendesk Suite plans include. Without it, type the number in the TalkChief panel instead. Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected.
+</Note>
+
+### Add a note after the call
+
+When a call ends, the panel lets you type a note and pick an outcome (connected, left voicemail, no answer, busy, wrong number). TalkChief adds them to the call's ticket:
+
+- The note becomes an internal note on the ticket, starting with **[Agent note]**.
+- The outcome becomes a tag such as `talkchief_outcome_busy`.
+
+You can change them later from the panel. Zendesk can't edit comments, so a changed note is added as a new internal note starting with **[Agent note, updated]**, and a removed note adds **[Agent note removed]**. The newest TalkChief note is the current one. A changed outcome replaces the old tag.
 
 ## Data TalkChief uses in Zendesk
 
@@ -126,6 +161,18 @@ A Zendesk admin can also end TalkChief's access from inside Zendesk by deleting 
 
   <Accordion title="A ticket has the wrong requester">
     TalkChief matches the caller by the phone number on the Zendesk user. Check that the user's phone number is saved with its country code (for example `+15551234567`). If **Create contacts for new numbers** is off, calls from unknown numbers use the answering agent as requester.
+  </Accordion>
+
+  <Accordion title="Clicking a phone number in Zendesk does nothing">
+    Click-to-call reaches the TalkChief app only on Zendesk accounts with Talk Partner Edition, and only after you signed in to the TalkChief panel. Without Talk Partner Edition, the panel shows a message and you can type the number in the panel.
+  </Accordion>
+
+  <Accordion title="The panel says it is signed in to a different Zendesk account">
+    The TalkChief panel only works in the Zendesk account your TalkChief company connected. If you signed in to the panel with a TalkChief user of another company, select **Sign out** and sign in with your user in the matching TalkChief company.
+  </Accordion>
+
+  <Accordion title="The TalkChief panel asks me to sign in again">
+    Select **Sign in to TalkChief** to continue. If nothing opens, allow pop-ups for Zendesk in your browser.
   </Accordion>
 
   <Accordion title="A recording does not play">
