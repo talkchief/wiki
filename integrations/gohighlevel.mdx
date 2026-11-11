@@ -22,6 +22,7 @@ The TalkChief app for HighLevel (GoHighLevel) logs every TalkChief phone call in
 - **Creates contacts for new numbers, if you want**: with **Create leads for new numbers** on, a number no contact has gets a new contact with the number and the caller ID name, assigned to the agent. It is off for new connections, and calls from unknown numbers are then not logged (see below).
 - **Adds the recording**: when the call was recorded, the call entry carries a link to the recording, and the note repeats it.
 - **Credits the agent**: the note is written by the HighLevel user whose email matches the TalkChief agent's email.
+- **Adds the AI call summary, if you want**: with [AI transcription](/ai/ai-transcription) on, TalkChief can add the call's AI summary to the same note once it's ready, with a link to the full transcript. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)).
 - **Calls from HighLevel**: the TalkChief calling panel places calls through your TalkChief phone and opens the caller's contact when your phone rings. See [Call from HighLevel](#call-from-highlevel).
 
 Each logged call adds:
@@ -32,6 +33,16 @@ Each logged call adds:
 | Call status | Answered calls show as completed; busy, unanswered, cancelled, voicemail and failed calls show as such |
 | Note on the contact | **Inbound call from** or **Outbound call to** with the other party's number, the status, talk time, the agent's name and extension, and the recording link |
 | New contact (only for unknown numbers) | The number, the caller ID name when there is one, source **TalkChief**, assigned to the agent |
+
+With **Add the AI call summary to each call** on, the summary is added at the end of the same note after the call has been transcribed:
+
+```text
+[AI summary]
+The customer asked to move their delivery to Friday. The agent confirmed the new date and will send a confirmation email.
+
+Full transcript in TalkChief: https://...
+[End of AI summary]
+```
 
 Calls usually appear in HighLevel within a few minutes of hanging up.
 
@@ -63,13 +74,16 @@ Calls usually appear in HighLevel within a few minutes of hanging up.
 
 ## Choose what gets logged
 
-On the connected HighLevel card in **Integrations**, select the settings (gear) icon. The **HighLevel settings** window shows the connected sub-account and three switches you can change at any time. Each change applies to calls that end afterwards.
+On the connected HighLevel card in **Integrations**, select the settings (gear) icon. The **HighLevel settings** window shows the connected sub-account and switches you can change at any time. Each change applies to calls that end afterwards. **Add the AI call summary to each call** appears only when your company has [AI transcription](/ai/ai-transcription).
 
 | Setting | New connections | On | Off |
 | --- | --- | --- | --- |
 | **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | On | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
 | **Create leads for new numbers** | Off | Unknown numbers get a new HighLevel contact | Calls from numbers HighLevel doesn't have are not logged |
+| **Add the AI call summary to each call** | Off | When a call's AI summary is ready, it's added to the call's note with a link to the full transcript | Notes have no summary |
+
+The summary is added only to calls that AI transcription covers. If a summary is created again, TalkChief replaces its earlier summary in the note instead of adding a second one. Anything else in the note stays as it is.
 
 <Note>
   HighLevel logs calls only on a contact, so with **Create leads for new numbers** off, a call from or to a number that no contact has is skipped.
@@ -110,7 +124,7 @@ When you install the app, you allow TalkChief to:
 | Access | Why |
 | --- | --- |
 | Read contacts | Find the contact whose phone number matches the call |
-| Create and update contacts | Create a contact for a number HighLevel doesn't have (only while **Create leads for new numbers** is on) and add the call note |
+| Create and update contacts | Create a contact for a number HighLevel doesn't have (only while **Create leads for new numbers** is on), add the call note, and add the AI call summary to that note (only while **Add the AI call summary to each call** is on). TalkChief changes only the notes it wrote |
 | Read and create conversations | Find the contact's conversation, or start one |
 | Write conversation messages | Add the call entry with its recording link |
 | Read users | Match the TalkChief agent to their HighLevel user by email |
@@ -167,6 +181,10 @@ To remove TalkChief completely, uninstall the TalkChief app from the sub-account
 
   <Accordion title="The panel asks me to sign in again">
     Your TalkChief sign-in in the panel lasts 30 days and renews by itself while you use the panel. You also need to sign in again after you change your TalkChief password. Select **Sign in** to continue.
+  </Accordion>
+
+  <Accordion title="A call's note has no AI summary">
+    Check that **Add the AI call summary to each call** is on in the **HighLevel settings** window. The switch appears only when your company has [AI transcription](/ai/ai-transcription). Only calls that AI transcription covers get a summary; short calls, internal calls and calls from before it was turned on are not transcribed. The summary is added after the call has been transcribed, so it can appear a while after the call itself. It's not added if TalkChief's note on the contact was deleted.
   </Accordion>
 
   <Accordion title="A call has no recording">
