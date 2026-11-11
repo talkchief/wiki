@@ -24,7 +24,7 @@ The TalkChief app for HighLevel (GoHighLevel) logs every TalkChief phone call in
 - **Adds the recording**: when the call was recorded, the call entry carries a link to the recording, and the note repeats it.
 - **Credits the agent**: the note is written by the HighLevel user whose email matches the TalkChief agent's email.
 - **Adds the AI call summary, if you want**: with [AI transcription](/ai/ai-transcription) on, TalkChief can add the call's AI summary to the same note once it's ready, with a link to the full transcript. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)).
-- **Calls from HighLevel**: the TalkChief calling panel places calls through your TalkChief phone and opens the caller's contact when your phone rings. With TalkChief's click-to-dial script, a TalkChief call button next to each phone number dials it in one click. See [Call from HighLevel](#call-from-highlevel).
+- **Calls from HighLevel**: the TalkChief calling panel places calls through your TalkChief phone and opens the caller's contact when your phone rings. With the TalkChief Click-to-Dial app, a TalkChief call button next to each phone number dials it in one click. See [Call from HighLevel](#call-from-highlevel).
 
 Each logged call adds:
 
@@ -116,7 +116,7 @@ Calls made or received with the panel are logged once, like every other call: a 
 
 ### Click a number to call
 
-With TalkChief's click-to-dial script, a small blue TalkChief call button appears next to phone numbers in HighLevel:
+With the **TalkChief Click-to-Dial** app, a small blue TalkChief call button appears next to phone numbers in HighLevel:
 
 - in the **Contacts** list, right after HighLevel's own call icon,
 - next to the phone field on a contact,
@@ -124,325 +124,22 @@ With TalkChief's click-to-dial script, a small blue TalkChief call button appear
 
 Select it, and the TalkChief panel calls that number. HighLevel's own call buttons stay where they are and keep using HighLevel's phone system.
 
-An **agency admin** adds the script once, and it then works in every sub-account of the agency.
+TalkChief Click-to-Dial is a separate app from the TalkChief app above, and only an **agency admin** can install it. You need both: the TalkChief app connects your sub-account and logs the calls, and TalkChief Click-to-Dial adds the buttons.
 
 <Steps>
-  <Step title="Copy the script">
-    Open **The click-to-dial script** below and copy all of it with the copy button. Don't change it.
+  <Step title="Open the Marketplace in Agency View">
+    In HighLevel, switch to **Agency View** and open **App Marketplace**.
   </Step>
-  <Step title="Open your agency's Custom JS">
-    In HighLevel, switch to **Agency View** and go to **Settings**, then **Company**, then the **White Label** tab. Scroll to **Custom JS**.
+  <Step title="Install TalkChief Click-to-Dial">
+    Search for **TalkChief Click-to-Dial**, open it and select **Install**.
   </Step>
-  <Step title="Paste and save">
-    Paste the script into the **Custom JS** editor, after anything already there. Keep any other scripts you have. Select **Save changes** under the editor.
+  <Step title="Choose the sub-accounts">
+    Choose the sub-accounts that should get the call buttons: the ones connected to TalkChief. Approve the install.
   </Step>
   <Step title="Check it">
-    Reload HighLevel and open **Contacts** in a sub-account that is connected to TalkChief. A blue TalkChief call button appears next to each phone number. In **Agency View** there are no buttons.
+    Reload HighLevel and open **Contacts** in one of those sub-accounts. A blue TalkChief call button appears next to each phone number. In **Agency View** there are no buttons.
   </Step>
 </Steps>
-
-<Accordion title="The click-to-dial script">
-
-```html
-<script>
-/*
- * TalkChief click-to-dial for HighLevel (Custom JS).
- *
- * Adds a small TalkChief call button next to phone numbers in a business
- * account (contact list, contact details, conversation header). HighLevel's
- * own call buttons stay as they are. A click hands the number (and the
- * contact, when known) to the TalkChief panel window:
- * - a panel is open: postMessage to it, for https://app.talkchief.io only;
- * - none is open: open the panel with the number (?dial=...).
- * The panel dials only for the business account it is connected to.
- *
- * Static and self-contained: no token, no network request, no data stored.
- * Paste it between <script> and </script> in HighLevel's Custom JS.
- * Source: talkchief_frontend, integrations/gohighlevel/click-to-dial.js.
- */
-(function () {
-  "use strict";
-  if (window.__talkchiefClickToDial) return;
-  window.__talkchiefClickToDial = true;
-
-  var PANEL_ORIGIN = "https://app.talkchief.io";
-  var PANEL_PATH = "/crm-dialer/gohighlevel";
-  var PANEL_WINDOW = "talkchief-ghl-panel";
-  var SOURCE = "talkchief-ghl";
-  var MARK = "data-talkchief-dial";
-  var ID = /^[A-Za-z0-9]{8,64}$/;
-  var NANP = ["US", "CA", "PR"];
-
-  var locationId = null;
-  var country = "";
-
-  /* The business account the agent is in (none in the agency view). */
-  function readLocation() {
-    var u = window.AppUtils && window.AppUtils.Utilities;
-    if (!u || typeof u.getCurrentLocation !== "function") return Promise.resolve();
-    return Promise.resolve(u.getCurrentLocation()).then(
-      function (loc) {
-        locationId = loc && typeof loc.id === "string" && ID.test(loc.id) ? loc.id : null;
-        country = loc && loc.address && loc.address.country ? String(loc.address.country).toUpperCase() : "";
-      },
-      function () {
-        locationId = null;
-      }
-    );
-  }
-
-  /* E.164 where the number says so (or a 10-digit US/Canada number); else digits for the panel to resolve. */
-  function toDial(raw) {
-    var s = String(raw || "").trim();
-    var digits = s.replace(/\D/g, "");
-    if (digits.length < 7 || digits.length > 15) return null;
-    if (s.charAt(0) === "+") return "+" + digits;
-    if (s.indexOf("00") === 0) return "+" + digits.slice(2);
-    if (NANP.indexOf(country) >= 0) {
-      if (digits.length === 10) return "+1" + digits;
-      if (digits.length === 11 && digits.charAt(0) === "1") return "+" + digits;
-    }
-    return digits;
-  }
-
-  function contactFromHref(href) {
-    var m = /\/contacts\/detail\/([A-Za-z0-9]{8,64})(?:[/?#]|$)/.exec(href || "");
-    return m ? m[1] : null;
-  }
-
-  function notice(text) {
-    var el = document.createElement("div");
-    el.setAttribute("role", "status");
-    el.textContent = text;
-    el.style.cssText =
-      "position:fixed;right:16px;bottom:16px;z-index:2147483647;max-width:320px;padding:10px 14px;" +
-      "border-radius:8px;background:#10293b;color:#fff;font:13px/1.4 sans-serif;box-shadow:0 4px 16px rgba(0,0,0,.2)";
-    document.body.appendChild(el);
-    setTimeout(function () {
-      el.remove();
-    }, 6000);
-  }
-
-  function panelUrl(number, contactId) {
-    var q = "location_id=" + encodeURIComponent(locationId) + "&crm_origin=" + encodeURIComponent(window.location.origin);
-    q += "&dial=" + encodeURIComponent(number);
-    if (contactId) q += "&contact_id=" + encodeURIComponent(contactId);
-    return PANEL_ORIGIN + PANEL_PATH + "?" + q;
-  }
-
-  function dial(raw, contactId) {
-    var number = toDial(raw);
-    if (!number || !locationId) return;
-    var w = window.open("", PANEL_WINDOW, "width=400,height=680");
-    if (!w) {
-      notice("Allow pop-ups for this site to call with TalkChief.");
-      return;
-    }
-    var fresh = false;
-    try {
-      fresh = w.location.href === "about:blank";
-    } catch (e) {
-      fresh = false; /* cross-origin: the TalkChief panel is already open */
-    }
-    if (fresh) {
-      w.location.replace(panelUrl(number, contactId));
-    } else {
-      var msg = { source: SOURCE, type: "dial", number: number, locationId: locationId };
-      if (contactId) msg.contactId = contactId;
-      w.postMessage(msg, PANEL_ORIGIN);
-    }
-    try {
-      w.focus();
-    } catch (e) {
-      /* the browser decides */
-    }
-  }
-
-  window.addEventListener("message", function (e) {
-    var d = e.data;
-    if (e.origin !== PANEL_ORIGIN || !d || d.source !== "talkchief-panel" || d.type !== "dial-result") return;
-    if (d.ok === false && d.reason === "other-account") {
-      notice("The TalkChief panel is open for another business account. Open it again from this business account's TalkChief menu.");
-    }
-  });
-
-  var SVG = "http://www.w3.org/2000/svg";
-  var PHONE =
-    "M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 " +
-    "4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 " +
-    "1.8.6 2.8.7a2 2 0 0 1 1.7 2z";
-
-  function icon() {
-    var svg = document.createElementNS(SVG, "svg");
-    var attrs = { viewBox: "0 0 24 24", width: "14", height: "14", fill: "none", stroke: "currentColor", "stroke-width": "2", "aria-hidden": "true" };
-    Object.keys(attrs).forEach(function (k) {
-      svg.setAttribute(k, attrs[k]);
-    });
-    var path = document.createElementNS(SVG, "path");
-    path.setAttribute("d", PHONE);
-    path.setAttribute("stroke-linejoin", "round");
-    svg.appendChild(path);
-    return svg;
-  }
-
-  /* One TalkChief button; read(): {number, contactId} at click time (HighLevel re-renders its rows). */
-  function button(read) {
-    var b = document.createElement("button");
-    b.type = "button";
-    b.setAttribute(MARK, "");
-    b.title = "Call with TalkChief";
-    b.setAttribute("aria-label", "Call with TalkChief");
-    b.appendChild(icon());
-    b.style.cssText =
-      "display:inline-flex;align-items:center;justify-content:center;flex:none;width:22px;height:22px;" +
-      "margin:0 4px;padding:0;border:0;border-radius:50%;background:#0f93f3;color:#fff;cursor:pointer;vertical-align:middle";
-    b.addEventListener("click", function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var t = read();
-      if (t) dial(t.number, t.contactId);
-    });
-    return b;
-  }
-
-  /* The first text in el that holds a number (HighLevel's cell shows it twice, e.g. formatted and as a tooltip). */
-  function firstNumber(el) {
-    var walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-    for (var n = walk.nextNode(); n; n = walk.nextNode()) {
-      if (n.nodeValue.replace(/\D/g, "").length >= 7) return n.nodeValue;
-    }
-    return "";
-  }
-
-  function pageContact() {
-    return contactFromHref(window.location.pathname);
-  }
-
-  /* Where HighLevel shows numbers (checked 2026-11-11; HighLevel's markup, so re-check after their UI changes). */
-  var SPOTS = [
-    {
-      /* Contact list: the phone cell, after HighLevel's own call icon. */
-      find: '.tabulator-cell[tabulator-field="phone"]',
-      add: function (cell, b) {
-        var own = cell.querySelector(".phone-call-icon");
-        if (own) own.insertAdjacentElement("afterend", b);
-        else cell.insertBefore(b, cell.firstChild);
-      },
-      read: function (cell) {
-        var row = cell.closest(".tabulator-row");
-        var link = row && row.querySelector('a[href*="/contacts/detail/"]');
-        return { number: firstNumber(cell), contactId: link ? contactFromHref(link.getAttribute("href")) : null };
-      },
-    },
-    {
-      /* Contact details: the phone field. */
-      find: 'input.hr-input-phone[type="tel"]',
-      host: function (input) {
-        var box = input.closest(".hr-input-container");
-        return box && box.parentElement && box.parentElement.parentElement;
-      },
-      add: function (row, b) {
-        row.appendChild(b);
-      },
-      read: function (row) {
-        var input = row.querySelector('input.hr-input-phone[type="tel"]');
-        return { number: input ? input.value : "", contactId: pageContact() };
-      },
-    },
-    {
-      /* Contact and conversation header: next to HighLevel's call button. */
-      find: '.header-calling-slot',
-      add: function (slot, b) {
-        slot.appendChild(b);
-      },
-      read: function (slot) {
-        var own = slot.querySelector('[aria-label^="Call:"]');
-        return { number: own ? own.getAttribute("aria-label").slice(5) : "", contactId: pageContact() };
-      },
-    },
-    {
-      /* Any tel: link. */
-      find: 'a[href^="tel:"]',
-      host: function (a) {
-        return a.parentElement;
-      },
-      add: function (parent, b, a) {
-        a.insertAdjacentElement("afterend", b);
-      },
-      read: function (parent) {
-        var a = parent.querySelector('a[href^="tel:"]');
-        return { number: a ? decodeURIComponent(a.getAttribute("href").slice(4)) : "", contactId: pageContact() };
-      },
-    },
-  ];
-
-  function removeAll() {
-    var all = document.querySelectorAll("[" + MARK + "]");
-    for (var i = 0; i < all.length; i++) all[i].remove();
-  }
-
-  /* One button for one number: its own function, so each click reads its own host. */
-  function attach(spot, el) {
-    var host = spot.host ? spot.host(el) : el;
-    if (!host || host.querySelector("[" + MARK + "]")) return;
-    var t = spot.read(host);
-    if (!t || !toDial(t.number)) return;
-    spot.add(
-      host,
-      button(function () {
-        return spot.read(host);
-      }),
-      el
-    );
-  }
-
-  function scan() {
-    if (!locationId) {
-      removeAll();
-      return;
-    }
-    SPOTS.forEach(function (spot) {
-      var found = document.querySelectorAll(spot.find);
-      for (var i = 0; i < found.length; i++) attach(spot, found[i]);
-    });
-  }
-
-  var timer = null;
-  function soon() {
-    if (timer) return;
-    timer = setTimeout(function () {
-      timer = null;
-      scan();
-    }, 300);
-  }
-
-  function refresh() {
-    readLocation().then(soon, soon);
-  }
-
-  function ours(node) {
-    return node.nodeType === 1 && node.hasAttribute(MARK);
-  }
-
-  new MutationObserver(function (records) {
-    for (var i = 0; i < records.length; i++) {
-      var r = records[i];
-      /* Our own buttons going in must not schedule another scan. */
-      var only = r.type === "childList" && r.removedNodes.length === 0 && Array.prototype.every.call(r.addedNodes, ours);
-      if (!only) {
-        soon();
-        return;
-      }
-    }
-  }).observe(document.body, { childList: true, subtree: true, characterData: true });
-  window.addEventListener("routeLoaded", refresh);
-  window.addEventListener("routeChangeEvent", refresh);
-  refresh();
-})();
-</script>
-```
-
-</Accordion>
 
 To call with the button:
 
@@ -456,9 +153,9 @@ If the panel asks you to sign in, sign in, then select **Call** followed by the 
 Good to know:
 
 - **Only your connected sub-account:** the panel calls only for the sub-account it was opened in. In another sub-account, the button shows "The TalkChief panel is open for another business account" and doesn't call. Open the panel again from that sub-account's **TalkChief** menu.
-- **Every sub-account sees the buttons:** the script is set for the whole agency, so the buttons appear in every sub-account. Sub-accounts that aren't connected to TalkChief can't call with them.
-- **Nothing else is shared:** the script holds no keys or passwords. It sends nothing to TalkChief except the number you select, and only when you select it.
-- **If HighLevel changes its pages,** the buttons may disappear until TalkChief updates the script. The panel's dial pad keeps working.
+- **Nothing else is shared:** TalkChief Click-to-Dial asks for no access to your HighLevel data and holds no keys or passwords. It sends nothing to TalkChief except the number you select, and only when you select it.
+- **If HighLevel changes its pages,** the buttons may disappear until TalkChief updates the app. The panel's dial pad keeps working.
+- **To remove the buttons,** uninstall TalkChief Click-to-Dial from the agency or from a sub-account. Call logging keeps working.
 
 <Note>
   HighLevel's own call buttons on a contact still use HighLevel's phone system, not TalkChief: place TalkChief calls from the panel or with the TalkChief call button (see [Click a number to call](#click-a-number-to-call)). Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected. Your company admin must have connected HighLevel first (see [Connect HighLevel](#connect-highlevel)).
@@ -527,7 +224,7 @@ To remove TalkChief completely, uninstall the TalkChief app from the sub-account
   </Accordion>
 
   <Accordion title="I don't see the TalkChief call button">
-    An agency admin must add TalkChief's click-to-dial script to the agency's **Custom JS** (see [Click a number to call](#click-a-number-to-call)). Then reload HighLevel. The buttons appear only inside a sub-account, never in **Agency View**, and only next to numbers HighLevel shows in the contact list, on a contact or in its conversation header.
+    An agency admin must install **TalkChief Click-to-Dial** from the HighLevel Marketplace in **Agency View** and choose your sub-account (see [Click a number to call](#click-a-number-to-call)). Then reload HighLevel. The buttons appear only inside a sub-account, never in **Agency View**, and only next to numbers HighLevel shows in the contact list, on a contact or in its conversation header.
   </Accordion>
 
   <Accordion title="The TalkChief call button doesn't open the panel">
