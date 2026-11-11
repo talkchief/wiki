@@ -50,7 +50,7 @@ Calls usually appear in HighLevel within a few minutes of hanging up.
 
 - You are a **company admin** in TalkChief.
 - In HighLevel, you can install apps in the sub-account you want to connect.
-- One HighLevel sub-account can be connected to one TalkChief company. Install the app in that sub-account: installing it for a whole agency at once is not supported.
+- One HighLevel sub-account can be connected to one TalkChief company. You can install the app from your agency (HighLevel's **Agency View**, which its install page opens in) or from the sub-account itself. If an agency install covers several sub-accounts, TalkChief asks which one to connect.
 
 ## Connect HighLevel
 
@@ -62,10 +62,10 @@ Calls usually appear in HighLevel within a few minutes of hanging up.
     On the **HighLevel** card, select **Connect**. TalkChief sends you to HighLevel.
   </Step>
   <Step title="Choose the sub-account and approve access">
-    Sign in to HighLevel if asked. Choose the sub-account whose calls you want to log, review the access TalkChief asks for (see [Data TalkChief uses in HighLevel](#data-talkchief-uses-in-highlevel)) and approve it.
+    Sign in to HighLevel if asked. Choose the sub-account whose calls you want to log, review the access TalkChief asks for (see [Data TalkChief uses in HighLevel](#data-talkchief-uses-in-highlevel)) and approve it. Installing from **Agency View** works too: choose the sub-account (or sub-accounts) HighLevel installs the app in.
   </Step>
   <Step title="Confirm in TalkChief">
-    HighLevel sends you back to **Integrations** in TalkChief. A message confirms that HighLevel is connected, and the HighLevel card moves to your connected integrations with a **Connected** label.
+    HighLevel sends you back to **Integrations** in TalkChief. A message confirms that HighLevel is connected, and the HighLevel card moves to your connected integrations with a **Connected** label. If you installed the app from the agency into more than one sub-account, TalkChief first asks you to **Choose your HighLevel business account**: pick the sub-account whose calls you want to log and select **Use this business account**. TalkChief logs calls only into that one.
   </Step>
   <Step title="Test with a real call">
     Make or receive a call with TalkChief. A few minutes after you hang up, open the contact in HighLevel and check its conversation for the call and its notes for the TalkChief note.
@@ -155,8 +155,12 @@ To remove TalkChief completely, uninstall the TalkChief app from the sub-account
     The card shows **Reconnect needed** when TalkChief lost access to HighLevel, usually because the app was uninstalled from the sub-account. Select **Reconnect** and approve access again. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
   </Accordion>
 
-  <Accordion title="Connecting fails after I approve access">
-    Install the app in a single sub-account: TalkChief cannot connect an installation made for a whole agency. Select **Connect** again and choose the sub-account. If it still fails, contact TalkChief support.
+  <Accordion title="TalkChief says to install in one business account">
+    HighLevel installed the app for the agency without installing it in any sub-account, so TalkChief has no sub-account to log calls into. Select **Connect** again and, on HighLevel's page, choose at least one sub-account for the app. If it still fails, contact TalkChief support.
+  </Accordion>
+
+  <Accordion title="TalkChief asks me to choose a business account">
+    You installed the app from the agency into several sub-accounts. Choose the sub-account whose calls this TalkChief company should log. To log calls for another sub-account, connect it from that sub-account's own TalkChief company.
   </Accordion>
 
   <Accordion title="This sub-account is already connected to another company">
