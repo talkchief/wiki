@@ -126,6 +126,11 @@ Select it, and the TalkChief panel calls that number. HighLevel's own call butto
 
 TalkChief Click-to-Dial is a separate app from the TalkChief app above, and only an **agency admin** can install it. You need both: the TalkChief app connects your sub-account and logs the calls, and TalkChief Click-to-Dial adds the buttons.
 
+Before you start:
+
+- **HighLevel is connected in TalkChief:** in the TalkChief web app, **Integrations** shows the **HighLevel** card as **Connected** (see [Connect HighLevel](#connect-highlevel)). Installing TalkChief Click-to-Dial doesn't connect TalkChief; the TalkChief app does.
+- **Each agent signs in to the panel once per browser:** open the panel from the sub-account's **TalkChief** menu (or select a blue button; the panel opens by itself) and select **Sign in**. If you're already signed in to the TalkChief web app in that browser, the panel signs in without asking for your password.
+
 <Steps>
   <Step title="Open the Marketplace in Agency View">
     In HighLevel, switch to **Agency View** and open **App Marketplace**.
@@ -145,7 +150,7 @@ To call with the button:
 
 1. Select the blue TalkChief button next to a number.
 2. The TalkChief panel comes to the front and calls the number. If the panel wasn't open, it opens first. Allow pop-ups for your HighLevel address (app.gohighlevel.com or your own domain) when your browser asks.
-3. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number.
+3. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. If the panel's **Calls ring** setting is **This browser**, the call starts in the panel window instead; keep that window open during the call.
 4. When you called from a contact, the call is logged on that contact.
 
 If the panel asks you to sign in, sign in, then select **Call** followed by the number in the panel. On your own white-label domain, a panel that just opened also waits for you to select **Call** with the number.
@@ -229,6 +234,10 @@ To remove TalkChief completely, uninstall the TalkChief app from the sub-account
 
   <Accordion title="The TalkChief call button doesn't open the panel">
     Your browser is blocking pop-ups from your HighLevel address. Allow pop-ups for app.gohighlevel.com, or for your own domain if your agency uses one, and select the button again.
+  </Accordion>
+
+  <Accordion title="The panel says your company has not connected HighLevel">
+    The TalkChief company you signed in with has no working HighLevel connection. In the TalkChief web app, open **Integrations**: if the **HighLevel** card shows **Connect** or **Reconnect needed**, a company admin connects it again (see [Connect HighLevel](#connect-highlevel)) and chooses this sub-account. Then select **Sign in** in the panel again.
   </Accordion>
 
   <Accordion title="The panel is open for another business account">
