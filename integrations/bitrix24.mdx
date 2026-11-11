@@ -23,6 +23,7 @@ TalkChief for Bitrix24 logs every TalkChief phone call in your Bitrix24 portal w
 - **Logs the call under the agent**: the call belongs to the Bitrix24 user whose email matches the TalkChief agent's email. When no user matches, it belongs to the responsible user of the record that has the number, and otherwise to the Bitrix24 user who connected TalkChief. New leads and contacts are assigned to the same user.
 - **Adds the recording**: when the call was recorded, Bitrix24 downloads the recording from TalkChief and attaches it to the call and its activity. TalkChief also posts the recording link on the record's timeline.
 - **Calls from inside Bitrix24**: click a phone number in Bitrix24's CRM and TalkChief places the call through your TalkChief phone. See [Call from Bitrix24](#call-from-bitrix24).
+- **Adds the AI call summary, if you want**: with [AI transcription](/ai/ai-transcription) on, TalkChief can post the call's AI summary on the record's timeline once it's ready, with a link to the full transcript. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)).
 
 Each logged call shows:
 
@@ -79,15 +80,28 @@ Calls usually appear in Bitrix24 within a few minutes of hanging up.
 
 ## Choose what gets logged
 
-On the connected Bitrix24 card in **Integrations**, select the settings (gear) icon. The **Bitrix24 settings** window shows the connected portal and three switches you can change at any time. Each change applies to calls that end afterwards.
+On the connected Bitrix24 card in **Integrations**, select the settings (gear) icon. The **Bitrix24 settings** window shows the connected portal and four switches you can change at any time. Each change applies to calls that end afterwards.
 
-**Log calls** and **Log missed calls** are on by default. **Create leads for new numbers** is off by default for new connections.
+**Log calls** and **Log missed calls** are on by default. **Create leads for new numbers** and **Add the AI call summary to each call** are off by default for new connections. **Add the AI call summary to each call** needs [AI transcription](/ai/ai-transcription): without it, the switch is locked and shows **Needs AI transcription.** with a **Turn it on** link to the AI transcription settings, or **Needs a plan with AI transcription.** with a **See plans** link when your plan doesn't include it.
 
 | Setting | On | Off |
 | --- | --- | --- |
 | **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
 | **Create leads for new numbers** | Unknown numbers become a new lead (or a new contact when your CRM works without leads) | Calls from unknown numbers are logged without a CRM record |
+| **Add the AI call summary to each call** | When a call's AI summary is ready, it appears as a timeline comment on the call's contact, company or lead, with a link to the full transcript | No summary is posted |
+
+The summary is posted only for calls that AI transcription covers and that are logged on a CRM record; a call logged without a record gets no summary. It is a timeline comment of its own, separate from the call, and looks like this:
+
+```text
+[AI summary]
+The customer asked to move their delivery to Friday. The agent confirmed the new date and will send a confirmation email.
+
+Full transcript in TalkChief: https://...
+[End of AI summary]
+```
+
+If a summary is created again for the same call, TalkChief updates its earlier summary comment instead of adding a second one. Anything you typed into that comment outside the summary stays as it is. If you delete the summary comment in Bitrix24, a later summary of the call is posted as a new comment.
 
 ## Call from Bitrix24
 
@@ -118,7 +132,7 @@ The TalkChief app asks Bitrix24 for these permissions:
 | Permission | Why |
 | --- | --- |
 | Telephony | Save each call in Bitrix24's telephony and attach its recording, add your TalkChief numbers as lines, and place the calls you start by clicking a number |
-| CRM | Find the record that matches the number, check whether your CRM uses leads, create a lead or contact for a new number (only while **Create leads for new numbers** is on), and post the recording link on the record's timeline |
+| CRM | Find the record that matches the number, check whether your CRM uses leads, create a lead or contact for a new number (only while **Create leads for new numbers** is on), post the recording link on the record's timeline, and post the AI call summary there (only while **Add the AI call summary to each call** is on) |
 | Users (basic) | Match the TalkChief agent to their Bitrix24 user by email, and identify the user who connected TalkChief |
 
 TalkChief writes calls, timeline comments and new leads or contacts to Bitrix24. It does not change or delete your existing deals, contacts, companies or other records, and it does not copy your CRM data into TalkChief. Bitrix24 also tells TalkChief when the app is installed or uninstalled, and when someone clicks a phone number to call through TalkChief.
@@ -185,6 +199,10 @@ Calls, comments, leads and contacts already in Bitrix24 stay there.
     | Already on a TalkChief call | Finish your current call first |
     | Invalid number | Check the number on the record, preferably with its country code |
     | TalkChief telephony unavailable or TalkChief could not place the call | Try again in a moment. If it keeps happening, contact TalkChief support |
+  </Accordion>
+
+  <Accordion title="A call has no AI summary">
+    Check that **Add the AI call summary to each call** is on in the **Bitrix24 settings** window. If the switch is locked, your company needs [AI transcription](/ai/ai-transcription) first. Only calls that AI transcription covers get a summary; short calls, internal calls and calls from before it was turned on are not transcribed. The summary is posted after the call has been transcribed, so it can appear a while after the call itself. A call logged without a contact, company or lead gets no summary, because there is no record to post it on.
   </Accordion>
 
   <Accordion title="A recording is missing">
