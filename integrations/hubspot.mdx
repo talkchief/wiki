@@ -18,8 +18,10 @@ The TalkChief app for HubSpot logs every TalkChief phone call in your HubSpot ac
 
 - **Logs every external call**: inbound and outbound calls are logged as HubSpot calls. Calls between two TalkChief extensions are not logged.
 - **Finds the right contact**: TalkChief looks up the caller's number (or the number you dialed) in the **Phone number** and **Mobile phone number** of your HubSpot contacts, in any format.
-- **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number and the caller ID name. You can turn this off.
-- **Assigns the call to the agent**: the call's owner is the HubSpot user whose email matches the TalkChief agent's email.
+- **Creates leads for new numbers, if you want**: with **Create leads for new numbers** on, a number no contact has gets a new HubSpot contact with the number and the caller ID name. It is off for new connections.
+- **Links the call to the company, deal or ticket**: the call is also linked to the contact's primary company, and to the deal or ticket you called from, when you allow TalkChief to read companies, deals and tickets while connecting.
+- **Assigns the call to the agent**: the call's owner is the HubSpot user whose email matches the TalkChief agent's email. If there is none, the contact's owner, then the user who connected HubSpot.
+- **Adds your after-call note**: after a call in the calling panel, add a note and pick an outcome; TalkChief writes them onto the same HubSpot call.
 - **Adds the recording**: when the call was recorded, the HubSpot call links to the recording so you can play it from the contact record.
 - **Calls from inside HubSpot**: click a phone number in HubSpot and TalkChief places the call through your TalkChief phone. Incoming calls open the caller's record in HubSpot. See [Call from HubSpot](#call-from-hubspot).
 
@@ -32,9 +34,10 @@ Each logged call shows:
 | Call status and outcome | Answered calls show **Connected**; busy, unanswered and voicemail calls show **Busy**, **No answer** or **Left voicemail** |
 | Duration | Talk time |
 | From and to numbers | The numbers on the call |
-| Notes | Status, the agent's name and extension, and talk time |
+| Notes | Status, the agent's name and extension, talk time, and your after-call note when you add one |
 | Recording | A link to the call recording, when there is one |
-| Call owner | The agent's HubSpot user, when their emails match |
+| Call owner | The agent's HubSpot user when their emails match, else the contact's owner, else the user who connected HubSpot |
+| Associations | The contact, its primary company, and the deal or ticket you called from (with the optional access) |
 
 Calls usually appear in HubSpot within a few minutes of hanging up.
 
@@ -71,11 +74,11 @@ Calls usually appear in HubSpot within a few minutes of hanging up.
 
 On the connected HubSpot card in **Integrations**, select the settings (gear) icon. The **HubSpot settings** window shows the connected HubSpot account and three switches you can change at any time. Each change is saved as soon as you flip the switch and applies to calls that end afterwards.
 
-| Setting | On (default) | Off |
-|---|---|---|
-| **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place. The other two switches are unavailable while this is off |
-| **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
-| **Create contacts for new numbers** | Unknown numbers get a new HubSpot contact | Calls from unknown numbers are logged without a contact |
+| Setting | New connections | On | Off |
+| --- | --- | --- | --- |
+| **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place. The other two switches are unavailable while this is off |
+| **Log missed calls** | On | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
+| **Create leads for new numbers** | Off | Unknown numbers get a new HubSpot contact | Calls from unknown numbers are logged without a contact |
 
 ## Call from HubSpot
 
@@ -96,6 +99,8 @@ The TalkChief calling panel lets each agent place and receive TalkChief calls fr
   </Step>
 </Steps>
 
+After you hang up, the panel shows the logged call: add a note and pick an outcome, then select **Save**. TalkChief writes them onto the same HubSpot call.
+
 Calls made or received through the panel appear on the contact once, with the same details as every other logged call: outcome, talk time, owner and recording.
 
 <Note>
@@ -109,11 +114,12 @@ When you connect, you allow TalkChief to:
 | Access | Why |
 |---|---|
 | Read contacts | Find the contact whose phone or mobile number matches the call |
-| Create and update contacts | Create a contact for a number HubSpot doesn't have (only while **Create contacts for new numbers** is on) |
+| Create and update contacts | Create a contact for a number HubSpot doesn't have (only while **Create leads for new numbers** is on) |
 | Read owners (users) | Match the TalkChief agent to their HubSpot user by email, to set the call owner |
-| Create calls | Log each call on the contact's timeline |
+| Create calls | Log each call on the contact's timeline, and add your after-call note to it |
+| Read companies, deals and tickets (optional) | Link the call to the contact's primary company and to the deal or ticket you called from. You can leave these out when connecting; calls are then linked to the contact only |
 
-TalkChief writes calls and new contacts to HubSpot. It does not read or change your deals, companies, tickets, emails or other records, and it does not copy your HubSpot contacts into TalkChief.
+TalkChief writes calls and new contacts to HubSpot. It does not change your deals, companies, tickets, emails or other records, and it keeps no copy of your HubSpot records: only the connected account's id and name, and the record ids it needs for a short time (at most 6 hours).
 
 ## Disconnect HubSpot
 
@@ -146,13 +152,13 @@ After you uninstall, calls stop being logged and the HubSpot card in TalkChief s
     The call owner is set only when the agent's TalkChief email matches a HubSpot user's email. Use the same email in both, or add the agent as a user in HubSpot.
   </Accordion>
   <Accordion title="A call is not on the contact">
-    TalkChief matches the contact by its **Phone number** or **Mobile phone number**. Check that the contact has the caller's number in one of those fields. If **Create contacts for new numbers** is off, calls from numbers HubSpot doesn't have are logged without a contact.
+    TalkChief matches the contact by its **Phone number** or **Mobile phone number**. Check that the contact has the caller's number in one of those fields. If **Create leads for new numbers** is off, calls from numbers HubSpot doesn't have are logged without a contact.
   </Accordion>
   <Accordion title="The calling panel says my TalkChief phone is offline">
     TalkChief rings your own TalkChief phone first, so it must be registered: open the TalkChief app on your computer or phone, or check that your desk phone is connected, then try again.
   </Accordion>
   <Accordion title="The calling panel asks me to sign in again">
-    Your TalkChief sign-in in the panel lasts 12 hours. Select **Sign in to TalkChief** to continue.
+    Your TalkChief sign-in in the panel lasts 30 days and renews by itself while you use the panel. You also need to sign in again after you change your TalkChief password. Select **Sign in to TalkChief** to continue.
   </Accordion>
   <Accordion title="A recording does not play">
     The recording link is added only when the call was recorded. Check that call recording is on for that number or team in TalkChief.
