@@ -18,7 +18,7 @@ TalkChief for Bitrix24 logs every TalkChief phone call in your Bitrix24 portal w
 
 - **Logs every external call**: inbound and outbound calls are saved through Bitrix24's own telephony, so they appear in Bitrix24's call statistics and as a call activity on the CRM record. Calls between two TalkChief extensions are not logged.
 - **Finds the right record**: Bitrix24 matches the caller's number (or the number you dialed) to a contact, company or lead in your CRM.
-- **Adds new callers to your CRM, if you want**: with **Create contacts for new numbers** on, a number no record has becomes a new **lead**. If your Bitrix24 CRM works without leads (simple mode), TalkChief adds a new **contact** instead. It is off for new connections.
+- **Adds new callers to your CRM, if you want**: with **Create leads for new numbers** on, a number no record has becomes a new **lead**. If your Bitrix24 CRM works without leads (simple mode), TalkChief adds a new **contact** instead. It is off for new connections.
 - **Logs the call under the agent**: the call belongs to the Bitrix24 user whose email matches the TalkChief agent's email. When no user matches, it belongs to the responsible user of the record that has the number, and otherwise to the Bitrix24 user who connected TalkChief. New leads and contacts are assigned to the same user.
 - **Adds the recording**: when the call was recorded, Bitrix24 downloads the recording from TalkChief and attaches it to the call and its activity. TalkChief also posts the recording link on the record's timeline.
 
@@ -79,13 +79,13 @@ Calls usually appear in Bitrix24 within a few minutes of hanging up.
 
 On the connected Bitrix24 card in **Integrations**, select the settings (gear) icon. The **Bitrix24 settings** window shows the connected portal and three switches you can change at any time. Each change applies to calls that end afterwards.
 
-**Log calls** and **Log missed calls** are on by default. **Create contacts for new numbers** is off by default for new connections.
+**Log calls** and **Log missed calls** are on by default. **Create leads for new numbers** is off by default for new connections.
 
 | Setting | On | Off |
 | --- | --- | --- |
 | **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
-| **Create contacts for new numbers** | Unknown numbers become a new lead (or a new contact when your CRM works without leads) | Calls from unknown numbers are logged without a CRM record |
+| **Create leads for new numbers** | Unknown numbers become a new lead (or a new contact when your CRM works without leads) | Calls from unknown numbers are logged without a CRM record |
 
 ## Data TalkChief uses in Bitrix24
 
@@ -94,7 +94,7 @@ The TalkChief app asks Bitrix24 for these permissions:
 | Permission | Why |
 | --- | --- |
 | Telephony | Save each call in Bitrix24's telephony and attach its recording |
-| CRM | Find the record that matches the number, check whether your CRM uses leads, create a lead or contact for a new number (only while **Create contacts for new numbers** is on), and post the recording link on the record's timeline |
+| CRM | Find the record that matches the number, check whether your CRM uses leads, create a lead or contact for a new number (only while **Create leads for new numbers** is on), and post the recording link on the record's timeline |
 | Users (basic) | Match the TalkChief agent to their Bitrix24 user by email, and identify the user who connected TalkChief |
 
 TalkChief writes calls, timeline comments and new leads or contacts to Bitrix24. It does not change or delete your existing deals, contacts, companies or other records, and it does not copy your CRM data into TalkChief. Bitrix24 also tells TalkChief when the app is installed or uninstalled.
@@ -142,7 +142,7 @@ Calls, comments, leads and contacts already in Bitrix24 stay there.
   </Accordion>
 
   <Accordion title="A call is not on the contact or lead">
-    Bitrix24 matches the record by its phone number. Check that the record has the caller's number. If **Create contacts for new numbers** is off, calls from numbers your CRM doesn't have are logged without a record.
+    Bitrix24 matches the record by its phone number. Check that the record has the caller's number. If **Create leads for new numbers** is off, calls from numbers your CRM doesn't have are logged without a record.
   </Accordion>
 
   <Accordion title="A recording is missing">
