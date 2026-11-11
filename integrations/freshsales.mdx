@@ -22,6 +22,7 @@ TalkChief logs every TalkChief phone call in your Freshsales Suite account witho
 - **Creates contacts for new numbers**: when no contact has the number, TalkChief creates one with the number as its mobile number and the caller ID name as its name (or the number, when there is no name). When your account has a lifecycle stage named **Lead**, the new contact gets that stage. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)); while it is off, calls from numbers Freshsales doesn't have are not logged.
 - **Assigns the activity to the agent**: the sales activity's owner is the Freshsales user whose email matches the TalkChief agent's email. When no user matches, the contact's owner is used.
 - **Adds the recording**: when the call was recorded, the notes of both records include a link to the recording.
+- **Adds the AI call summary, if you want**: with [AI transcription](/ai/ai-transcription) on, TalkChief can add the call's AI summary to the notes of the call's Phone sales activity once it's ready, with a link to the full transcript. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)).
 
 Each logged call shows:
 
@@ -31,6 +32,16 @@ Each logged call shows:
 | Phone sales activity | Title (**Inbound call from** or **Outbound call to**, followed by the other party's number), start and end time, owner, outcome and the same notes |
 | Notes | The title, the call status, the agent's name and extension, talk time, the start time (UTC), the recording link when there is one, and **Logged by TalkChief** |
 | Outcome | Your account's own Phone outcome with a matching name: **Connected** (or **Interested**) for answered calls, **Left voicemail**, **Busy**, or **No answer**. When your account has no outcome with a matching name, the call is logged without one |
+
+With **Add the AI call summary to each call** on, the summary is added at the end of the Phone sales activity's notes after the call has been transcribed:
+
+```text
+[AI summary]
+The customer asked to move their delivery to Friday. The agent confirmed the new date and will send a confirmation email.
+
+Full transcript in TalkChief: https://...
+[End of AI summary]
+```
 
 Calls usually appear in Freshsales within a few minutes of hanging up.
 
@@ -69,13 +80,18 @@ Calls usually appear in Freshsales within a few minutes of hanging up.
 
 ## Choose what gets logged
 
-On the connected Freshsales card in **Integrations**, select the settings (gear) icon. The **Freshsales settings** window shows the connected Freshsales account and three switches you can change at any time. Each change is saved as soon as you flip the switch and applies to calls that end afterwards.
+On the connected Freshsales card in **Integrations**, select the settings (gear) icon. The **Freshsales settings** window shows the connected Freshsales account and the switches you can change at any time. Each change is saved as soon as you flip the switch and applies to calls that end afterwards.
 
 | Setting | Default | On | Off |
 | --- | --- | --- | --- |
-| **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place. The other two switches are unavailable while this is off |
+| **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place. The other switches are unavailable while this is off |
 | **Log missed calls** | On | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
 | **Create leads for new numbers** | Off | Unknown numbers get a new Freshsales contact, so their calls are logged too | Calls from numbers Freshsales doesn't have are not logged, because Freshsales logs calls only on a record |
+| **Add the AI call summary to each call** | Off | When a call's AI summary is ready, it's added to the notes of the call's Phone sales activity, with a link to the full transcript | Calls are logged without a summary |
+
+If your company doesn't have [AI transcription](/ai/ai-transcription) yet, **Add the AI call summary to each call** is locked and shows **Needs AI transcription.** Select **Turn it on** next to it to open **Settings** > **AI transcription**, turn it on there, and then come back and turn on the switch.
+
+The summary goes in the Phone sales activity's notes, next to the call details, and is added only to calls that AI transcription covers. If a summary is created again, TalkChief replaces its earlier summary in the notes instead of adding a second one. Everything else in the notes, including text your team typed in Freshsales, stays as it is.
 
 <Tip>
   Turn on **Create leads for new numbers** if you want every call in Freshsales, including calls from people who are not contacts yet.
@@ -92,6 +108,7 @@ When you connect, you allow TalkChief to:
 | Read users | Match the TalkChief agent to their Freshsales user by email, to set the activity's owner |
 | Read sales activity types, outcomes and lifecycle stages | Find your **Phone** activity type, the outcome that matches the call, and the **Lead** stage for new contacts |
 | Create phone calls and sales activities | Log each call on the contact |
+| Read and update sales activities | Add the AI call summary to the notes of the call's Phone sales activity (only while **Add the AI call summary to each call** is on). TalkChief changes only its own summary there |
 
 TalkChief writes phone calls, Phone sales activities and new contacts to Freshsales. It does not read or change your deals, accounts, tasks, emails or other records, and it does not copy your Freshsales contacts into TalkChief.
 
@@ -140,6 +157,10 @@ You can connect again at any time: the Freshsales card returns to **Discover mor
 
   <Accordion title="A recording link is missing">
     The recording link is added only when the call was recorded. Check that call recording is on for that number or team in TalkChief.
+  </Accordion>
+
+  <Accordion title="A call has no AI summary">
+    Check that **Add the AI call summary to each call** is on in the **Freshsales settings** window. If the switch is locked, your company needs [AI transcription](/ai/ai-transcription) first. Only calls that AI transcription covers get a summary; short calls, internal calls and calls from before it was turned on are not transcribed. The summary is added after the call has been transcribed, so it can appear a while after the call itself. Look for it in the notes of the call's Phone sales activity, not on the phone call. It's not added if the Phone sales activity was deleted, or if the call was logged without one because your account has no **Phone** activity type.
   </Accordion>
 
   <Accordion title="Calls appear late on a very busy account">
