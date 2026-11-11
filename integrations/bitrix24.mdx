@@ -1,12 +1,13 @@
 ---
 title: "Connect Bitrix24 to log TalkChief calls automatically"
 sidebarTitle: "Bitrix24"
-description: "Set up TalkChief for Bitrix24: connect your portal, log every call in Bitrix24 telephony and CRM with its recording, add new callers as leads, and disconnect."
+description: "Set up TalkChief for Bitrix24: connect your portal, log every call with its recording, call by clicking a number in the CRM, and disconnect safely."
 keywords:
   - "bitrix24"
   - "crm"
   - "telephony"
   - "call logging"
+  - "click to call"
   - "oauth"
   - "setup guide"
 hidden: false
@@ -21,6 +22,7 @@ TalkChief for Bitrix24 logs every TalkChief phone call in your Bitrix24 portal w
 - **Adds new callers to your CRM, if you want**: with **Create leads for new numbers** on, a number no record has becomes a new **lead**. If your Bitrix24 CRM works without leads (simple mode), TalkChief adds a new **contact** instead. It is off for new connections.
 - **Logs the call under the agent**: the call belongs to the Bitrix24 user whose email matches the TalkChief agent's email. When no user matches, it belongs to the responsible user of the record that has the number, and otherwise to the Bitrix24 user who connected TalkChief. New leads and contacts are assigned to the same user.
 - **Adds the recording**: when the call was recorded, Bitrix24 downloads the recording from TalkChief and attaches it to the call and its activity. TalkChief also posts the recording link on the record's timeline.
+- **Calls from inside Bitrix24**: click a phone number in Bitrix24's CRM and TalkChief places the call through your TalkChief phone. See [Call from Bitrix24](#call-from-bitrix24).
 
 Each logged call shows:
 
@@ -87,17 +89,39 @@ On the connected Bitrix24 card in **Integrations**, select the settings (gear) i
 | **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
 | **Create leads for new numbers** | Unknown numbers become a new lead (or a new contact when your CRM works without leads) | Calls from unknown numbers are logged without a CRM record |
 
+## Call from Bitrix24
+
+Agents can call a customer by clicking a phone number in Bitrix24's CRM. Bitrix24 opens its own call card, and you talk on your usual TalkChief phone (the TalkChief app or your desk phone), so moving between Bitrix24 pages never drops a call.
+
+<Steps>
+  <Step title="Choose a TalkChief number for outgoing calls">
+    When you connect, TalkChief adds your company's TalkChief numbers to Bitrix24's telephony as lines named **TalkChief (+number)**, or **TalkChief** followed by the number's name in TalkChief, such as **TalkChief Sales (+number)**. In Bitrix24's telephony settings, a Bitrix24 administrator picks one of them as the **Default Number for Outgoing Calls**. Each user can also choose TalkChief as their default in their own Bitrix24 user settings.
+  </Step>
+  <Step title="Click a phone number">
+    Click the phone number on a contact, company or lead. Bitrix24 opens its call card, and TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. Hang up on your phone.
+  </Step>
+  <Step title="Find the call afterwards">
+    When the call ends, TalkChief logs it on that same Bitrix24 call, with its result, talk time and recording. Each call appears once in Bitrix24's call statistics and on the record.
+  </Step>
+</Steps>
+
+<Note>
+  TalkChief finds you by email: your Bitrix24 user's email must be the same as your email in the TalkChief company connected to this portal. Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected. TalkChief checks for new TalkChief numbers once a day and adds them as lines. Numbers you remove in TalkChief stay in Bitrix24's list.
+</Note>
+
+Bitrix24's CRM callback form (a visitor asks on your website to be called back) is not supported yet: TalkChief receives the request but places no call.
+
 ## Data TalkChief uses in Bitrix24
 
 The TalkChief app asks Bitrix24 for these permissions:
 
 | Permission | Why |
 | --- | --- |
-| Telephony | Save each call in Bitrix24's telephony and attach its recording |
+| Telephony | Save each call in Bitrix24's telephony and attach its recording, add your TalkChief numbers as lines, and place the calls you start by clicking a number |
 | CRM | Find the record that matches the number, check whether your CRM uses leads, create a lead or contact for a new number (only while **Create leads for new numbers** is on), and post the recording link on the record's timeline |
 | Users (basic) | Match the TalkChief agent to their Bitrix24 user by email, and identify the user who connected TalkChief |
 
-TalkChief writes calls, timeline comments and new leads or contacts to Bitrix24. It does not change or delete your existing deals, contacts, companies or other records, and it does not copy your CRM data into TalkChief. Bitrix24 also tells TalkChief when the app is installed or uninstalled.
+TalkChief writes calls, timeline comments and new leads or contacts to Bitrix24. It does not change or delete your existing deals, contacts, companies or other records, and it does not copy your CRM data into TalkChief. Bitrix24 also tells TalkChief when the app is installed or uninstalled, and when someone clicks a phone number to call through TalkChief.
 
 ## Disconnect Bitrix24
 
@@ -106,6 +130,7 @@ To stop logging calls, open **Integrations** in TalkChief and select the trash i
 When you disconnect:
 
 - Calls are no longer logged in Bitrix24. Calls that were waiting to be logged are dropped.
+- Clicking a phone number in Bitrix24 no longer places a TalkChief call. The TalkChief lines stay in Bitrix24's telephony settings, so choose another **Default Number for Outgoing Calls** there if your team keeps calling from Bitrix24.
 - TalkChief deletes its access to your portal.
 - Calls, comments, leads and contacts already in Bitrix24 stay there. Nothing is deleted from Bitrix24.
 - The TalkChief app stays installed in Bitrix24 until you uninstall it there.
@@ -143,6 +168,23 @@ Calls, comments, leads and contacts already in Bitrix24 stay there.
 
   <Accordion title="A call is not on the contact or lead">
     Bitrix24 matches the record by its phone number. Check that the record has the caller's number. If **Create leads for new numbers** is off, calls from numbers your CRM doesn't have are logged without a record.
+  </Accordion>
+
+  <Accordion title="Clicking a phone number doesn't call through TalkChief">
+    Check that a TalkChief line is chosen as the **Default Number for Outgoing Calls** in Bitrix24's telephony settings, or as your default in your Bitrix24 user settings. If no TalkChief line is listed, TalkChief hasn't finished setting up your portal yet: it finishes when it logs the next call. If the lines are still missing after that, contact TalkChief support.
+  </Accordion>
+
+  <Accordion title="The call card closes right after I click a number">
+    TalkChief couldn't place the call and ended it in Bitrix24 with one of these reasons:
+
+    | Reason | What to do |
+    | --- | --- |
+    | No TalkChief user for this Bitrix24 user | Use the same email in Bitrix24 and TalkChief, in the TalkChief company connected to this portal |
+    | TalkChief user not set up for calls | Your TalkChief user isn't fully set up for calling yet. Contact TalkChief support |
+    | TalkChief phone offline | Open the TalkChief app on your computer or phone, or check that your desk phone is connected, then try again |
+    | Already on a TalkChief call | Finish your current call first |
+    | Invalid number | Check the number on the record, preferably with its country code |
+    | TalkChief telephony unavailable or TalkChief could not place the call | Try again in a moment. If it keeps happening, contact TalkChief support |
   </Accordion>
 
   <Accordion title="A recording is missing">
