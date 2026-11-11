@@ -86,7 +86,7 @@ On the connected Pipedrive card in **Integrations**, select the settings (gear) 
 | --- | --- | --- | --- |
 | **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | On | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
-| **Create leads for new numbers** | Off | Unknown numbers get a new Pipedrive person | Calls from unknown numbers are logged without a person |
+| **Create leads for new numbers** | Off | Unknown numbers get a new Pipedrive person, and the call is logged on it | Calls from numbers Pipedrive doesn't have are not logged, because Pipedrive logs calls only on a person, organization or deal |
 | **Add the AI call summary to each call** | Off | When a call's AI summary is ready, it's added to the note of the call in Pipedrive, with a link to the full transcript | Calls get no summary |
 
 **Add the AI call summary to each call** needs [AI transcription](/ai/ai-transcription). Without it, the switch is locked and shows **Needs AI transcription.** with a **Turn it on** link to **Settings** > **AI transcription**. If your plan doesn't include AI transcription, it shows **Needs a plan with AI transcription.** with a **See plans** link instead.
@@ -194,7 +194,7 @@ Call logs and persons already in Pipedrive stay there.
   </Accordion>
 
   <Accordion title="A call is not on the person">
-    TalkChief matches the person by their phone numbers. Check that the person has the caller's number, preferably with its country code. If **Create leads for new numbers** is off, calls from numbers Pipedrive doesn't have are logged without a person.
+    TalkChief matches the person by their phone numbers. Check that the person has the caller's number, preferably with its country code. If **Create leads for new numbers** is off, calls from numbers Pipedrive doesn't have are not logged, because Pipedrive keeps call logs only on a person, organization or deal. Turn the setting on, or add the number to the person. A call you place from a deal is logged on that deal even without a person.
   </Accordion>
 
   <Accordion title="Calls arrive late or stop for the day">
