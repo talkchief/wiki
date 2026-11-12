@@ -21,7 +21,9 @@ The TalkChief app for HighLevel (GoHighLevel) logs every TalkChief phone call in
 - **Finds the right contact**: TalkChief looks up the caller's number (or the number you dialed) among the contacts of the connected sub-account.
 - **Creates contacts for new numbers, if you want**: with **Create leads for new numbers** on, a number no contact has gets a new contact with the number and the caller ID name, assigned to the agent. It is off for new connections, and calls from unknown numbers are then not logged (see below).
 - **Adds the recording**: when the call was recorded, the call entry carries a link to the recording, and the note repeats it.
-- **Credits the agent**: the note is written by the HighLevel user whose email matches the TalkChief agent's email.
+- **Credits the agent**: the note is written by the HighLevel user whose email matches the TalkChief agent's email. When the agent has no HighLevel user, it is written by the contact's owner, or else by the person who installed the app.
+- **Names the opportunity**: when the contact has exactly one open opportunity, the note names it.
+- **Adds the agent's note and outcome**: after a call, agents can type a note and pick an outcome in the TalkChief calling panel. TalkChief adds them to the call's note in HighLevel.
 - **Adds the AI call summary, if you want**: with [AI transcription](/ai/ai-transcription) on, TalkChief can add the call's AI summary to the same note once it's ready, with a link to the full transcript. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)).
 - **Calls from HighLevel**: the TalkChief calling panel places calls through your TalkChief phone and opens the caller's contact when your phone rings. See [Call from HighLevel](#call-from-highlevel).
 
@@ -31,7 +33,7 @@ Each logged call adds:
 | --- | --- |
 | Call entry in the contact's conversation | Direction (inbound or outbound), the numbers on the call, the call status and the recording link when there is one. On incoming calls, the entry's text also shows the talk time and the agent |
 | Call status | Answered calls show as completed; busy, unanswered, cancelled, voicemail and failed calls show as such |
-| Note on the contact | **Inbound call from** or **Outbound call to** with the other party's number, the status, talk time, the agent's name and extension, and the recording link |
+| Note on the contact | **Inbound call from** or **Outbound call to** with the other party's number, the status, talk time, the agent's name and extension, the recording link, and the contact's open opportunity when there is exactly one. After the agent saves a note in the panel, the outcome they picked and their note, under **Agent note** |
 | New contact (only for unknown numbers) | The number, the caller ID name when there is one, source **TalkChief**, assigned to the agent |
 
 With **Add the AI call summary to each call** on, the summary is added at the end of the same note after the call has been transcribed:
@@ -91,7 +93,12 @@ The summary is added only to calls that AI transcription covers. If a summary is
 
 ## Call from HighLevel
 
-The TalkChief calling panel lets each agent place TalkChief calls and see incoming ones while working in HighLevel. You talk on your usual TalkChief phone (the TalkChief app or your desk phone), and the panel runs in its own small window, so moving between HighLevel pages never closes it.
+The TalkChief calling panel lets each agent place TalkChief calls and see incoming ones while working in HighLevel. The panel runs in its own small window, so moving between HighLevel pages never closes it. The bottom of the panel shows where your calls ring:
+
+- **Calls ring this browser**: you talk in the panel, with your computer's microphone and speakers. Allow the microphone for app.talkchief.io the first time your browser asks.
+- **Calls ring my TalkChief phone**: you talk on your usual TalkChief phone (the TalkChief app or your desk phone).
+
+Select **Change** at the bottom of the panel to switch.
 
 <Steps>
   <Step title="Open the panel">
@@ -104,17 +111,25 @@ The TalkChief calling panel lets each agent place TalkChief calls and see incomi
     When your browser asks, allow pop-ups for app.talkchief.io. The panel needs them to open the caller's contact in HighLevel.
   </Step>
   <Step title="Place a call">
-    Type or paste the number on the panel's dial pad and select **Call**. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. Hang up on your phone.
+    Type or paste the number on the panel's dial pad and select **Call**. When calls ring this browser, the call starts in the panel. When they ring your TalkChief phone, TalkChief rings it first. Answer it, and TalkChief dials the number.
   </Step>
   <Step title="Receive a call">
-    When a call rings your TalkChief phone, the panel shows it and opens the caller's contact in a HighLevel tab. If your browser blocked that, select **Open record** in the panel. Answer on your TalkChief phone as usual.
+    When a call comes in, the panel shows it and opens the caller's contact in a HighLevel tab. If your browser blocked that, select **Open record** in the panel. Answer in the panel when calls ring this browser, or on your TalkChief phone.
+  </Step>
+  <Step title="Add a note after the call">
+    When the call ends, type a **Note**, pick an **Outcome** (or keep the logged one) and select **Save**. TalkChief adds them to the call's note in HighLevel, under **Agent note**. Saving again replaces your earlier note; it never adds a second one.
+  </Step>
+  <Step title="Call someone back">
+    The panel lists the last callers it matched to a HighLevel contact. Select **Call** with the name to call them back. The call is logged on that contact.
   </Step>
 </Steps>
 
 Calls made or received with the panel are logged once, like every other call: a call entry in the contact's conversation and a note with the talk time and agent.
 
+The panel works only in the HighLevel sub-account that is connected to your TalkChief company. Opened from another sub-account, it says so and doesn't place calls or open contacts.
+
 <Note>
-  HighLevel's own call buttons on a contact still use HighLevel's phone system, not TalkChief: place TalkChief calls from the panel. Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected. Your company admin must have connected HighLevel first (see [Connect HighLevel](#connect-highlevel)).
+  HighLevel's own call buttons on a contact still use HighLevel's phone system, not TalkChief: place TalkChief calls from the panel. When calls ring your TalkChief phone, it must be online: keep the TalkChief app open or your desk phone connected. Your company admin must have connected HighLevel first (see [Connect HighLevel](#connect-highlevel)).
 </Note>
 
 ## Data TalkChief uses in HighLevel
@@ -129,8 +144,11 @@ When you install the app, you allow TalkChief to:
 | Write conversation messages | Add the call entry with its recording link |
 | Read users | Match the TalkChief agent to their HighLevel user by email |
 | Read the sub-account | Show the connected sub-account's name in TalkChief |
+| Read opportunities | Name the contact's open opportunity in the call note |
+| See where the app is installed | After an install from the agency, find the sub-accounts the app was installed in |
+| Manage the app's installation | After an install from the agency, get access to the sub-account you chose; uninstall the app from your sub-account when you disconnect in TalkChief |
 
-TalkChief writes call entries, notes and new contacts to HighLevel. It does not read or change your opportunities, calendars, campaigns or other records, does not send messages to your contacts, and keeps no copy of your HighLevel records: only the connected sub-account's id and name, and the record ids it needs for a short time (at most 6 hours).
+TalkChief writes call entries, notes and new contacts to HighLevel. It does not change your opportunities, calendars, campaigns or other records, does not send messages to your contacts, and keeps no copy of your HighLevel records: only the connected sub-account's id and name, and the record ids it needs for a short time (at most 6 hours).
 
 ## Disconnect HighLevel
 
@@ -139,20 +157,20 @@ To stop logging calls, open **Integrations** in TalkChief and select the trash i
 When you disconnect:
 
 - Calls are no longer logged in HighLevel. Calls that were waiting to be logged are dropped.
-- TalkChief deletes its access tokens for your sub-account.
+- TalkChief uninstalls its app from your HighLevel sub-account and deletes its access tokens.
 - Calls, notes and contacts already in HighLevel stay there. Nothing is deleted from HighLevel.
 
-The TalkChief app stays installed in your HighLevel sub-account until you uninstall it there (see below). You can connect again at any time from the HighLevel card.
+You can connect again at any time from the HighLevel card: TalkChief installs the app again when you approve access.
 
 ## Uninstall the app from HighLevel
 
-To remove TalkChief completely, uninstall the TalkChief app from the sub-account in HighLevel. After you uninstall, calls stop being logged and the HighLevel card in TalkChief shows **Reconnect needed**. Calls, notes and contacts already in HighLevel stay there. To remove the connection from TalkChief too, disconnect it on the HighLevel card.
+You can also uninstall the TalkChief app from the sub-account in HighLevel. HighLevel tells TalkChief right away: calls stop being logged, and the HighLevel card in TalkChief shows that it is no longer connected. Calls, notes and contacts already in HighLevel stay there. Connect again from the HighLevel card at any time.
 
 ## Troubleshooting
 
 <AccordionGroup>
   <Accordion title="The HighLevel card asks me to reconnect">
-    The card shows **Reconnect needed** when TalkChief lost access to HighLevel, usually because the app was uninstalled from the sub-account. Select **Reconnect** and approve access again. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
+    The card shows **Reconnect needed** when TalkChief lost access to HighLevel, for example because the access was revoked. Select **Reconnect** and approve access again. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
   </Accordion>
 
   <Accordion title="TalkChief says to install in one business account">
@@ -168,11 +186,11 @@ To remove TalkChief completely, uninstall the TalkChief app from the sub-account
   </Accordion>
 
   <Accordion title="A call is missing">
-    TalkChief logs a call only on a contact with the caller's number (or the number you dialed). Check that the contact has that number. If **Create leads for new numbers** is off, calls from numbers HighLevel doesn't have are not logged.
+    TalkChief logs a call only on a contact with the caller's number (or the number you dialed). Check that the contact has that number. With **Create leads for new numbers** off (the default for new connections), calls from numbers that aren't a HighLevel contact aren't logged: turn it on to log every call.
   </Accordion>
 
   <Accordion title="The note has no agent">
-    The note is written by the agent's HighLevel user only when the agent's TalkChief email matches a HighLevel user's email in the sub-account. Use the same email in both.
+    The note is written by the agent's HighLevel user only when the agent's TalkChief email matches a HighLevel user's email in the sub-account. Otherwise it is written by the contact's owner, or by the person who installed the app. Use the same email in both to credit the agent.
   </Accordion>
 
   <Accordion title="The panel doesn't open the caller's contact">
@@ -180,7 +198,7 @@ To remove TalkChief completely, uninstall the TalkChief app from the sub-account
   </Accordion>
 
   <Accordion title="The panel says my TalkChief phone is offline">
-    TalkChief rings your own TalkChief phone first, so it must be registered: open the TalkChief app on your computer or phone, or check that your desk phone is connected, then try again.
+    When calls ring your TalkChief phone, TalkChief rings it first, so it must be registered: open the TalkChief app on your computer or phone, or check that your desk phone is connected, then try again. Or select **Change** at the bottom of the panel and let calls ring this browser.
   </Accordion>
 
   <Accordion title="The panel asks me to sign in again">
@@ -189,6 +207,10 @@ To remove TalkChief completely, uninstall the TalkChief app from the sub-account
 
   <Accordion title="A call's note has no AI summary">
     Check that **Add the AI call summary to each call** is on in the **HighLevel settings** window. The switch appears only when your company has [AI transcription](/ai/ai-transcription). Only calls that AI transcription covers get a summary; short calls, internal calls and calls from before it was turned on are not transcribed. The summary is added after the call has been transcribed, so it can appear a while after the call itself. It's not added if TalkChief's note on the contact was deleted.
+  </Accordion>
+
+  <Accordion title="The panel says it is signed in to a different HighLevel account">
+    You opened the panel from a sub-account that isn't the one connected to your TalkChief company. Open it from the connected sub-account. If you signed in to the panel as a member of another TalkChief company, select **Sign out**, then **Sign in** with the matching company.
   </Accordion>
 
   <Accordion title="A call has no recording">
