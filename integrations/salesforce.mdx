@@ -143,58 +143,17 @@ The TalkChief softphone lets each agent place and receive TalkChief calls from S
 
 ### Set up the softphone
 
-A Salesforce admin does this once for your org, after installing the TalkChief app and connecting Salesforce (see [Connect Salesforce](#connect-salesforce)). You need the **Customize Application** and **Manage Call Centers** permissions.
-
-First, save this call center file on your computer as `TalkChiefCallCenter.xml`:
-
-```xml TalkChiefCallCenter.xml
-<callCenter>
-  <section sortOrder="0" name="reqGeneralInfo" label="General Information">
-    <item sortOrder="0" name="reqInternalName" label="Internal Name">TalkChiefOpenCTI</item>
-    <item sortOrder="1" name="reqDisplayName" label="Display Name">TalkChief</item>
-    <item sortOrder="2" name="reqAdapterUrl" label="CTI Adapter URL">https://app.talkchief.io/crm-dialer/salesforce</item>
-    <item sortOrder="3" name="reqUseApi" label="Use CTI API">true</item>
-    <item sortOrder="4" name="reqSoftphoneHeight" label="Softphone Height">560</item>
-    <item sortOrder="5" name="reqSoftphoneWidth" label="Softphone Width">360</item>
-    <item sortOrder="6" name="reqSalesforceCompatibilityMode" label="Salesforce Compatibility Mode">Lightning</item>
-  </section>
-  <section sortOrder="1" name="reqDialingOptions" label="Dialing Options">
-    <item sortOrder="0" name="reqOutsidePrefix" label="Outside Prefix"></item>
-    <item sortOrder="1" name="reqLongDistPrefix" label="Long Distance Prefix"></item>
-    <item sortOrder="2" name="reqInternationalPrefix" label="International Prefix"></item>
-  </section>
-</callCenter>
-```
+A Salesforce admin does this once for your org, in the same guided setup that connects Salesforce: on the **Salesforce** card in **Integrations**, select **Connect**. If Salesforce is already connected, select the settings (gear) icon on the card, then **Set up the softphone**.
 
 <Steps>
-  <Step title="Open Call Centers">
-    In Salesforce **Setup**, search for **Call Centers** and open **Call Centers**. The first time, Salesforce shows **Say Hello to Salesforce Call Center**: select **Continue**.
+  <Step title="Choose your agents">
+    In the **Choose your agents** step, TalkChief sets itself up in Salesforce: it creates the **TalkChief** call center in your org, or uses the one that is already there, and shows **TalkChief is set up in Salesforce.** Below that, it lists your active Salesforce users. Tick everyone who makes and takes calls from Salesforce, then select **Save**.
 
-    <Frame>
-      ![Say Hello to Salesforce Call Center page with the Continue button at the bottom](/images/docs/salesforce-call-centers-intro.png)
-    </Frame>
-  </Step>
-  <Step title="Import the TalkChief call center">
-    Select **Import**. Under **Call Center Definition File**, select **Choose File**, pick `TalkChiefCallCenter.xml`, and select **Import**. Salesforce opens the new **TalkChief** call center.
+    - The first time, people whose email matches a TalkChief account are ticked for you.
+    - A user marked **In another call center** belongs to a different call center. A user can be in only one call center at a time, so ticking them moves them to TalkChief's.
+    - To take someone off the softphone later, untick them and select **Save**.
 
-    <Frame>
-      ![All Call Centers list with the Import button above the list](/images/docs/salesforce-call-centers-import.png)
-    </Frame>
-
-    <Frame>
-      ![Call Center Import page with the Choose File button for the Call Center Definition File and the Import button](/images/docs/salesforce-call-center-import-file.png)
-    </Frame>
-  </Step>
-  <Step title="Add your agents to the call center">
-    On the **TalkChief** call center, check that **CTI Adapter URL** is `https://app.talkchief.io/crm-dialer/salesforce`, then select **Manage Call Center Users**. Select **Add More Users**, find each agent who calls from Salesforce, tick them and select **Add to Call Center**. A user can belong to one call center at a time.
-
-    <Frame>
-      ![TalkChief call center detail page showing the CTI Adapter URL https://app.talkchief.io/crm-dialer/salesforce and the Manage Call Center Users button](/images/docs/salesforce-call-center-detail.png)
-    </Frame>
-
-    <Frame>
-      ![TalkChief: Manage Users page with the Add More Users button](/images/docs/salesforce-call-center-add-users.png)
-    </Frame>
+    If Salesforce doesn't let TalkChief do this, the step says why and shows how to do it by hand (see [When Salesforce refuses the automatic setup](#when-salesforce-refuses-the-automatic-setup)).
   </Step>
   <Step title="Open your Lightning app in App Manager">
     In **Setup**, open **App Manager**. Find the Lightning app your agents use, for example **Sales**, open its row menu and select **Edit**. Some apps are listed twice: choose the row whose **App Type** is **Lightning** (for **Sales**, its developer name is **LightningSales**). The softphone works only in Lightning apps.
@@ -215,6 +174,77 @@ First, save this call center file on your computer as `TalkChiefCallCenter.xml`:
     </Frame>
   </Step>
 </Steps>
+
+#### When Salesforce refuses the automatic setup
+
+TalkChief sets up the softphone with the Salesforce access of the admin who connected it. The **Choose your agents** step shows the manual steps below only when Salesforce refuses, with the reason:
+
+- **A permission is missing**: creating the call center needs the **Modify All Data** permission (or **Modify Metadata Through Metadata API Functions**), and adding agents needs **Manage Internal Users**. System administrators have both. Ask your Salesforce admin, or follow the steps below.
+- **Your Salesforce edition doesn't allow it**: some editions, such as Professional Edition, don't let apps create a call center. Follow the steps below once.
+
+<AccordionGroup>
+  <Accordion title="Import the TalkChief call center by hand">
+    Save this call center file on your computer as `TalkChiefCallCenter.xml` (the step's **Download the call center file** button saves the same file):
+
+    ```xml TalkChiefCallCenter.xml
+    <callCenter>
+      <section sortOrder="0" name="reqGeneralInfo" label="General Information">
+        <item sortOrder="0" name="reqInternalName" label="Internal Name">TalkChiefOpenCTI</item>
+        <item sortOrder="1" name="reqDisplayName" label="Display Name">TalkChief</item>
+        <item sortOrder="2" name="reqAdapterUrl" label="CTI Adapter URL">https://app.talkchief.io/crm-dialer/salesforce</item>
+        <item sortOrder="3" name="reqUseApi" label="Use CTI API">true</item>
+        <item sortOrder="4" name="reqSoftphoneHeight" label="Softphone Height">560</item>
+        <item sortOrder="5" name="reqSoftphoneWidth" label="Softphone Width">360</item>
+        <item sortOrder="6" name="reqSalesforceCompatibilityMode" label="Salesforce Compatibility Mode">Lightning</item>
+      </section>
+      <section sortOrder="1" name="reqDialingOptions" label="Dialing Options">
+        <item sortOrder="0" name="reqOutsidePrefix" label="Outside Prefix"></item>
+        <item sortOrder="1" name="reqLongDistPrefix" label="Long Distance Prefix"></item>
+        <item sortOrder="2" name="reqInternationalPrefix" label="International Prefix"></item>
+      </section>
+    </callCenter>
+    ```
+
+    <Steps>
+      <Step title="Open Call Centers">
+        In Salesforce **Setup**, search for **Call Centers** and open **Call Centers**. The first time, Salesforce shows **Say Hello to Salesforce Call Center**: select **Continue**.
+
+        <Frame>
+          ![Say Hello to Salesforce Call Center page with the Continue button at the bottom](/images/docs/salesforce-call-centers-intro.png)
+        </Frame>
+      </Step>
+      <Step title="Import the TalkChief call center">
+        Select **Import**. Under **Call Center Definition File**, select **Choose File**, pick `TalkChiefCallCenter.xml`, and select **Import**. Salesforce opens the new **TalkChief** call center.
+
+        <Frame>
+          ![All Call Centers list with the Import button above the list](/images/docs/salesforce-call-centers-import.png)
+        </Frame>
+
+        <Frame>
+          ![Call Center Import page with the Choose File button for the Call Center Definition File and the Import button](/images/docs/salesforce-call-center-import-file.png)
+        </Frame>
+      </Step>
+    </Steps>
+
+    Then select **Check again** in the **Choose your agents** step to pick your agents there.
+  </Accordion>
+
+  <Accordion title="Add agents by hand">
+    <Steps>
+      <Step title="Add your agents to the call center">
+        On the **TalkChief** call center, check that **CTI Adapter URL** is `https://app.talkchief.io/crm-dialer/salesforce`, then select **Manage Call Center Users**. Select **Add More Users**, find each agent who calls from Salesforce, tick them and select **Add to Call Center**. A user can belong to one call center at a time.
+
+        <Frame>
+          ![TalkChief call center detail page showing the CTI Adapter URL https://app.talkchief.io/crm-dialer/salesforce and the Manage Call Center Users button](/images/docs/salesforce-call-center-detail.png)
+        </Frame>
+
+        <Frame>
+          ![TalkChief: Manage Users page with the Add More Users button](/images/docs/salesforce-call-center-add-users.png)
+        </Frame>
+      </Step>
+    </Steps>
+  </Accordion>
+</AccordionGroup>
 
 ### Use the softphone
 
@@ -310,7 +340,7 @@ A Salesforce admin can also remove TalkChief from inside Salesforce by uninstall
   </Accordion>
 
   <Accordion title="The softphone doesn't appear in Salesforce">
-    Check that you are in a Lightning app with **Open CTI Softphone** in its utility bar, and that your user is in the TalkChief call center. A user can belong to only one call center, so remove yourself from any other call center first.
+    Check that you are in a Lightning app with **Open CTI Softphone** in its utility bar, and that you are ticked in the **Choose your agents** step of the guided setup (that puts you in the TalkChief call center). A user can belong to only one call center at a time.
   </Accordion>
 
   <Accordion title="The softphone panel says it refused to connect">
