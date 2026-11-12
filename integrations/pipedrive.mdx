@@ -20,10 +20,11 @@ The TalkChief app for Pipedrive logs every TalkChief phone call in your Pipedriv
 - **Logs every external call**: inbound and outbound calls are logged as Pipedrive call logs. Calls between two TalkChief extensions are not logged.
 - **Finds the right person**: TalkChief looks up the caller's number (or the number you dialed) in the phone numbers of your Pipedrive persons. A call on a person who belongs to an organization is linked to that organization too.
 - **Links the deal**: a call you place from a deal is linked to that deal. Other calls are linked to the person's most recently updated open deal, if they have one.
-- **Can create persons for new numbers**: when you turn on **Create contacts for new numbers**, TalkChief creates a person with the number and the caller ID name when no person has it. It is off for new connections.
+- **Can create persons for new numbers**: when you turn on **Create leads for new numbers**, TalkChief creates a person with the number and the caller ID name when no person has it. It is off for new connections.
 - **Assigns the call to the agent**: the call log belongs to the Pipedrive user whose email matches the TalkChief agent's email. If the agent has no Pipedrive user, it belongs to the person's owner, otherwise to the admin who connected Pipedrive.
 - **Links the recording**: when the call was recorded, the call log's note links to the recording so you can play it from Pipedrive.
-- **Calls from inside Pipedrive**: click a phone number in Pipedrive and TalkChief places the call through your TalkChief phone. Incoming calls open the caller's person in Pipedrive. See [Call from Pipedrive](#call-from-pipedrive).
+- **Adds the AI call summary, if you want**: with [AI transcription](/ai/ai-transcription) on, TalkChief can add the call's AI summary to the call in Pipedrive once it's ready, with a link to the full transcript. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)).
+- **Calls from inside Pipedrive**: click a phone number in Pipedrive and TalkChief places the call through your TalkChief phone. Incoming calls open the caller's person in Pipedrive, and after a call you can add a note and an outcome. See [Call from Pipedrive](#call-from-pipedrive).
 
 Each logged call shows:
 
@@ -65,6 +66,9 @@ Calls usually appear in Pipedrive within a few minutes of hanging up.
   <Step title="Confirm in TalkChief">
     Pipedrive sends you back to **Integrations** in TalkChief. A message confirms that Pipedrive is connected, and the Pipedrive card moves to your connected integrations with a **Connected** label.
   </Step>
+  <Step title="Make TalkChief your calling app in Pipedrive">
+    TalkChief shows **One more step**: in Pipedrive, open **Settings** > **Tools and apps** > **Phone calls**, choose **TalkChief** under **Default calling app** and select **Save settings**. Ask each agent to do the same in their own Pipedrive account (see [Call from Pipedrive](#call-from-pipedrive)).
+  </Step>
   <Step title="Test with a real call">
     Make or receive a call with TalkChief. A few minutes after you hang up, open the person in Pipedrive and check that the call is on their history.
   </Step>
@@ -76,21 +80,42 @@ Calls usually appear in Pipedrive within a few minutes of hanging up.
 
 ## Choose what gets logged
 
-On the connected Pipedrive card in **Integrations**, select the settings (gear) icon. The **Pipedrive settings** window shows the connected Pipedrive company and three switches you can change at any time. Each change applies to calls that end afterwards.
+On the connected Pipedrive card in **Integrations**, select the settings (gear) icon. The **Pipedrive settings** window shows the connected Pipedrive company and switches you can change at any time. Each change applies to calls that end afterwards.
 
 | Setting | New connections | On | Off |
 | --- | --- | --- | --- |
 | **Log calls** | On | Every external call is logged | Nothing is logged, and the connection stays in place |
 | **Log missed calls** | On | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
-| **Create contacts for new numbers** | Off | Unknown numbers get a new Pipedrive person | Calls from unknown numbers are logged without a person |
+| **Create leads for new numbers** | Off | Unknown numbers get a new Pipedrive person, and the call is logged on it | Calls from numbers Pipedrive doesn't have are not logged, because Pipedrive logs calls only on a person, organization or deal |
+| **Add the AI call summary to each call** | Off | When a call's AI summary is ready, it's added to the note of the call in Pipedrive, with a link to the full transcript | Calls get no summary |
+
+**Add the AI call summary to each call** needs [AI transcription](/ai/ai-transcription). Without it, the switch is locked and shows **Needs AI transcription.** with a **Turn it on** link to **Settings** > **AI transcription**. If your plan doesn't include AI transcription, it shows **Needs a plan with AI transcription.** with a **See plans** link instead.
+
+The summary goes into the note of the call's activity in Pipedrive, after the call details and any after-call note:
+
+```text
+[AI summary]
+The customer asked to move their delivery to Friday. The agent confirmed the new date and will send a confirmation email.
+
+Full transcript in TalkChief
+[End of AI summary]
+```
+
+Only calls that AI transcription covers get a summary. If a summary is created again, TalkChief replaces its earlier summary instead of adding a second one. Your after-call note and anything typed in Pipedrive stay as they are. Opening the transcript link needs a TalkChief sign-in with access to the call.
 
 ## Call from Pipedrive
 
 The TalkChief calling panel opens in a small window inside Pipedrive, so each agent can place and receive TalkChief calls without leaving Pipedrive. You talk on your usual TalkChief phone (the TalkChief app or your desk phone), so moving between Pipedrive pages never drops a call.
 
 <Steps>
-  <Step title="Choose TalkChief for phone calls">
-    In Pipedrive, click a person's phone number. If Pipedrive asks how to make the call, choose **TalkChief**. You can also set it as your default calling app in Pipedrive's calling settings.
+  <Step title="Make TalkChief your calling app in Pipedrive">
+    Pipedrive sends a click on a phone number to your **default calling app**. Pipedrive doesn't let apps set this, so each agent does it once in their own Pipedrive account:
+
+    1. In Pipedrive, open **Settings** > **Tools and apps** > **Phone calls**.
+    2. Under **Default calling app**, choose **TalkChief** (listed under **Installed apps**).
+    3. Select **Save settings**.
+
+    Until you do this, Pipedrive uses its own "callto" handler: hovering a number shows **Click to call from Pipedrive**, and the click doesn't reach TalkChief. After connecting Pipedrive, TalkChief shows these steps and a button that opens Pipedrive's phone call settings.
   </Step>
   <Step title="Sign in to TalkChief">
     In the TalkChief window, select **Sign in**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. Each agent signs in once on their own computer. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
@@ -100,6 +125,9 @@ The TalkChief calling panel opens in a small window inside Pipedrive, so each ag
   </Step>
   <Step title="Receive a call">
     When a call rings your TalkChief phone, the TalkChief window opens and Pipedrive shows the caller's person. Answer on your TalkChief phone as usual.
+  </Step>
+  <Step title="Add a note and an outcome">
+    When the call ends, type a note and, if you like, pick an outcome in the TalkChief window (**Keep the logged outcome** leaves TalkChief's own). They are added to the call in Pipedrive; saving again replaces them.
   </Step>
 </Steps>
 
@@ -116,13 +144,13 @@ When you connect, you allow TalkChief to:
 | Access | Why |
 | --- | --- |
 | Basic information | Identify the connected Pipedrive company and user |
-| Contacts (full access) | Find the person whose phone number matches the call, and create a person for a number Pipedrive doesn't have (only while **Create contacts for new numbers** is on) |
+| Contacts (full access) | Find the person whose phone number matches the call, and create a person for a number Pipedrive doesn't have (only while **Create leads for new numbers** is on) |
 | Deals (read only) | Find the person's open deal to link the call to |
-| Activities (full access) | Add your after-call note to the call's activity in Pipedrive |
+| Activities (full access) | Add your after-call note and the AI call summary to the call's activity in Pipedrive |
 | Read users data | Match the TalkChief agent to their Pipedrive user by email, to set the call's user |
 | Call logs | Log each call with its outcome, duration and numbers |
 
-TalkChief writes call logs and new persons to Pipedrive. It reads deals only to link calls to them and never changes them, and it changes an activity only to add your after-call note to a call TalkChief logged. It does not read or change your leads, emails or other records, and it does not copy your Pipedrive contacts into TalkChief.
+TalkChief writes call logs and new persons to Pipedrive. It reads deals only to link calls to them and never changes them, and it changes an activity only to add your after-call note or the AI call summary to a call TalkChief logged. It does not read or change your leads, emails or other records, and it does not copy your Pipedrive contacts into TalkChief.
 
 ## Disconnect Pipedrive
 
@@ -166,7 +194,7 @@ Call logs and persons already in Pipedrive stay there.
   </Accordion>
 
   <Accordion title="A call is not on the person">
-    TalkChief matches the person by their phone numbers. Check that the person has the caller's number, preferably with its country code. If **Create contacts for new numbers** is off, calls from numbers Pipedrive doesn't have are logged without a person.
+    TalkChief matches the person by their phone numbers. Check that the person has the caller's number, preferably with its country code. If **Create leads for new numbers** is off, calls from numbers Pipedrive doesn't have are not logged, because Pipedrive keeps call logs only on a person, organization or deal. Turn the setting on, or add the number to the person. A call you place from a deal is logged on that deal even without a person.
   </Accordion>
 
   <Accordion title="Calls arrive late or stop for the day">
@@ -174,7 +202,7 @@ Call logs and persons already in Pipedrive stay there.
   </Accordion>
 
   <Accordion title="TalkChief is not offered when I click a phone number">
-    The TalkChief app must be installed in your Pipedrive company. Check Pipedrive's calling settings and choose TalkChief as your calling app. If it is not listed, contact TalkChief support.
+    Pipedrive uses your default calling app for every number you click. In Pipedrive, open **Settings** > **Tools and apps** > **Phone calls**, choose **TalkChief** under **Default calling app** and select **Save settings**. Each agent does this in their own Pipedrive account. If TalkChief is not listed under **Installed apps**, ask your admin to connect Pipedrive in TalkChief first (see [Connect Pipedrive](#connect-pipedrive)), or contact TalkChief support.
   </Accordion>
 
   <Accordion title="The calling window says my TalkChief phone is offline">
@@ -183,6 +211,18 @@ Call logs and persons already in Pipedrive stay there.
 
   <Accordion title="The calling window asks me to sign in again">
     Your TalkChief sign-in in the window lasts 30 days and renews itself while you use the window. Select **Sign in** to continue.
+  </Accordion>
+
+  <Accordion title="My after-call note is not in Pipedrive">
+    A note saved a while after the call needs TalkChief's access to activities. If you connected Pipedrive before after-call notes were added, disconnect and connect again.
+  </Accordion>
+
+  <Accordion title="A call has no AI summary">
+    Check that **Add the AI call summary to each call** is on in the **Pipedrive settings** window; if it is locked, turn on [AI transcription](/ai/ai-transcription) first. Only calls that AI transcription covers get a summary: short calls, internal calls and calls from before it was turned on are not transcribed. The summary is added after the call has been transcribed, so it can appear a while after the call itself. It needs TalkChief's access to activities: if you connected Pipedrive before after-call notes were added, disconnect and connect again.
+  </Accordion>
+
+  <Accordion title="The calling window shows Wrong account">
+    You are signed in to a TalkChief company that is connected to a different Pipedrive company, so the window doesn't place or show calls. Sign out in the window and sign in with the TalkChief company connected to this Pipedrive company.
   </Accordion>
 
   <Accordion title="A call has no recording link">
