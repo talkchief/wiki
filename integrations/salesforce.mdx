@@ -56,14 +56,24 @@ Calls usually appear in Salesforce within a few minutes of hanging up, under **A
 
 ## Install the TalkChief app in Salesforce
 
-Before you connect, a Salesforce admin installs the TalkChief app (a managed package) in your org. Ask TalkChief support at [support@talkchief.io](mailto:support@talkchief.io) for the install link.
+Before you connect, a Salesforce admin installs the TalkChief app (a managed package) in your org.
 
 <Steps>
   <Step title="Open the install link">
-    Open the install link and sign in to Salesforce as an admin of the org you want to connect.
+    Open the [TalkChief install link](https://login.salesforce.com/packaging/installPackage.apexp?p0=04thm000003iHWTAA2) and sign in to Salesforce as an admin of the org you want to connect. For a sandbox, use the same link with `test.salesforce.com` in place of `login.salesforce.com`.
   </Step>
   <Step title="Install for admins only">
-    Choose **Install for Admins Only** and select **Install**. Only the admin who connects TalkChief authorizes the app, so no other user needs access to it.
+    Choose **Install for Admins Only**. Until TalkChief is listed on AppExchange, Salesforce shows a notice that the app is not authorized for distribution through AppExchange: tick **I acknowledge** and select **Install**. Only the admin who connects TalkChief authorizes the app, so no other user needs access to it.
+  </Step>
+  <Step title="Allow the TalkChief softphone">
+    Salesforce asks you to approve third-party access for `https://app.talkchief.io`, the address of the TalkChief softphone. Tick **Yes, grant access to these third-party web sites** and select **Continue**.
+
+    <Frame>
+      ![Approve Third-Party Access window listing the CSP Trusted Site https://app.talkchief.io, with the Yes, grant access checkbox ticked and the Continue button](/images/docs/salesforce-install-approve-third-party.png)
+    </Frame>
+  </Step>
+  <Step title="Finish the install">
+    When Salesforce shows **Installation Complete!**, select **Done**.
   </Step>
 </Steps>
 
@@ -133,17 +143,76 @@ The TalkChief softphone lets each agent place and receive TalkChief calls from S
 
 ### Set up the softphone
 
-A Salesforce admin does this once for your org, after installing the TalkChief app and connecting Salesforce (see [Connect Salesforce](#connect-salesforce)). Ask TalkChief support at [support@talkchief.io](mailto:support@talkchief.io) for the TalkChief call center file.
+A Salesforce admin does this once for your org, after installing the TalkChief app and connecting Salesforce (see [Connect Salesforce](#connect-salesforce)). You need the **Customize Application** and **Manage Call Centers** permissions.
+
+First, save this call center file on your computer as `TalkChiefCallCenter.xml`:
+
+```xml TalkChiefCallCenter.xml
+<callCenter>
+  <section sortOrder="0" name="reqGeneralInfo" label="General Information">
+    <item sortOrder="0" name="reqInternalName" label="Internal Name">TalkChiefOpenCTI</item>
+    <item sortOrder="1" name="reqDisplayName" label="Display Name">TalkChief</item>
+    <item sortOrder="2" name="reqAdapterUrl" label="CTI Adapter URL">https://app.talkchief.io/crm-dialer/salesforce</item>
+    <item sortOrder="3" name="reqUseApi" label="Use CTI API">true</item>
+    <item sortOrder="4" name="reqSoftphoneHeight" label="Softphone Height">560</item>
+    <item sortOrder="5" name="reqSoftphoneWidth" label="Softphone Width">360</item>
+    <item sortOrder="6" name="reqSalesforceCompatibilityMode" label="Salesforce Compatibility Mode">Lightning</item>
+  </section>
+  <section sortOrder="1" name="reqDialingOptions" label="Dialing Options">
+    <item sortOrder="0" name="reqOutsidePrefix" label="Outside Prefix"></item>
+    <item sortOrder="1" name="reqLongDistPrefix" label="Long Distance Prefix"></item>
+    <item sortOrder="2" name="reqInternationalPrefix" label="International Prefix"></item>
+  </section>
+</callCenter>
+```
 
 <Steps>
+  <Step title="Open Call Centers">
+    In Salesforce **Setup**, search for **Call Centers** and open **Call Centers**. The first time, Salesforce shows **Say Hello to Salesforce Call Center**: select **Continue**.
+
+    <Frame>
+      ![Say Hello to Salesforce Call Center page with the Continue button at the bottom](/images/docs/salesforce-call-centers-intro.png)
+    </Frame>
+  </Step>
   <Step title="Import the TalkChief call center">
-    In Salesforce **Setup**, search for **Call Centers**, open **Call Centers** and select **Import**. Choose the TalkChief call center file and import it. You need the **Customize Application** and **Manage Call Centers** permissions.
+    Select **Import**. Under **Call Center Definition File**, select **Choose File**, pick `TalkChiefCallCenter.xml`, and select **Import**. Salesforce opens the new **TalkChief** call center.
+
+    <Frame>
+      ![All Call Centers list with the Import button above the list](/images/docs/salesforce-call-centers-import.png)
+    </Frame>
+
+    <Frame>
+      ![Call Center Import page with the Choose File button for the Call Center Definition File and the Import button](/images/docs/salesforce-call-center-import-file.png)
+    </Frame>
   </Step>
   <Step title="Add your agents to the call center">
-    Open the **TalkChief** call center and, under **Call Center Users**, select **Manage Call Center Users** (or **Add**), then add each agent who calls from Salesforce. A user can belong to one call center at a time.
+    On the **TalkChief** call center, check that **CTI Adapter URL** is `https://app.talkchief.io/crm-dialer/salesforce`, then select **Manage Call Center Users**. Select **Add More Users**, find each agent who calls from Salesforce, tick them and select **Add to Call Center**. A user can belong to one call center at a time.
+
+    <Frame>
+      ![TalkChief call center detail page showing the CTI Adapter URL https://app.talkchief.io/crm-dialer/salesforce and the Manage Call Center Users button](/images/docs/salesforce-call-center-detail.png)
+    </Frame>
+
+    <Frame>
+      ![TalkChief: Manage Users page with the Add More Users button](/images/docs/salesforce-call-center-add-users.png)
+    </Frame>
   </Step>
-  <Step title="Add the softphone to your Lightning app">
-    In **Setup**, open **App Manager**, find the Lightning app your agents use (for example **Sales**) and select **Edit**. Under **Utility Items (Desktop Only)**, select **Add Utility Item**, choose **Open CTI Softphone** and save. The softphone works only in Lightning apps.
+  <Step title="Open your Lightning app in App Manager">
+    In **Setup**, open **App Manager**. Find the Lightning app your agents use, for example **Sales**, open its row menu and select **Edit**. Some apps are listed twice: choose the row whose **App Type** is **Lightning** (for **Sales**, its developer name is **LightningSales**). The softphone works only in Lightning apps.
+
+    <Frame>
+      ![Lightning Experience App Manager with the row menu of the Lightning Sales app open on Edit](/images/docs/salesforce-app-manager-edit.png)
+    </Frame>
+  </Step>
+  <Step title="Add the softphone to the utility bar">
+    Select **Utility Items (Desktop Only)**, then **Add Utility Item**. Search for **Open CTI** and choose **Open CTI Softphone**. Set **Label** to **TalkChief**, **Panel Width** to **360** and **Panel Height** to **560**, keep **Start automatically** on, and select **Save**.
+
+    <Frame>
+      ![Utility Items with the Add Utility Item search showing Open CTI Softphone](/images/docs/salesforce-utility-add-open-cti.png)
+    </Frame>
+
+    <Frame>
+      ![Open CTI Softphone utility item properties with Label TalkChief, Panel Width 360 and Panel Height 560](/images/docs/salesforce-utility-talkchief-properties.png)
+    </Frame>
   </Step>
 </Steps>
 
@@ -154,7 +223,7 @@ A Salesforce admin does this once for your org, after installing the TalkChief a
     Open the **TalkChief** softphone from the utility bar and select **Sign in**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. If nothing opens, allow pop-ups for Salesforce in your browser. Each agent signs in once on their own computer. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
   </Step>
   <Step title="Place a call">
-    Click a phone number on a contact, lead, account or opportunity. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. Hang up on your phone.
+    Click a phone number on a contact, lead, account or opportunity. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. Hang up on your phone. If the panel is set to **Calls ring this browser**, the call goes out from your browser instead: allow the microphone for Salesforce the first time your browser asks.
   </Step>
   <Step title="Receive a call">
     When a call rings your TalkChief phone, the softphone opens and Salesforce opens the caller's contact or lead. Answer on your TalkChief phone as usual.
@@ -242,6 +311,14 @@ A Salesforce admin can also remove TalkChief from inside Salesforce by uninstall
 
   <Accordion title="The softphone doesn't appear in Salesforce">
     Check that you are in a Lightning app with **Open CTI Softphone** in its utility bar, and that your user is in the TalkChief call center. A user can belong to only one call center, so remove yourself from any other call center first.
+  </Accordion>
+
+  <Accordion title="The softphone panel says it refused to connect">
+    Salesforce blocks the panel when `https://app.talkchief.io` is not a trusted URL in your org. The TalkChief app adds it when you approve third-party access during the install. If it was removed or not approved, open **Setup** > **Trusted URLs** and select **New**: enter `https://app.talkchief.io` as the URL, tick **Active**, choose **All** as the **CSP Context**, tick **frame-src (iframe content)** and **microphone**, and save. Then reload Salesforce.
+  </Accordion>
+
+  <Accordion title="A call shows Calling but the number never rings">
+    When the panel is set to **Calls ring this browser**, the call starts only after your browser has microphone access for Salesforce. Allow the microphone when the browser asks, or in the browser's site settings for your Salesforce address, then call again. If Salesforce still can't use the microphone, ask your Salesforce admin to check **Setup** > **Session Settings** > **Browser Feature Permissions** > **Microphone**, or open the panel in its own window with the pop-out button.
   </Accordion>
 
   <Accordion title="The softphone won't call or open records">
