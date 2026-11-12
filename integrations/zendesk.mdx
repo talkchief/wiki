@@ -22,7 +22,7 @@ TalkChief for Zendesk turns every TalkChief phone call into a Zendesk Support ti
 - **Finds the caller**: TalkChief looks up the caller's number (or the number you dialed) among your Zendesk users and makes that user the ticket's requester.
 - **Creates users for new numbers, if you want**: when **Create leads for new numbers** is on, a number no Zendesk user has gets a new end user with the caller ID name and the number. It is off by default: the call is then logged with the agent as requester and the tag `talkchief_unknown_caller`.
 - **Assigns the ticket to the agent**: answered calls are assigned to the Zendesk agent whose email matches the TalkChief agent's email, or to the Zendesk admin who connected TalkChief when there is no match. Missed calls stay unassigned for your Zendesk routing.
-- **Calls from inside Zendesk**: with the TalkChief app in Zendesk's top bar, click a phone number and TalkChief places the call through your TalkChief phone. Incoming calls open the caller's profile, and after a call you can add a note and an outcome. See [Call from Zendesk](#call-from-zendesk).
+- **Calls from inside Zendesk**: with the TalkChief app in Zendesk's top bar, click a phone number and TalkChief places the call from your browser or through your TalkChief phone. Incoming calls ring as soon as Zendesk is open and open the caller's profile, and after a call you can add a note and an outcome. See [Call from Zendesk](#call-from-zendesk).
 - **Adds the AI call summary, if you want**: with [AI transcription](/ai/ai-transcription) on, TalkChief can add the call's AI summary to the call's ticket as an internal note once it's ready, with a link to the full transcript. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)).
 
 Each ticket shows:
@@ -94,27 +94,27 @@ The summary is added only to calls that AI transcription covers, after the call 
 
 ## Call from Zendesk
 
-The TalkChief app adds a TalkChief panel to the top bar of Zendesk Support, so each agent can place and receive TalkChief calls while working in Zendesk. You talk on your usual TalkChief phone (the TalkChief app or your desk phone), so moving between tickets never drops a call.
+The TalkChief app adds a TalkChief panel to the top bar of Zendesk Support, so each agent can place and receive TalkChief calls while working in Zendesk. You talk in your browser, or on your usual TalkChief phone (the TalkChief app or your desk phone). The panel starts by itself when you open Zendesk, so calls reach you even if you never open it.
 
 <Steps>
   <Step title="Install the TalkChief app in Zendesk">
     A Zendesk admin installs the **TalkChief** app in your Zendesk account. Its icon then appears in the top bar of Zendesk Support. Your TalkChief admin must also have connected Zendesk (see [Connect Zendesk](#connect-zendesk)).
   </Step>
   <Step title="Sign in to TalkChief">
-    Open the TalkChief panel from the top bar and select **Sign in**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. Each agent signs in once on their own computer. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
+    The first time you open Zendesk after the app is installed, the TalkChief panel opens by itself. Select **Sign in**. A TalkChief window opens; sign in if asked, and it closes by itself when you are connected. If nothing opens, allow pop-ups for Zendesk in your browser. Each agent signs in once on their own computer. Your sign-in lasts 30 days and renews itself while Zendesk is open; if it ends, the panel opens again and asks you to sign in. Signing in here doesn't sign you out of the TalkChief web app or your TalkChief apps.
   </Step>
   <Step title="Place a call">
-    Click a phone number in a ticket or a user profile, or type a number in the panel and select **Call**. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. Hang up on your phone.
+    Click a phone number in a ticket or a user profile, or type a number in the panel and select **Call**. When the panel shows **Calls ring this browser**, the call goes out from your browser: allow the microphone for Zendesk the first time your browser asks. Otherwise TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number.
   </Step>
   <Step title="Receive a call">
-    When a call rings your TalkChief phone, the TalkChief panel opens and Zendesk shows the caller's profile. Answer on your TalkChief phone as usual. Zendesk loads the panel the first time you open it, so open the TalkChief panel once after you load Zendesk to get these pop-ups.
+    When a call comes in, the TalkChief panel opens and Zendesk shows the caller's profile. Answer in the panel, or on your TalkChief phone as usual. You don't need to open the panel first: it starts by itself when Zendesk loads. If you have Zendesk open in several tabs, calls ring in the Zendesk tab you used last.
   </Step>
 </Steps>
 
 A call you place from a ticket is added to that ticket when it ends. Other calls get their own ticket, like every logged call.
 
 <Note>
-  Clicking phone numbers in Zendesk needs Talk Partner Edition, which all Zendesk Suite plans include. Without it, type the number in the TalkChief panel instead. Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected.
+  Clicking phone numbers in Zendesk needs Talk Partner Edition, which all Zendesk Suite plans include. Without it, type the number in the TalkChief panel instead. For calls in your browser, keep Zendesk open in a browser tab. For calls on your TalkChief phone, keep the TalkChief app open or your desk phone connected.
 </Note>
 
 ### Add a note after the call
