@@ -146,41 +146,37 @@ The TalkChief softphone lets each agent place and receive TalkChief calls from S
 A Salesforce admin does this once for your org, in the same guided setup that connects Salesforce: on the **Salesforce** card in **Integrations**, select **Connect**. If Salesforce is already connected, select the settings (gear) icon on the card, then **Set up the softphone**.
 
 <Steps>
-  <Step title="Choose your agents">
-    In the **Choose your agents** step, TalkChief sets itself up in Salesforce: it creates the **TalkChief** call center in your org, or uses the one that is already there, and shows **TalkChief is set up in Salesforce.** Below that, it lists your active Salesforce users. Tick everyone who makes and takes calls from Salesforce, then select **Save**.
+  <Step title="Set up TalkChief in Salesforce">
+    In the **Set up** step, TalkChief sets itself up in your org: it creates the **TalkChief** call center, or uses the one that is already there, and shows **TalkChief's call center is ready.**
 
-    - The first time, people whose email matches a TalkChief account are ticked for you.
-    - A user marked **In another call center** belongs to a different call center. A user can be in only one call center at a time, so ticking them moves them to TalkChief's.
-    - To take someone off the softphone later, untick them and select **Save**.
+    Below that, under **Add TalkChief to the bar at the bottom of**, it lists your Lightning apps that have a utility bar (the bar at the bottom of the page). Apps that share one bar are listed together, for example **Sales, Sales Console**. The first time, **Sales** is ticked for you. Tick the apps your agents use and select **Add**. TalkChief first names the bars it will change: select **Add now**, and don't edit those utility bars in Salesforce until it's done. Apps that have TalkChief show **Added**.
+
+    TalkChief adds an **Open CTI Softphone** item labeled **TalkChief**, 360 wide and 560 high, that starts automatically. Everything else in the bar stays as it was. TalkChief doesn't change bars that come with an installed package; for those, the step shows how to add it by hand.
 
     If Salesforce doesn't let TalkChief do this, the step says why and shows how to do it by hand (see [When Salesforce refuses the automatic setup](#when-salesforce-refuses-the-automatic-setup)).
   </Step>
-  <Step title="Open your Lightning app in App Manager">
-    In **Setup**, open **App Manager**. Find the Lightning app your agents use, for example **Sales**, open its row menu and select **Edit**. Some apps are listed twice: choose the row whose **App Type** is **Lightning** (for **Sales**, its developer name is **LightningSales**). The softphone works only in Lightning apps.
+  <Step title="Choose your agents">
+    In the **Choose your agents** step, under **Who calls from Salesforce?**, TalkChief lists the active users of your org. Tick everyone who makes and takes calls from Salesforce, then select **Save changes**.
 
-    <Frame>
-      ![Lightning Experience App Manager with the row menu of the Lightning Sales app open on Edit](/images/docs/salesforce-app-manager-edit.png)
-    </Frame>
-  </Step>
-  <Step title="Add the softphone to the utility bar">
-    Select **Utility Items (Desktop Only)**, then **Add Utility Item**. Search for **Open CTI** and choose **Open CTI Softphone**. Set **Label** to **TalkChief**, **Panel Width** to **360** and **Panel Height** to **560**, keep **Start automatically** on, and select **Save**.
+    - The first time, people whose email matches a TalkChief account are ticked for you. They are marked **On TalkChief**.
+    - Use **Search name or email** to find people, and **Show** to see only **Agents**, **TalkChief users** or **Not agents**. The list shows 50 people per page.
+    - **Select all** ticks everyone your search and **Show** choice list, except people in another call center and system users.
+    - A user marked **In another call center** belongs to a different call center. A user can be in only one call center at a time, so ticking them moves them to TalkChief's.
+    - A user marked **System user** is an integration account. It's listed only when it's already in TalkChief's call center, so you can remove it.
+    - To take someone off the softphone later, untick them and select **Save changes**.
 
-    <Frame>
-      ![Utility Items with the Add Utility Item search showing Open CTI Softphone](/images/docs/salesforce-utility-add-open-cti.png)
-    </Frame>
-
-    <Frame>
-      ![Open CTI Softphone utility item properties with Label TalkChief, Panel Width 360 and Panel Height 560](/images/docs/salesforce-utility-talkchief-properties.png)
-    </Frame>
+    The list shows up to 2,000 people, by name. In a larger org, add the others by hand (see [Add agents by hand](#when-salesforce-refuses-the-automatic-setup)). If Salesforce refuses a change for someone, that person shows the reason and everyone else is still saved.
   </Step>
 </Steps>
 
 #### When Salesforce refuses the automatic setup
 
-TalkChief sets up the softphone with the Salesforce access of the admin who connected it. The **Choose your agents** step shows the manual steps below only when Salesforce refuses, with the reason:
+TalkChief sets up the softphone with the Salesforce access of the admin who connected it. The **Set up** and **Choose your agents** steps show the manual steps below only when Salesforce refuses, with the reason:
 
-- **A permission is missing**: creating the call center needs the **Modify All Data** permission (or **Modify Metadata Through Metadata API Functions**), and adding agents needs **Manage Internal Users**. System administrators have both. Ask your Salesforce admin, or follow the steps below.
-- **Your Salesforce edition doesn't allow it**: some editions, such as Professional Edition, don't let apps create a call center. Follow the steps below once.
+- **A permission is missing**: creating the call center and adding TalkChief to your apps' utility bars need the **Modify All Data** permission (or **Modify Metadata Through Metadata API Functions**), and adding agents needs **Manage Internal Users**. System administrators have both. Ask your Salesforce admin, or follow the steps below.
+- **Your Salesforce edition doesn't allow it**: some editions, such as Professional Edition, don't let apps create a call center or change apps. Follow the steps below once.
+- **TalkChief doesn't change this bar**: the bar comes with an installed package, or has settings TalkChief doesn't recognize. Add the softphone to that app by hand.
+- **Salesforce saved this bar differently**: after adding itself, TalkChief reads the bar back and checks that the only change is the TalkChief item. If anything else differs, the step says so for that app. TalkChief doesn't undo anything: open the app in App Manager and check its utility items (see **The utility bar of an app changed during setup** in [Troubleshooting](#troubleshooting)).
 
 <AccordionGroup>
   <Accordion title="Import the TalkChief call center by hand">
@@ -226,7 +222,30 @@ TalkChief sets up the softphone with the Salesforce access of the admin who conn
       </Step>
     </Steps>
 
-    Then select **Check again** in the **Choose your agents** step to pick your agents there.
+    Then select **Check again** in the **Set up** step.
+  </Accordion>
+
+  <Accordion title="Add the softphone to an app by hand">
+    <Steps>
+      <Step title="Open your Lightning app in App Manager">
+        In **Setup**, open **App Manager**. Find the Lightning app your agents use, for example **Sales**, open its row menu and select **Edit**. Some apps are listed twice: choose the row whose **App Type** is **Lightning** (for **Sales**, its developer name is **LightningSales**). The softphone works only in Lightning apps.
+
+        <Frame>
+          ![Lightning Experience App Manager with the row menu of the Lightning Sales app open on Edit](/images/docs/salesforce-app-manager-edit.png)
+        </Frame>
+      </Step>
+      <Step title="Add the softphone to the utility bar">
+        Select **Utility Items (Desktop Only)**, then **Add Utility Item**. Search for **Open CTI** and choose **Open CTI Softphone**. Set **Label** to **TalkChief**, **Panel Width** to **360** and **Panel Height** to **560**, keep **Start automatically** on, and select **Save**.
+
+        <Frame>
+          ![Utility Items with the Add Utility Item search showing Open CTI Softphone](/images/docs/salesforce-utility-add-open-cti.png)
+        </Frame>
+
+        <Frame>
+          ![Open CTI Softphone utility item properties with Label TalkChief, Panel Width 360 and Panel Height 560](/images/docs/salesforce-utility-talkchief-properties.png)
+        </Frame>
+      </Step>
+    </Steps>
   </Accordion>
 
   <Accordion title="Add agents by hand">
@@ -340,7 +359,11 @@ A Salesforce admin can also remove TalkChief from inside Salesforce by uninstall
   </Accordion>
 
   <Accordion title="The softphone doesn't appear in Salesforce">
-    Check that you are in a Lightning app with **Open CTI Softphone** in its utility bar, and that you are ticked in the **Choose your agents** step of the guided setup (that puts you in the TalkChief call center). A user can belong to only one call center at a time.
+    Check that you are in a Lightning app whose utility bar has TalkChief (the **Set up** step of the guided setup shows **Added** next to it), and that you are ticked in the **Choose your agents** step (that puts you in the TalkChief call center). A user can belong to only one call center at a time.
+  </Accordion>
+
+  <Accordion title="The utility bar of an app changed during setup">
+    Salesforce has no way for an app to lock a utility bar while it changes it. TalkChief reads the bar twice and writes only when nothing changed in between, then reads it back to check that the only change is the TalkChief item. If someone saves the same utility bar in App Manager at that very moment, one of the two changes can still be lost. When the check finds a difference, the **Set up** step shows **Salesforce saved this bar differently** for that app. TalkChief doesn't undo anything: open the app in **App Manager**, select **Utility Items (Desktop Only)**, and restore anything that is missing or add the TalkChief item by hand (see [Add the softphone to an app by hand](#when-salesforce-refuses-the-automatic-setup)).
   </Accordion>
 
   <Accordion title="The softphone panel says it refused to connect">
