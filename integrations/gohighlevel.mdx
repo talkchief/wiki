@@ -8,6 +8,7 @@ keywords:
   - "leadconnector"
   - "crm"
   - "call logging"
+  - "click to dial"
   - "integration"
   - "setup guide"
 hidden: false
@@ -23,7 +24,7 @@ The TalkChief app for HighLevel (GoHighLevel) logs every TalkChief phone call in
 - **Adds the recording**: when the call was recorded, the call entry carries a link to the recording, and the note repeats it.
 - **Credits the agent**: the note is written by the HighLevel user whose email matches the TalkChief agent's email.
 - **Adds the AI call summary, if you want**: with [AI transcription](/ai/ai-transcription) on, TalkChief can add the call's AI summary to the same note once it's ready, with a link to the full transcript. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)).
-- **Calls from HighLevel**: the TalkChief calling panel places calls through your TalkChief phone and opens the caller's contact when your phone rings. See [Call from HighLevel](#call-from-highlevel).
+- **Calls from HighLevel**: the TalkChief calling panel places calls through your TalkChief phone and opens the caller's contact when your phone rings. With the TalkChief Click-to-Dial app, a TalkChief call button next to each phone number dials it in one click. See [Call from HighLevel](#call-from-highlevel).
 
 Each logged call adds:
 
@@ -113,8 +114,57 @@ The TalkChief calling panel lets each agent place TalkChief calls and see incomi
 
 Calls made or received with the panel are logged once, like every other call: a call entry in the contact's conversation and a note with the talk time and agent.
 
+### Click a number to call
+
+With the **TalkChief Click-to-Dial** app, a small blue TalkChief call button appears next to phone numbers in HighLevel:
+
+- in the **Contacts** list, right after HighLevel's own call icon,
+- next to the phone field on a contact,
+- in the contact's conversation header, next to HighLevel's call button.
+
+Select it, and the TalkChief panel calls that number. HighLevel's own call buttons stay where they are and keep using HighLevel's phone system.
+
+TalkChief Click-to-Dial is a separate app from the TalkChief app above, and only an **agency admin** can install it. You need both: the TalkChief app connects your sub-account and logs the calls, and TalkChief Click-to-Dial adds the buttons.
+
+Before you start:
+
+- **HighLevel is connected in TalkChief:** in the TalkChief web app, **Integrations** shows the **HighLevel** card as **Connected** (see [Connect HighLevel](#connect-highlevel)). Installing TalkChief Click-to-Dial doesn't connect TalkChief; the TalkChief app does.
+- **Each agent signs in to the panel once per browser:** open the panel from the sub-account's **TalkChief** menu (or select a blue button; the panel opens by itself) and select **Sign in**. If you're already signed in to the TalkChief web app in that browser, the panel signs in without asking for your password.
+
+<Steps>
+  <Step title="Open the Marketplace in Agency View">
+    In HighLevel, switch to **Agency View** and open **App Marketplace**.
+  </Step>
+  <Step title="Install TalkChief Click-to-Dial">
+    Search for **TalkChief Click-to-Dial**, open it and select **Install**.
+  </Step>
+  <Step title="Choose the sub-accounts">
+    Choose the sub-accounts that should get the call buttons: the ones connected to TalkChief. Approve the install.
+  </Step>
+  <Step title="Check it">
+    Reload HighLevel and open **Contacts** in one of those sub-accounts. A blue TalkChief call button appears next to each phone number. In **Agency View** there are no buttons.
+  </Step>
+</Steps>
+
+To call with the button:
+
+1. Select the blue TalkChief button next to a number.
+2. The TalkChief panel comes to the front and calls the number. If the panel wasn't open, it opens first. Allow pop-ups for your HighLevel address (app.gohighlevel.com or your own domain) when your browser asks.
+3. TalkChief rings your TalkChief phone first. Answer it, and TalkChief dials the number. If the panel's **Calls ring** setting is **This browser**, the call starts in the panel window instead; keep that window open during the call.
+4. When you called from a contact, the call is logged on that contact.
+
+If the panel asks you to sign in, sign in, then select **Call** followed by the number in the panel. On your own white-label domain, a panel that just opened also waits for you to select **Call** with the number.
+
+Good to know:
+
+- **Only your connected sub-account:** the panel calls only for the sub-account it was opened in. In another sub-account, the button shows "The TalkChief panel is open for another business account" and doesn't call. Open the panel again from that sub-account's **TalkChief** menu.
+- **Nothing else is shared:** TalkChief Click-to-Dial asks for no access to your HighLevel data and holds no keys or passwords. It sends nothing to TalkChief except the number you select, and only when you select it.
+- **If HighLevel changes its pages,** the buttons may disappear until TalkChief updates the app. The panel's dial pad keeps working.
+- **Which sub-accounts get the buttons:** the agency admin chooses the sub-accounts when installing, and whether TalkChief Click-to-Dial also installs on future sub-accounts (**Auto-Install on future sub-accounts**). To change the selection later, open TalkChief Click-to-Dial in **Agency View**.
+- **To remove the buttons,** an agency admin opens TalkChief Click-to-Dial in **Agency View**, selects the menu next to the app's name, then **Uninstall**, and selects the agency and its sub-accounts. Removing it from TalkChief Click-to-Dial doesn't disconnect TalkChief: call logging keeps working.
+
 <Note>
-  HighLevel's own call buttons on a contact still use HighLevel's phone system, not TalkChief: place TalkChief calls from the panel. Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected. Your company admin must have connected HighLevel first (see [Connect HighLevel](#connect-highlevel)).
+  HighLevel's own call buttons on a contact still use HighLevel's phone system, not TalkChief: place TalkChief calls from the panel or with the TalkChief call button (see [Click a number to call](#click-a-number-to-call)). Your TalkChief phone must be online to place calls: keep the TalkChief app open or your desk phone connected. Your company admin must have connected HighLevel first (see [Connect HighLevel](#connect-highlevel)).
 </Note>
 
 ## Data TalkChief uses in HighLevel
@@ -177,6 +227,22 @@ To remove TalkChief completely, uninstall the TalkChief app from the sub-account
 
   <Accordion title="The panel doesn't open the caller's contact">
     Your browser is blocking pop-ups from app.talkchief.io. Allow them in your browser's settings, or select **Open record** in the panel for each call. The contact opens only when a contact in the connected sub-account has the caller's number.
+  </Accordion>
+
+  <Accordion title="I don't see the TalkChief call button">
+    An agency admin must install **TalkChief Click-to-Dial** from the HighLevel Marketplace in **Agency View** and choose your sub-account (see [Click a number to call](#click-a-number-to-call)). Then reload HighLevel. The buttons appear only inside a sub-account, never in **Agency View**, and only next to numbers HighLevel shows in the contact list, on a contact or in its conversation header.
+  </Accordion>
+
+  <Accordion title="The TalkChief call button doesn't open the panel">
+    Your browser is blocking pop-ups from your HighLevel address. Allow pop-ups for app.gohighlevel.com, or for your own domain if your agency uses one, and select the button again.
+  </Accordion>
+
+  <Accordion title="The panel says your company has not connected HighLevel">
+    The TalkChief company you signed in with has no working HighLevel connection. In the TalkChief web app, open **Integrations**: if the **HighLevel** card shows **Connect** or **Reconnect needed**, a company admin connects it again (see [Connect HighLevel](#connect-highlevel)) and chooses this sub-account. Then select **Sign in** in the panel again.
+  </Accordion>
+
+  <Accordion title="The panel is open for another business account">
+    The panel was opened in a different sub-account than the one you're calling from. Close it, then open it again from this sub-account's **TalkChief** menu, and select the button again.
   </Accordion>
 
   <Accordion title="The panel says my TalkChief phone is offline">
