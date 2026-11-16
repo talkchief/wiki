@@ -1,0 +1,199 @@
+---
+title: "Connect Odoo to log calls and call from Odoo"
+sidebarTitle: "Odoo"
+description: "Log every TalkChief call in the chatter of the matching Odoo lead or contact, and let agents call and answer from the Odoo Phone app with TalkChief as the provider."
+keywords:
+  - "odoo"
+  - "odoo online"
+  - "crm"
+  - "call logging"
+  - "odoo phone"
+  - "voip"
+  - "api key"
+  - "setup guide"
+hidden: true
+---
+
+The TalkChief integration for Odoo CRM does two things, and you can set up either one or both. **Call logging** adds every TalkChief call as a note in the chatter of the matching Odoo lead, opportunity or contact, with a link to the recording. **Calling in Odoo** lets agents click a phone number in Odoo and answer calls inside Odoo, using the Odoo Phone app with TalkChief as its provider. Nothing is installed in Odoo: call logging uses Odoo's API, and calling uses Odoo's own Phone app.
+
+This guide is for **Odoo Online** (databases at `yourcompany.odoo.com`), version 18 and later.
+
+| | Call logging | Calling in Odoo |
+| --- | --- | --- |
+| Odoo plan | Custom plan (API access) | Every Odoo plan that includes the Phone app |
+| What you set up | An Odoo API key, entered in TalkChief | TalkChief as a provider in Odoo, and each agent's TalkChief phone login |
+| Calls covered | Every external call, from any TalkChief app or desk phone | Calls placed and answered in Odoo |
+
+<Note>
+  Call logging needs the Odoo Custom plan, because Odoo allows API access only on that plan. Calling in Odoo works on every plan.
+</Note>
+
+## What call logging does
+
+- **Logs every external call as a note**: each inbound and outbound call adds a note to the chatter of the matching record. Calls between two TalkChief extensions are not logged.
+- **Finds the right record**: TalkChief looks for an open lead or opportunity with the caller's number (or the number you dialed) first, then for a contact. Formats such as `+15551234567` and `+1 555-555-1234` match.
+- **Shows who handled the call**: the note's author is the agent's Odoo user when their email matches a TalkChief user, otherwise the record's salesperson, otherwise the Odoo user whose API key you connected.
+- **Creates leads for new numbers**: when no record has the number, TalkChief creates a lead with the number and the caller ID name, assigned to the agent. This is off until you turn it on (see [Choose what gets logged](#choose-what-gets-logged)).
+- **Adds the recording**: when the call was recorded, the note links to the recording.
+- **Adds the AI call summary, if you want**: with [AI transcription](/ai/ai-transcription) on, TalkChief can add the call's AI summary to the same note once it's ready, with a link to the full transcript. This is off until you turn it on.
+
+Each note looks like this:
+
+```text
+Inbound call from +15551234567 - Answered
+Agent: Dana Cohen (ext 101)
+Talk time: 02:05
+Time: 2026-11-12 08:00 UTC
+Recording: Listen to the recording
+Call ID: ...
+Logged by TalkChief
+```
+
+Calls usually appear in Odoo within a few minutes of hanging up.
+
+## Before you start
+
+- You are a **company admin** in TalkChief.
+- Your Odoo database runs on **Odoo Online**, version 18 or later.
+- For call logging: your Odoo subscription is on the **Custom** plan, and you can sign in to Odoo as an **administrator**. The administrator's API key is used to log calls, and only administrators can create a key that does not expire.
+- For calling in Odoo: the **Phone** app is installed in Odoo, and each agent has a TalkChief phone line.
+- One Odoo database can be connected to one TalkChief company.
+
+## Set up call logging
+
+### Create an API key in Odoo
+
+<Steps>
+  <Step title="Open your preferences">
+    Sign in to Odoo as an administrator, select your avatar in the top right, then **Preferences** (or **My Preferences**).
+  </Step>
+  <Step title="Create the key">
+    Open the **Account Security** tab and select **New API Key**. Odoo asks for your password. Enter a description such as "TalkChief" and choose **Persistent Key** as the duration, so the key doesn't expire.
+  </Step>
+  <Step title="Copy the key">
+    Copy the key Odoo shows. Odoo shows it only once.
+  </Step>
+</Steps>
+
+<Warning>
+  Keys of users who are not administrators expire after at most 3 months. When a key expires, the Odoo card in TalkChief asks you to reconnect with a new key.
+</Warning>
+
+### Connect Odoo in TalkChief
+
+<Steps>
+  <Step title="Open Integrations in TalkChief">
+    In the TalkChief web app, select **Integrations** under **Configuration** in the sidebar. The page opens on the **CRM** tab.
+  </Step>
+  <Step title="Start the connection">
+    On the **Odoo** card, select **Connect**.
+  </Step>
+  <Step title="Enter your Odoo address and key">
+    Enter your **Odoo address** (for example `yourcompany.odoo.com`; you can paste the address from your browser) and paste the **API key**, then select **Connect**.
+  </Step>
+  <Step title="Odoo 18 only: enter the login">
+    If your database runs Odoo 18, TalkChief also asks for the **login** (the email) of the user who created the key. Enter it and select **Connect** again. Odoo 19 and later don't need it.
+  </Step>
+  <Step title="Test with a real call">
+    Make or receive a call with TalkChief. A few minutes after you hang up, open the lead or contact in Odoo and check the note in its chatter.
+  </Step>
+</Steps>
+
+TalkChief stores the API key encrypted and uses it only to log calls in Odoo.
+
+### Choose what gets logged
+
+On the connected Odoo card in **Integrations**, select the settings (gear) icon. **Log calls** and **Log missed calls** start on; **Create leads for new numbers** and **Add the AI call summary to each call** start off. **Add the AI call summary to each call** appears only when your company has [AI transcription](/ai/ai-transcription).
+
+| Setting | On | Off |
+| --- | --- | --- |
+| **Log calls** | Every external call is logged | Nothing is logged, and the connection stays in place |
+| **Log missed calls** | Busy, unanswered, cancelled and voicemail calls are logged too | Only answered calls are logged |
+| **Create leads for new numbers** | Unknown numbers get a new lead, assigned to the agent | Calls from numbers Odoo doesn't have are not logged, because Odoo keeps notes only on a record |
+| **Add the AI call summary to each call** | When a call's AI summary is ready, it's added to the call's note with a link to the full transcript | Notes have no summary |
+
+## Set up calling in Odoo
+
+Calling in Odoo uses Odoo's own **Phone** app with TalkChief as its provider. You add TalkChief as a provider once, then give each agent their own TalkChief phone login in Odoo. You don't need to connect call logging first.
+
+<Steps>
+  <Step title="Open the calling setup in TalkChief">
+    In **Integrations**, open the Odoo card's settings and select **Set up calling in Odoo**. If you haven't connected call logging, select **Connect** on the Odoo card, then **Set up calling in Odoo** at the bottom of the window. The window shows the values to copy.
+  </Step>
+  <Step title="Add TalkChief as a provider in Odoo">
+    In Odoo, open **Phone** > **Configuration** > **Providers** and select **New**. Enter **TalkChief** as the name, and copy the **WebSocket** and **OnSIP Domain** values from TalkChief. Set the environment to **Production**, then save.
+  </Step>
+  <Step title="Give each agent their login">
+    In TalkChief, select **Show login** next to an agent to see their **Username** and **Secret**. In Odoo, open **Settings** > **Users**, select the agent, open the **VoIP** tab, choose **TalkChief** as the provider, and enter the username and secret. Save, and repeat for each agent.
+  </Step>
+  <Step title="Test a call">
+    As the agent, open a contact in Odoo, hover over the phone number and select **Call**. Calls to the agent also ring in Odoo while it's open.
+  </Step>
+</Steps>
+
+Each agent's login belongs only to calling in Odoo: it is not their TalkChief password, and changing their TalkChief password doesn't change it. Only company admins can see it. If a login may have been exposed, select **New password** next to the agent: the old password stops working at once, and you enter the new one in the agent's **VoIP** tab in Odoo.
+
+Calls placed or answered in Odoo ring through TalkChief like any other call, and the agent's other TalkChief apps keep ringing too. The Odoo mobile app does not ring for incoming calls; agents answer on their TalkChief app instead.
+
+## Data TalkChief uses in Odoo
+
+With your API key (call logging only), TalkChief:
+
+| Access | Why |
+| --- | --- |
+| Reads leads, opportunities and contacts | Find the record whose phone number matches the call |
+| Reads users | Show the agent as the note's author |
+| Creates leads | Create a lead for a number Odoo doesn't have (only while **Create leads for new numbers** is on) |
+| Posts and updates notes | Log each call in the record's chatter, and add the AI call summary to that note (only while **Add the AI call summary to each call** is on). TalkChief changes only the notes it wrote |
+
+TalkChief does not change your leads' stages, values or other fields, and it does not copy your Odoo records into TalkChief. Calling in Odoo uses no API access at all.
+
+## Disconnect Odoo
+
+To stop logging calls, open **Integrations** in TalkChief and select the trash icon on the Odoo card (or **Disconnect** in the **Odoo settings** window), then confirm.
+
+When you disconnect:
+
+- Calls are no longer logged in Odoo. Calls that were waiting to be logged are dropped.
+- TalkChief deletes the API key it stored.
+- Notes and leads already in Odoo stay there.
+
+The key itself keeps working in Odoo until you delete it: in Odoo, open **Preferences** > **Account Security** and delete the TalkChief key. To stop calling in Odoo, remove the TalkChief provider from the agents' **VoIP** tab in Odoo.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="This is not an Odoo address">
+    Enter the address of your Odoo Online database, such as `yourcompany.odoo.com`. Databases hosted on Odoo.sh or on your own servers are not supported yet.
+  </Accordion>
+
+  <Accordion title="Odoo did not accept this API key">
+    Create a new key in **Preferences** > **Account Security** and try again. Check that your Odoo subscription is on the Custom plan: Odoo allows API access only on that plan.
+  </Accordion>
+
+  <Accordion title="This Odoo version is not supported">
+    TalkChief works with Odoo 18 and later. Odoo upgrades Odoo Online databases regularly; connect again after your database is upgraded.
+  </Accordion>
+
+  <Accordion title="The Odoo card asks me to reconnect">
+    Odoo no longer accepts the API key, usually because it expired or was deleted. Create a new key (choose **Persistent Key** as an administrator) and select **Reconnect**. Calls that ended in the meantime are logged once you reconnect, as long as you reconnect within 7 days.
+  </Accordion>
+
+  <Accordion title="Calls cannot be logged because of the key user's rights">
+    The user whose key you connected may not read or update leads and contacts. Give that user **Sales: All Documents** and **Contacts: Creation**, or connect with an administrator's key.
+  </Accordion>
+
+  <Accordion title="A call is not on the lead or contact">
+    TalkChief matches the record by its **Phone** field (and **Mobile** on Odoo 18). Check that the record has the caller's number there. Won and lost leads are skipped. If **Create leads for new numbers** is off, calls from numbers Odoo doesn't have are not logged.
+  </Accordion>
+
+  <Accordion title="The Odoo phone can't connect">
+    Check the provider's **WebSocket** and **OnSIP Domain** values, and the agent's username and secret, against the TalkChief window. If Odoo refuses a pasted secret, type it instead.
+  </Accordion>
+
+  <Accordion title="A recording does not play">
+    The recording link is added only when the call was recorded. Check that call recording is on for that number or team in TalkChief.
+  </Accordion>
+</AccordionGroup>
+
+For anything else, contact TalkChief support at [support@talkchief.io](mailto:support@talkchief.io).
