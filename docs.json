@@ -119,7 +119,8 @@
               "integrations/freshsales",
               "integrations/bitrix24",
               "integrations/salesforce",
-              "integrations/dynamics-365"
+              "integrations/dynamics-365",
+              "integrations/odoo"
             ]
           },
           {
